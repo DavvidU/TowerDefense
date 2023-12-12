@@ -1,0 +1,163 @@
+﻿using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+      /**
+      * @brief Klasa ma za zadanie zarządzać trybem budoawnia/rozbiórki użytkownika 
+      * 
+      * <span style="font-size: 16px; text-indent: 30px;">
+      *     śledzi promień kursora użytkownika i zaznacza pdpowieni element siatki na któym w przypadku trybu budowania stawia przeszkodę lub w przypadku 
+      *     trybu rozbiórki przeszkodę usuwa.
+      * </span>
+      * @author <i><span style="font-size: 1rem; font-weight: bold; color: #fff;">Artur Leszczak</span></i>
+      */
+
+public class ClickPoint : MonoBehaviour
+{
+    //deklaruje obiekty możliwe do wyubudowania
+    public enum BuldableObjects
+    {
+        Sciezka,
+        Sciany,
+        Pułapki
+    }
+
+    public bool inBuildMode = true;
+    public bool inDestroyingMode = false;
+    public BuldableObjects TrybBudowania;
+    private PlaceWall sciana;
+    private PlacePath sciezka;
+    public Transform mainCamera;
+    public Camera kamera;
+    private EnemyManager ManagerEnemy;
+    public GameObject obiektEnemyManager;
+
+    private float Mousex = 0f;
+    private float Mouser = 0f;
+
+    // Start is called before the first frame update
+    void Start()
+    {
+        this.TrybBudowania = BuldableObjects.Sciany;
+        this.sciana = new PlaceWall();
+        this.sciezka = kamera.GetComponent<PlacePath>();
+        this.ManagerEnemy = obiektEnemyManager.GetComponent<EnemyManager>();
+
+    }
+
+      
+    void Update()
+    {
+        //reaguje/niszczy na wciśnięcie lewego klawisza myszy
+        if (Input.GetMouseButtonDown(0))
+        {
+            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+
+            // Deklaruj strukturę RaycastHit, aby przechwyci� informacje o kolizji
+            RaycastHit hit;
+
+            // Sprawdź, czy promień przecina obiekty z koliderem
+            if (Physics.Raycast(ray, out hit))
+            {
+                //sprawdza czy znajdujemy się w trybie budowania / rozbiórki
+                if (inBuildMode && !inDestroyingMode)
+                {
+                    // Utw�rz promie� od pozycji kamery przez punkt, w kt�ry klikn��e�
+
+
+                    GridTile gridTile = hit.collider.GetComponent<GridTile>();
+                    //sprawdza czy wybraną opcją jest budowa ścian czy pułapek
+                    if (this.TrybBudowania == BuldableObjects.Sciany && gridTile.movable == true)
+                    {
+                        //wywołuje metodę tworząca ścianę
+                        sciana.getWall(gridTile);
+
+                    }else if(this.TrybBudowania == BuldableObjects.Pułapki && gridTile.movable == true)
+                    {
+
+                    }else if(this.TrybBudowania == BuldableObjects.Sciezka && gridTile.movable == true&&gridTile.pathable==true)
+                    {
+                        sciezka.GetPath(gridTile);
+                        
+                    }
+                }
+                else if (inDestroyingMode && !inBuildMode)
+                {
+                    //w przypadku trybu rozbiórki niszczy obiekt na siatce i ponownie robi z niej movable
+                    
+                    GridTile gridTile = hit.collider.GetComponent<GridTile>();
+                    if (gridTile.removable)
+                    {
+                        gridTile.movable = true;
+                        if (gridTile.isPath)
+                        {
+                            GridGenerator.ModifyTitlePath(gridTile.x, gridTile.y,true,false);
+                            GridTile obiekt = sciezka.ostatniobiekt();
+                            GridGenerator.ModifyTitlePath(obiekt.x, obiekt.y, false, true);
+                            //sciezka.usunobiekt(gridTile);
+                        }
+                        
+                        Destroy(gridTile.buildedObject);
+                        gridTile.buildedObject = null;
+                    }
+                    else
+                    {
+                        Debug.Log("Nie można usunąć!");
+                    }
+                    
+
+                }
+            }
+                
+        }
+        else if(Input.GetKeyDown(KeyCode.Space) && sciezka.czySciezkaStworzona==true )
+        {
+            ManagerEnemy.enabled = true;
+           
+        }
+        
+        //zmienia pozycję kamery
+        if(Input.GetMouseButton(1))
+        {
+            if (Input.GetKey(KeyCode.LeftControl))
+            {
+                float deltaPose = Input.mousePosition.x - (Screen.width / 2);
+
+                deltaPose -= Mouser;
+
+                deltaPose /= 10;
+
+                Transform tr = this.GetComponent<Transform>();
+
+                Mouser = tr.rotation.y + deltaPose;
+                float rotY = tr.rotation.y - deltaPose;
+                if (rotY > 0f)
+                {
+                    rotY = 0f;
+                }
+                else if(rotY < -180f)
+                {
+                    rotY = -180f;
+                }
+
+                mainCamera.rotation = Quaternion.Euler(52.487f,rotY , tr.rotation.z);
+            }
+            else
+            {
+                float deltaPose = Input.mousePosition.x - (Screen.width / 2);
+
+                deltaPose -= Mousex;
+
+                deltaPose /= 10000;
+
+                Transform tr = this.GetComponent<Transform>();
+                Vector3 v3 = new Vector3(tr.position.x + deltaPose, tr.position.y, tr.position.z);
+
+                Mousex = tr.position.x + deltaPose;
+
+                mainCamera.position = v3;
+            }
+        }
+    }
+        
+    }
