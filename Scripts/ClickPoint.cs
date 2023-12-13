@@ -27,6 +27,7 @@ public class ClickPoint : MonoBehaviour
     public BuldableObjects TrybBudowania;
     private PlaceWall sciana;
     private PlacePath sciezka;
+    private PlaceTrap pulapka; // new 13.12.
     public Transform mainCamera;
     public Camera kamera;
     private EnemyManager ManagerEnemy;
@@ -41,6 +42,8 @@ public class ClickPoint : MonoBehaviour
         this.TrybBudowania = BuldableObjects.Sciany;
         this.sciana = new PlaceWall();
         this.sciezka = kamera.GetComponent<PlacePath>();
+        this.pulapka = new PlaceTrap();
+
         this.ManagerEnemy = obiektEnemyManager.GetComponent<EnemyManager>();
 
     }
@@ -66,16 +69,18 @@ public class ClickPoint : MonoBehaviour
 
 
                     GridTile gridTile = hit.collider.GetComponent<GridTile>();
-                    //sprawdza czy wybraną opcją jest budowa ścian czy pułapek
-                    if (this.TrybBudowania == BuldableObjects.Sciany && gridTile.movable == true)
+                    //sprawdza czy wybraną opcją jest budowa ścian, pułapek czy ścieżki
+                    
+                    if (this.TrybBudowania == BuldableObjects.Sciany && gridTile.movable == true) // aktualnie(13.12.) sciane mozna postawic na pulapce (gridTile.buildedObject == true)
                     {
                         //wywołuje metodę tworząca ścianę
                         sciana.getWall(gridTile);
 
-                    }else if(this.TrybBudowania == BuldableObjects.Pułapki && gridTile.movable == true)
+                    }else if(this.TrybBudowania == BuldableObjects.Pułapki && gridTile.movable == true) // aktualnie(13.12.) pulapke mozna postawic na scianie
                     {
-
-                    }else if(this.TrybBudowania == BuldableObjects.Sciezka && gridTile.movable == true&&gridTile.pathable==true)
+                        //wywołuje metodę tworzącą pułapkę
+                        pulapka.getTrap(gridTile);
+                    }else if(this.TrybBudowania == BuldableObjects.Sciezka && gridTile.movable == true&&gridTile.pathable== true)
                     {
                         sciezka.GetPath(gridTile);
                         
