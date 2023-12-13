@@ -17,8 +17,8 @@ public class ClickPoint : MonoBehaviour
     //deklaruje obiekty możliwe do wyubudowania
     public enum BuldableObjects
     {
-        Sciezka,
         Sciany,
+        Sciezka,
         Pułapki
     }
 
