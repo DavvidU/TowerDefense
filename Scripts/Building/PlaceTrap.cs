@@ -15,6 +15,8 @@ public class PlaceTrap : MonoBehaviour
 {
     private GameObject SimpleSpikes;
 
+    private GameObject PushingTrap; //strzelaj¹ca
+
     private GameObject trap;
 
     private GameObject[] obiektySiatki;
@@ -24,9 +26,14 @@ public class PlaceTrap : MonoBehaviour
         //skanuje katalog zawieraj¹cy pliki Pulapek/Kolcow
         string katalogZasobow = "Assets/Prefabs/Traps/Spikes";
 
-        string[] sciezkiDoZasobow = AssetDatabase.FindAssets("", new[] { katalogZasobow });
+        string katalogZasobowStrzelajacych = "Assets/Prefabs/Traps/PushingTraps";
 
-        foreach (string sciezka in sciezkiDoZasobow)
+        string[] sciezkiDoZasobowKolce = AssetDatabase.FindAssets("", new[] { katalogZasobow });
+        string[] sciezkiDoZasobowStrzelajacych = AssetDatabase.FindAssets("", new[] { katalogZasobowStrzelajacych });
+        
+
+        //pobiera sciezki kolcow
+        foreach (string sciezka in sciezkiDoZasobowKolce)
         {
             //narazie tylko jedna pulapka w Traps/Spikes
             string pelnaSciezka = AssetDatabase.GUIDToAssetPath(sciezka);
@@ -38,6 +45,23 @@ public class PlaceTrap : MonoBehaviour
                 if (zasob.name == "Spikes")
                 {
                     this.SimpleSpikes = zasob;
+                }
+            }
+        }
+
+        //pobiera sciezki strzelajacych
+        foreach (string sciezka in sciezkiDoZasobowStrzelajacych)
+        {
+            //narazie tylko jedna pulapka w Traps/Spikes
+            string pelnaSciezka = AssetDatabase.GUIDToAssetPath(sciezka);
+
+            GameObject zasob = AssetDatabase.LoadAssetAtPath<GameObject>(pelnaSciezka);
+
+            if (zasob != null && PrefabUtility.IsPartOfPrefabAsset(zasob))
+            {
+                if (zasob.name == "PushingSimple")
+                {
+                    this.PushingTrap = zasob;
                 }
             }
         }
@@ -58,7 +82,7 @@ public class PlaceTrap : MonoBehaviour
     * 
     * @author <i><span style="font-size: 1rem; font-weight: bold; color: #fff;">Dawid Ugniewski</span></i>
     */
-    public void getTrap(GridTile gridTile)
+    public void getTrap(int id, GridTile gridTile)
     {
         if (gridTile.isPath)
         {
@@ -70,7 +94,16 @@ public class PlaceTrap : MonoBehaviour
 
         GameObject ob; //nowy obiekt na którym wykonujê operacjê transformacji rotacji
 
-        ob = Instantiate(SimpleSpikes);
+        switch (id)
+        {
+            case 1:
+                ob = Instantiate(SimpleSpikes);
+                break;
+            default:
+                ob = Instantiate(SimpleSpikes);
+                break;
+        }
+       
         ob.transform.rotation = Quaternion.identity;
         ob.transform.position = new Vector3(gridTile.x, 0f, gridTile.y);
         this.trap = ob;
@@ -80,6 +113,43 @@ public class PlaceTrap : MonoBehaviour
         {
             gridTile.buildedObject = this.trap;
         }
+    }
+
+    public void getTrap(int id, TrapPoint trapPoint)
+    {
+
+        if(trapPoint.getIsFree() != false)
+        {
+            this.trap = null;
+
+            GameObject ob; //nowy obiekt na którym wykonujê operacjê transformacji rotacji
+            switch (id)
+            {
+                case 1:
+                    ob = Instantiate(PushingTrap);
+                    break;
+                default:
+                    ob = Instantiate(PushingTrap);
+                    break;
+            }
+            ob.transform.SetParent(trapPoint.getTransform());
+            ob.transform.rotation = trapPoint.getTransformRotation();
+            ob.transform.localPosition = Vector3.zero;
+            this.trap = ob;
+
+            if (this.trap != null)
+            {
+                trapPoint.setBuildedObject(this.trap);
+                trapPoint.setIsFree(false); //jest zajety
+            }
+
+        }
+        else
+        {
+            Debug.Log("Pu³apka juz istnieje w tym punkcie");
+        }
+
+       
     }
 
     // Start is called before the first frame update

@@ -1,16 +1,19 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static ClickPoint;
 
-      /**
-      * @brief Klasa ma za zadanie zarządzać trybem budoawnia/rozbiórki użytkownika 
-      * 
-      * <span style="font-size: 16px; text-indent: 30px;">
-      *     śledzi promień kursora użytkownika i zaznacza pdpowieni element siatki na któym w przypadku trybu budowania stawia przeszkodę lub w przypadku 
-      *     trybu rozbiórki przeszkodę usuwa.
-      * </span>
-      * @author <i><span style="font-size: 1rem; font-weight: bold; color: #fff;">Artur Leszczak</span></i>
-      */
+
+/**
+* @brief Klasa ma za zadanie zarządzać trybem budoawnia/rozbiórki użytkownika 
+* 
+* <span style="font-size: 16px; text-indent: 30px;">
+*     śledzi promień kursora użytkownika i zaznacza pdpowieni element siatki na któym w przypadku trybu budowania stawia przeszkodę lub w przypadku 
+*     trybu rozbiórki przeszkodę usuwa.
+* </span>
+* @author <i><span style="font-size: 1rem; font-weight: bold; color: #fff;">Artur Leszczak</span></i>
+*/
 
 public class ClickPoint : MonoBehaviour
 {
@@ -22,9 +25,16 @@ public class ClickPoint : MonoBehaviour
         Pułapki
     }
 
+    public enum BuldableTraps
+    {
+        Kolce,
+        Strzelajaca
+    }
+
     public bool inBuildMode = true;
     public bool inDestroyingMode = false;
     public BuldableObjects TrybBudowania;
+    public BuldableTraps WybranaPułapka;
     private PlaceWall sciana;
     private PlacePath sciezka;
     private PlaceTrap pulapka; // new 13.12.
@@ -32,7 +42,7 @@ public class ClickPoint : MonoBehaviour
     public Camera kamera;
     private EnemyManager ManagerEnemy;
     public GameObject obiektEnemyManager;
-
+    private ZarzadzajObiektami zarzadzanieObiektamiGlobalnymi;
     private float Mousex = 0f;
     private float Mouser = 0f;
 
@@ -43,7 +53,7 @@ public class ClickPoint : MonoBehaviour
         this.sciana = new PlaceWall();
         this.sciezka = kamera.GetComponent<PlacePath>();
         this.pulapka = new PlaceTrap();
-
+        this.zarzadzanieObiektamiGlobalnymi = new ZarzadzajObiektami();
         this.ManagerEnemy = obiektEnemyManager.GetComponent<EnemyManager>();
 
     }
@@ -51,7 +61,16 @@ public class ClickPoint : MonoBehaviour
       
     void Update()
     {
-        //reaguje/niszczy na wciśnięcie lewego klawisza myszy
+        if(this.WybranaPułapka == BuldableTraps.Strzelajaca && this.TrybBudowania == BuldableObjects.Pułapki)
+        {
+            zarzadzanieObiektamiGlobalnymi.setObjectsVisibilityByTag("TrapPlaceRender", true);
+        }
+        else
+        {
+            zarzadzanieObiektamiGlobalnymi.setObjectsVisibilityByTag("TrapPlaceRender", false);
+        }
+
+            //reaguje/niszczy na wciśnięcie lewego klawisza myszy
         if (Input.GetMouseButtonDown(0))
         {
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
@@ -67,24 +86,39 @@ public class ClickPoint : MonoBehaviour
                 {
                     // Utw�rz promie� od pozycji kamery przez punkt, w kt�ry klikn��e�
 
-
-                    GridTile gridTile = hit.collider.GetComponent<GridTile>();
-                    //sprawdza czy wybraną opcją jest budowa ścian, pułapek czy ścieżki
-                    
-                    if (this.TrybBudowania == BuldableObjects.Sciany && gridTile.movable == true) // aktualnie(13.12.) sciane mozna postawic na pulapce (gridTile.buildedObject == true)
+                    if(this.WybranaPułapka == BuldableTraps.Strzelajaca && this.TrybBudowania == BuldableObjects.Pułapki)
                     {
-                        //wywołuje metodę tworząca ścianę
-                        sciana.getWall(gridTile);
-
-                    }else if(this.TrybBudowania == BuldableObjects.Pułapki && gridTile.movable == true) // aktualnie(13.12.) pulapke mozna postawic na scianie
-                    {
-                        //wywołuje metodę tworzącą pułapkę
-                        pulapka.getTrap(gridTile);
-                    }else if(this.TrybBudowania == BuldableObjects.Sciezka && gridTile.movable == true&&gridTile.pathable== true)
-                    {
-                        sciezka.GetPath(gridTile);
+                        //Debug.Log("xd");
+                        TrapPoint trapPoint = hit.collider.GetComponent<TrapPoint>();
                         
+                        pulapka.getTrap(1, trapPoint);
                     }
+                    else
+                    {
+                        GridTile gridTile = hit.collider.GetComponent<GridTile>();
+                        //sprawdza czy wybraną opcją jest budowa ścian, pułapek czy ścieżki
+
+                        if (this.TrybBudowania == BuldableObjects.Sciany && gridTile.movable == true) // aktualnie(13.12.) sciane mozna postawic na pulapce (gridTile.buildedObject == true)
+                        {
+                            //wywołuje metodę tworząca ścianę
+                            sciana.getWall(gridTile);
+
+                        }
+                        else if (this.TrybBudowania == BuldableObjects.Pułapki && gridTile.movable == true) // aktualnie(13.12.) pulapke mozna postawic na scianie
+                        {
+                            //wywołuje metodę tworzącą pułapkę
+
+                            pulapka.getTrap(1, gridTile);
+
+                        }
+                        else if (this.TrybBudowania == BuldableObjects.Sciezka && gridTile.movable == true && gridTile.pathable == true)
+                        {
+                            sciezka.GetPath(gridTile);
+
+                        }
+                    }
+
+                    
                 }
                 else if (inDestroyingMode && !inBuildMode)
                 {
