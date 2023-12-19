@@ -10,8 +10,13 @@ using UnityEngine;
 using UnityEngine.UIElements;
 
 /**
- * 
- * @author Dawid Ugniewski
+ * @brief Klasa generuje obiekty siatki i przechowuje tablicê indywidualnie do³¹czonych do nich komponentów
+ * <span style="font-size: 16px; text-indent: 50px;">
+ *   Klasa wymaga obiektu, do którego zostanie do³¹czona jako skrypt oraz podania prefabu kafelka siatki
+ *   Generuje mapWidth * mapHeight obiektów kafelków mapy i do³¹cza do ka¿dego z nich komponent typu [GridTile]
+ *   Wszystkie do³¹czone komponenty (logiczne obiekty siatki) przechowywane s¹ w tej klasie w tablicy gridTiles.
+ * </span>
+ * @author <i><span style="font-size: 1rem; font-weight: bold; color: #fff;">Dawid Ugniewski</span></i>
  */
 
 public class GridGenerator : MonoBehaviour
@@ -92,9 +97,11 @@ public class GridGenerator : MonoBehaviour
 }
 
 /**
- * @brief 
- * 
- * @author Dawid Ugniewski
+ * @brief Klasa do³¹czana jako komponent do obiektów kafelków siatki wygenerowanych przez GridGenerator
+ * <span style="font-size: 16px; text-indent: 50px;">
+ *   
+ *   
+ * @author <i><span style="font-size: 1rem; font-weight: bold; color: #fff;">Dawid Ugniewski</span></i>
  */
 
 public class GridTile : MonoBehaviour
@@ -105,7 +112,13 @@ public class GridTile : MonoBehaviour
     public bool removable;
     public bool pathable;
     public bool isPath;
+    
     public GameObject buildedObject;
+
+    public GameObject buildedWall;
+    public GameObject buildedTrap;
+    public GameObject buildedPath;
+
     public bool isBorder;
 
     public void Initialize(int x, int y, bool movable, bool isPath,bool isBorder)
