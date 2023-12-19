@@ -121,7 +121,7 @@ public class PlacePath : MonoBehaviour
             Sciezka = Instantiate(obiektsciezki);
             Sciezka.transform.rotation = Quaternion.identity;
             Sciezka.transform.position = new Vector3(gridTile.x, 0f, gridTile.y);
-        gridTile.BuildObject(Sciezka);
+        gridTile.BuildPath(Sciezka);
 
 
     }

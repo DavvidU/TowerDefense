@@ -84,11 +84,11 @@ public class PlaceTrap : MonoBehaviour
     */
     public void getTrap(int id, GridTile gridTile)
     {
-        if (gridTile.isPath)
+        /*if (gridTile.isPath)
         {
             return;
 
-        }
+        }*/
 
         this.trap = null;
 
@@ -111,7 +111,7 @@ public class PlaceTrap : MonoBehaviour
         // Podaj informacjê do Tile, jaki obiekt przechowuje
         if (this.trap != null)
         {
-            gridTile.buildedObject = this.trap;
+            gridTile.BuildTrap(trap);
         }
     }
 

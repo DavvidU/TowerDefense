@@ -343,7 +343,7 @@ public class PlaceWall : MonoBehaviour
         if (this.wall != null)
         {
             gridTile.movable = false;
-            gridTile.buildedObject = this.wall;
+            gridTile.BuildWall(wall);
         }
 
     }
@@ -368,7 +368,7 @@ public class PlaceWall : MonoBehaviour
     {
         if(gridTile.isPath == false)
         {
-            GameObject toRemove = gridTile.buildedObject;
+            GameObject toRemove = gridTile.buildedWall;
             Destroy(toRemove);
 
             Vector3 position = new Vector3(gridTile.x, 0f, gridTile.y);
@@ -376,7 +376,7 @@ public class PlaceWall : MonoBehaviour
             Object.transform.rotation = eulerRotation;
             Object.transform.position = position;
 
-            gridTile.buildedObject = Object;
+            gridTile.BuildWall(Object);
             gridTile.movable = false;
         }
     }

@@ -88,10 +88,6 @@ public class GridGenerator : MonoBehaviour
             gridTiles[x -1, y].pathable = pathable;
         if(y< 9)
             gridTiles[x, y+1].pathable = pathable;
-
-        
-            gridTiles[x, y].removable = pathable;
-        
     }
 
 }
@@ -129,17 +125,44 @@ public class GridTile : MonoBehaviour
         this.removable = true;
         this.pathable = false;
         this.isPath = false;
+        
         buildedObject = null;
-	this.isBorder = isBorder;
+
+        buildedWall = null;
+        buildedTrap = null;
+        buildedPath = null;
+	    
+        this.isBorder = isBorder;
     }
-    
+    // ------------------------------------------------------------
     public void BuildObject(GameObject objectToBuild)
     {
         if (objectToBuild == null) { }
         else
-            this.buildedObject = objectToBuild;
+            buildedObject = objectToBuild;
     }
-    
+    // ------------------------------------------------------------
+    public void BuildWall(GameObject wallToBuild)
+    {
+        if (wallToBuild == null) { }
+        else
+            buildedWall = wallToBuild;
+    }
+
+    public void BuildTrap(GameObject trapToBuild)
+    {
+        if (trapToBuild == null) { }
+        else
+            buildedTrap = trapToBuild;
+    }
+
+    public void BuildPath(GameObject pathToBuild)
+    {
+        if (pathToBuild == null) { }
+        else
+            buildedPath = pathToBuild;
+    }
+
     public void SetMovable(bool movable)
     {
         this.movable = movable;
