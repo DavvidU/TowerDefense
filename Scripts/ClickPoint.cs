@@ -130,14 +130,29 @@ public class ClickPoint : MonoBehaviour
                         gridTile.movable = true;
                         if (gridTile.isPath)
                         {
-                            GridGenerator.ModifyTitlePath(gridTile.x, gridTile.y,true,false);
-                            GridTile obiekt = sciezka.ostatniobiekt();
-                            GridGenerator.ModifyTitlePath(obiekt.x, obiekt.y, false, true);
+                            // --- STAD SKOPIOWANE ---
                             //sciezka.usunobiekt(gridTile);
                         }
-                        
-                        Destroy(gridTile.buildedObject);
-                        gridTile.buildedObject = null;
+
+                        if (TrybBudowania == BuldableObjects.Sciany)
+                        {
+                            Destroy(gridTile.buildedWall);
+                            gridTile.buildedWall = null;
+                        }
+                        if (TrybBudowania == BuldableObjects.Pułapki)
+                        {
+                            Destroy(gridTile.buildedTrap);
+                            gridTile.buildedTrap = null;
+                        }
+                        if (TrybBudowania == BuldableObjects.Sciezka)
+                        {
+                            GridGenerator.ModifyTitlePath(gridTile.x, gridTile.y, true, false);
+                            GridTile obiekt = sciezka.ostatniobiekt();
+                            GridGenerator.ModifyTitlePath(obiekt.x, obiekt.y, false, true);
+
+                            Destroy(gridTile.buildedPath);
+                            gridTile.buildedPath = null;
+                        }
                     }
                     else
                     {

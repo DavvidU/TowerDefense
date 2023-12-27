@@ -10,8 +10,13 @@ using UnityEngine;
 using UnityEngine.UIElements;
 
 /**
- * 
- * @author Dawid Ugniewski
+ * @brief Klasa generuje obiekty siatki i przechowuje tablicê indywidualnie do³¹czonych do nich komponentów
+ * <span style="font-size: 16px; text-indent: 50px;">
+ *   Klasa wymaga obiektu, do którego zostanie do³¹czona jako skrypt oraz podania prefabu kafelka siatki
+ *   Generuje mapWidth * mapHeight obiektów kafelków mapy i do³¹cza do ka¿dego z nich komponent typu [GridTile]
+ *   Wszystkie do³¹czone komponenty (logiczne obiekty siatki) przechowywane s¹ w tej klasie w tablicy gridTiles.
+ * </span>
+ * @author <i><span style="font-size: 1rem; font-weight: bold; color: #fff;">Dawid Ugniewski</span></i>
  */
 
 public class GridGenerator : MonoBehaviour
@@ -83,18 +88,16 @@ public class GridGenerator : MonoBehaviour
             gridTiles[x -1, y].pathable = pathable;
         if(y< 9)
             gridTiles[x, y+1].pathable = pathable;
-
-        
-            gridTiles[x, y].removable = pathable;
-        
     }
 
 }
 
 /**
- * @brief 
- * 
- * @author Dawid Ugniewski
+ * @brief Klasa do³¹czana jako komponent do obiektów kafelków siatki wygenerowanych przez GridGenerator
+ * <span style="font-size: 16px; text-indent: 50px;">
+ *   
+ *   
+ * @author <i><span style="font-size: 1rem; font-weight: bold; color: #fff;">Dawid Ugniewski</span></i>
  */
 
 public class GridTile : MonoBehaviour
@@ -105,7 +108,13 @@ public class GridTile : MonoBehaviour
     public bool removable;
     public bool pathable;
     public bool isPath;
+    
     public GameObject buildedObject;
+
+    public GameObject buildedWall;
+    public GameObject buildedTrap;
+    public GameObject buildedPath;
+
     public bool isBorder;
 
     public void Initialize(int x, int y, bool movable, bool isPath,bool isBorder)
@@ -116,17 +125,44 @@ public class GridTile : MonoBehaviour
         this.removable = true;
         this.pathable = false;
         this.isPath = false;
+        
         buildedObject = null;
-	this.isBorder = isBorder;
+
+        buildedWall = null;
+        buildedTrap = null;
+        buildedPath = null;
+	    
+        this.isBorder = isBorder;
     }
-    
+    // ------------------------------------------------------------
     public void BuildObject(GameObject objectToBuild)
     {
         if (objectToBuild == null) { }
         else
-            this.buildedObject = objectToBuild;
+            buildedObject = objectToBuild;
     }
-    
+    // ------------------------------------------------------------
+    public void BuildWall(GameObject wallToBuild)
+    {
+        if (wallToBuild == null) { }
+        else
+            buildedWall = wallToBuild;
+    }
+
+    public void BuildTrap(GameObject trapToBuild)
+    {
+        if (trapToBuild == null) { }
+        else
+            buildedTrap = trapToBuild;
+    }
+
+    public void BuildPath(GameObject pathToBuild)
+    {
+        if (pathToBuild == null) { }
+        else
+            buildedPath = pathToBuild;
+    }
+
     public void SetMovable(bool movable)
     {
         this.movable = movable;
