@@ -356,7 +356,7 @@ MonoBehaviour:
       m_Image: {fileID: 0}
     - m_Text: Strzelajaca
       m_Image: {fileID: 0}
-    - m_Text: Podpalajaca
+    - m_Text: Lawa
       m_Image: {fileID: 0}
     - m_Text: Oblodzenie
       m_Image: {fileID: 0}

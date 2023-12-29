@@ -28,7 +28,9 @@ public class ClickPoint : MonoBehaviour
     public enum BuldableTraps
     {
         Kolce,
-        Strzelajaca
+        Strzelajaca,
+        Lawa,
+        Oblodzenie
     }
 
     public bool inBuildMode = true;
@@ -37,7 +39,7 @@ public class ClickPoint : MonoBehaviour
     public BuldableTraps WybranaPułapka;
     private PlaceWall sciana;
     private PlacePath sciezka;
-    private PlaceTrap pulapka; // new 13.12.
+    private PlaceTrap pulapka;
     public Transform mainCamera;
     public Camera kamera;
     private EnemyManager ManagerEnemy;
@@ -107,8 +109,8 @@ public class ClickPoint : MonoBehaviour
                         else if (this.TrybBudowania == BuldableObjects.Pułapki && gridTile.movable == true) // aktualnie(13.12.) pulapke mozna postawic na scianie
                         {
                             //wywołuje metodę tworzącą pułapkę
-
-                            pulapka.getTrap(1, gridTile);
+                            if (gridTile.buildedTrap == null)
+                                pulapka.getTrap((int)WybranaPułapka, gridTile);
 
                         }
                         else if (this.TrybBudowania == BuldableObjects.Sciezka && gridTile.movable == true && gridTile.pathable == true)
@@ -128,11 +130,6 @@ public class ClickPoint : MonoBehaviour
                     if (gridTile.removable)
                     {
                         gridTile.movable = true;
-                        if (gridTile.isPath)
-                        {
-                            // --- STAD SKOPIOWANE ---
-                            //sciezka.usunobiekt(gridTile);
-                        }
 
                         if (TrybBudowania == BuldableObjects.Sciany)
                         {
