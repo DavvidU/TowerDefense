@@ -13,9 +13,12 @@ using UnityEngine;
 
 public class PlaceTrap : MonoBehaviour
 {
-    private GameObject SimpleSpikes;
+    /* Zmienne przechowujace prefaby pulapek */
 
-    private GameObject PushingTrap; //strzelaj¹ca
+    private GameObject SimpleSpikes;
+    private GameObject PushingTrap; //strzelajaca
+    private GameObject LavaTrap;
+    private GameObject IcingTrap;
 
     private GameObject trap;
 
@@ -23,19 +26,21 @@ public class PlaceTrap : MonoBehaviour
 
     public PlaceTrap()
     {
-        //skanuje katalog zawieraj¹cy pliki Pulapek/Kolcow
-        string katalogZasobow = "Assets/Prefabs/Traps/Spikes";
-
+        //skanuje katalog zawieraj¹cy pliki Pulapek
+        string katalogZasobowKolce = "Assets/Prefabs/Traps/Spikes";
         string katalogZasobowStrzelajacych = "Assets/Prefabs/Traps/PushingTraps";
+        string katalogZasobowLawa = "Assets/Prefabs/Traps/Lava";
+        string katalogZasobowOblodzenie = "Assets/Prefabs/Traps/Icing";
 
-        string[] sciezkiDoZasobowKolce = AssetDatabase.FindAssets("", new[] { katalogZasobow });
+        string[] sciezkiDoZasobowKolce = AssetDatabase.FindAssets("", new[] { katalogZasobowKolce });
         string[] sciezkiDoZasobowStrzelajacych = AssetDatabase.FindAssets("", new[] { katalogZasobowStrzelajacych });
-        
+        string[] sciezkiDoZasobowLawa = AssetDatabase.FindAssets("", new[] { katalogZasobowLawa });
+        string[] sciezkiDoZasobowOblodzenie = AssetDatabase.FindAssets("", new[] { katalogZasobowOblodzenie });
 
-        //pobiera sciezki kolcow
+
+        // Znajdowanie prefabu Kolcow w odpowiednich zasobach
         foreach (string sciezka in sciezkiDoZasobowKolce)
         {
-            //narazie tylko jedna pulapka w Traps/Spikes
             string pelnaSciezka = AssetDatabase.GUIDToAssetPath(sciezka);
 
             GameObject zasob = AssetDatabase.LoadAssetAtPath<GameObject>(pelnaSciezka);
@@ -44,7 +49,7 @@ public class PlaceTrap : MonoBehaviour
             {
                 if (zasob.name == "Spikes")
                 {
-                    this.SimpleSpikes = zasob;
+                    SimpleSpikes = zasob;
                 }
             }
         }
@@ -52,7 +57,6 @@ public class PlaceTrap : MonoBehaviour
         //pobiera sciezki strzelajacych
         foreach (string sciezka in sciezkiDoZasobowStrzelajacych)
         {
-            //narazie tylko jedna pulapka w Traps/Spikes
             string pelnaSciezka = AssetDatabase.GUIDToAssetPath(sciezka);
 
             GameObject zasob = AssetDatabase.LoadAssetAtPath<GameObject>(pelnaSciezka);
@@ -61,8 +65,36 @@ public class PlaceTrap : MonoBehaviour
             {
                 if (zasob.name == "PushingSimple")
                 {
-                    this.PushingTrap = zasob;
+                    PushingTrap = zasob;
                 }
+            }
+        }
+
+        // Znajdowanie prefabu Lawy w odpowiednich zasobach
+        foreach (string sciezka in sciezkiDoZasobowLawa)
+        {
+            string pelnaSciezka = AssetDatabase.GUIDToAssetPath(sciezka);
+
+            GameObject zasob = AssetDatabase.LoadAssetAtPath<GameObject>(pelnaSciezka);
+
+            if (zasob != null && PrefabUtility.IsPartOfPrefabAsset(zasob))
+            {
+                if (zasob.name == "Lava 1")
+                    LavaTrap = zasob;
+            }
+        }
+
+        // Znajdowanie prefabu Oblodzenia w odpowiednich zasobach
+        foreach (string sciezka in sciezkiDoZasobowOblodzenie)
+        {
+            string pelnaSciezka = AssetDatabase.GUIDToAssetPath(sciezka);
+
+            GameObject zasob = AssetDatabase.LoadAssetAtPath<GameObject>(pelnaSciezka);
+
+            if (zasob != null && PrefabUtility.IsPartOfPrefabAsset(zasob))
+            {
+                if (zasob.name == "Icing 1")
+                    IcingTrap = zasob;
             }
         }
 
@@ -82,7 +114,7 @@ public class PlaceTrap : MonoBehaviour
     * 
     * @author <i><span style="font-size: 1rem; font-weight: bold; color: #fff;">Dawid Ugniewski</span></i>
     */
-    public void getTrap(int id, GridTile gridTile)
+    public void getTrap(int rodzajPulapki, GridTile gridTile)
     {
         /*if (gridTile.isPath)
         {
@@ -94,10 +126,28 @@ public class PlaceTrap : MonoBehaviour
 
         GameObject ob; //nowy obiekt na którym wykonujê operacjê transformacji rotacji
 
-        switch (id)
+        /* 
+         *  Rodzaje pulapek:
+         *  0 - Kolce
+         *  1 - Strzelajaca
+         *  2 - Lawa
+         *  3 - Oblodzenie
+         *  W tym przeciazeniu getTrap() nigdy nie zachodzi: (rodzajPulapki == 1)
+         */
+
+        switch (rodzajPulapki)
         {
-            case 1:
+            case 0:
                 ob = Instantiate(SimpleSpikes);
+                break;
+            case 1: // to nigdy nie nastapi w tym przeciazeniu metody getTrap
+                ob = Instantiate(SimpleSpikes);
+                break;
+            case 2:
+                ob = Instantiate(LavaTrap);
+                break;
+            case 3:
+                ob = Instantiate(IcingTrap);
                 break;
             default:
                 ob = Instantiate(SimpleSpikes);
@@ -105,7 +155,10 @@ public class PlaceTrap : MonoBehaviour
         }
        
         ob.transform.rotation = Quaternion.identity;
-        ob.transform.position = new Vector3(gridTile.x, 0f, gridTile.y);
+        if (rodzajPulapki == 2 || rodzajPulapki == 3)
+            ob.transform.position = new Vector3(gridTile.x, 0.055f, gridTile.y);
+        else
+            ob.transform.position = new Vector3(gridTile.x, 0f, gridTile.y);
         this.trap = ob;
 
         // Podaj informacjê do Tile, jaki obiekt przechowuje
