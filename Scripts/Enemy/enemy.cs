@@ -35,24 +35,14 @@ public class enemy : MonoBehaviour
     void Update()
     {
         aktualnaPozycja = transform.position;
-        if (aktualnyKafelek < listaSciezki.Count - 1 && aktualnyKafelek >= 0)
+        if (aktualnyKafelek < listaSciezki.Count && aktualnyKafelek >= 0)
         {
             Vector3 targetPosition = new Vector3();
-            if (aktualnaPozycja.x == listaSciezki[aktualnyKafelek].x && aktualnaPozycja.z == listaSciezki[aktualnyKafelek].y)
-            {
-                if (powrot == false)
-                    aktualnyKafelek++;
-                else
-                {
-                    aktualnyKafelek--;
-                }
-            }
-
             if (listaSciezki[aktualnyKafelek] != null)
             {
                 targetPosition.x = listaSciezki[aktualnyKafelek].x;
                 targetPosition.z = listaSciezki[aktualnyKafelek].y;
-                targetPosition.y = 0.5f; 
+                targetPosition.y = 0.5f;
                 float krok = speed * Time.deltaTime;
                 transform.position = Vector3.MoveTowards(transform.position, targetPosition, krok);
 
@@ -66,10 +56,24 @@ public class enemy : MonoBehaviour
                 }
             }
 
-        }
-        else if (aktualnyKafelek < 0 && powrot == true)
-        {
-            Destroy(gameObject);
+            
+            if (aktualnaPozycja.x == listaSciezki[aktualnyKafelek].x && aktualnaPozycja.z == listaSciezki[aktualnyKafelek].y)
+            {
+                if (powrot == false)
+                    aktualnyKafelek++;
+                else
+                {
+                    if (aktualnyKafelek == 0)
+                    {
+                        Destroy(gameObject);
+                    }
+                    else
+                    aktualnyKafelek--;
+                }
+            }
+
+           
+
         }
         else
         {
