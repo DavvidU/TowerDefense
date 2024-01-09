@@ -35,33 +35,39 @@ public class enemy : MonoBehaviour
     void Update()
     {
         aktualnaPozycja = transform.position;
-        if (aktualnyKafelek < listaSciezki.Count - 1  &&  aktualnyKafelek >= 0)
+        if (aktualnyKafelek < listaSciezki.Count - 1 && aktualnyKafelek >= 0)
         {
-            Vector3 pozycja = new Vector3();
-             if (aktualnaPozycja.x == listaSciezki[aktualnyKafelek].x && aktualnaPozycja.z== listaSciezki[aktualnyKafelek].y )
+            Vector3 targetPosition = new Vector3();
+            if (aktualnaPozycja.x == listaSciezki[aktualnyKafelek].x && aktualnaPozycja.z == listaSciezki[aktualnyKafelek].y)
             {
-
-                if(powrot==false)
-                  aktualnyKafelek++;
+                if (powrot == false)
+                    aktualnyKafelek++;
                 else
                 {
                     aktualnyKafelek--;
                 }
-
             }
 
             if (listaSciezki[aktualnyKafelek] != null)
             {
-                pozycja.x = listaSciezki[aktualnyKafelek].x;
-                pozycja.z = listaSciezki[aktualnyKafelek].y;
-                pozycja.y = 0.5f;
+                targetPosition.x = listaSciezki[aktualnyKafelek].x;
+                targetPosition.z = listaSciezki[aktualnyKafelek].y;
+                targetPosition.y = 0.5f; 
                 float krok = speed * Time.deltaTime;
-                transform.position = Vector3.MoveTowards(transform.position, pozycja, krok);
-                
+                transform.position = Vector3.MoveTowards(transform.position, targetPosition, krok);
+
+                // obliczamy wektor kierunku i tworzymy obrót na podstawie kierunku
+                Vector3 direction = (targetPosition - transform.position).normalized;
+                if (direction != Vector3.zero)
+                {
+                    // rotacja w stronê kierunkow¹
+                    Quaternion lookRotation = Quaternion.LookRotation(direction);
+                    transform.rotation = Quaternion.Slerp(transform.rotation, lookRotation, Time.deltaTime * speed);
+                }
             }
-            
+
         }
-        else if (aktualnyKafelek<0 && powrot==true)
+        else if (aktualnyKafelek < 0 && powrot == true)
         {
             Destroy(gameObject);
         }
@@ -71,12 +77,13 @@ public class enemy : MonoBehaviour
             {
                 Destroy(sciezka.posag);
                 Destroy(gameObject);
-              
+
             }
             powrot = true;
             aktualnyKafelek--;
         }
     }
+
 
 }
 

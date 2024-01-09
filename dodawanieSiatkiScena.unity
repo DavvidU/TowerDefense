@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.18028378, g: 0.22571412, b: 0.30692285, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657844, g: 0.49641222, b: 0.57481694, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -67,6 +67,9 @@ LightmapSettings:
     m_LightmapParameters: {fileID: 0}
     m_LightmapsBakeMode: 1
     m_TextureCompression: 1
+    m_FinalGather: 0
+    m_FinalGatherFiltering: 1
+    m_FinalGatherRayCount: 256
     m_ReflectionCompression: 2
     m_MixedBakeMode: 2
     m_BakeBackend: 1
@@ -261,7 +264,7 @@ GameObject:
   - component: {fileID: 118313182}
   m_Layer: 5
   m_Name: Dropdown4Trap
-  m_TagString: Untagged
+  m_TagString: TrapList
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -3449,7 +3452,7 @@ GameObject:
   - component: {fileID: 1787276333}
   m_Layer: 5
   m_Name: Dropdown
-  m_TagString: Untagged
+  m_TagString: BuildList
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -3490,6 +3493,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   clickPointScript: {fileID: 1662344387}
   dropdown: {fileID: 1787276334}
+  trapsDropdownGameObject: {fileID: 118313180}
 --- !u!114 &1787276334
 MonoBehaviour:
   m_ObjectHideFlags: 0

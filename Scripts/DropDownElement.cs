@@ -5,21 +5,28 @@ using TMPro;
 
 public class DropDownElement : MonoBehaviour
 {
-    public ClickPoint clickPointScript; // Referencja do skryptu ClickPoint
-    public TMP_Dropdown dropdown; // Referencja do komponentu TMP_Dropdown
+    public ClickPoint clickPointScript;
+    public TMP_Dropdown dropdown;
+    public GameObject trapsDropdownGameObject; // GameObject z rozwijanym menu dla pu³apek
 
     void Start()
     {
-        // Ustawienie pocz¹tkowej wartoœci dropdown zgodnie z aktualnym trybem budowania
+        // ustawienie na bazow¹ wartoœæ aktualnego trybu budowania
         dropdown.value = (int)clickPointScript.TrybBudowania;
-        // Dodanie nas³uchiwania zmiany wartoœci dropdown
+        // nas³uch wartoœci
         dropdown.onValueChanged.AddListener(OnDropdownValueChanged);
+        // wy³¹czenie domyœlenie listy z pu³apkami
+        UpdateTrapsDropdownVisibility(dropdown.value);
     }
-
-    // Metoda wywo³ywana, gdy wartoœæ dropdown ulegnie zmianie
     private void OnDropdownValueChanged(int value)
     {
-        // Ustawienie nowego trybu budowania w skrypcie ClickPoint
         clickPointScript.TrybBudowania = (ClickPoint.BuldableObjects)value;
+        // aktualizacja widocznoœci
+        UpdateTrapsDropdownVisibility(value);
+    }
+    private void UpdateTrapsDropdownVisibility(int value)
+    {
+        // jeœli value 2 to poka¿ liste pu³apek (2 to index pu³apek w liœcie budowli)
+        trapsDropdownGameObject.SetActive(value == 2);
     }
 }
