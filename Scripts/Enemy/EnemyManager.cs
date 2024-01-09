@@ -15,7 +15,7 @@ public class EnemyManager : MonoBehaviour
     public Camera kamera;
     public PlacePath sciezka;
     private float elapsedTime = 0f;
-    public float interval = 2f;
+    public float interval = 0f;
     int ilosc = 10;
     int iloscodmierzacz = 0;
    public bool startFali = false;

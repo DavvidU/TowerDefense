@@ -221,10 +221,10 @@ GameObject:
   - component: {fileID: 1717350598316848098}
   - component: {fileID: 6669739101388405745}
   - component: {fileID: 5128283328641125472}
-  - component: {fileID: 2196334456436524224}
+  - component: {fileID: 3975231790672525280}
   m_Layer: 0
   m_Name: Spikes
-  m_TagString: Untagged
+  m_TagString: Kolce
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -297,8 +297,8 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!64 &2196334456436524224
-MeshCollider:
+--- !u!65 &3975231790672525280
+BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -312,13 +312,12 @@ MeshCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_ProvidesContacts: 0
   m_Enabled: 1
-  serializedVersion: 5
-  m_Convex: 0
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 10209, guid: 0000000000000000e000000000000000, type: 0}
+  serializedVersion: 3
+  m_Size: {x: 10, y: 2.5598907, z: 10}
+  m_Center: {x: 0, y: 1.5511703, z: 0}
 --- !u!1 &4959022487157638886
 GameObject:
   m_ObjectHideFlags: 0

@@ -8,6 +8,7 @@ using UnityEditor.Experimental.GraphView;
 using UnityEditor.XR;
 using UnityEngine;
 using UnityEngine.UIElements;
+using TMPro;
 
 public class enemy : MonoBehaviour
 {
@@ -17,23 +18,134 @@ public class enemy : MonoBehaviour
     List<GridTile> listaSciezki=new List<GridTile>();
     private Vector3 aktualnaPozycja;
     public int aktualnyKafelek=1;
-    public float speed = 8f;
+    public float speed = 6f;
     public bool powrot = false;
-    
+   // public int HP=100;
+    private bool czasSpowolnienia = false;
+    private bool czasPodpalenia = false;
+        private float timer = 0.0f;
+    private GameObject gameControllerObj;
+    private int currentLife = 100; // Aktualna iloœæ ¿ycia
+    private TextMeshPro lifeText;
+    private int licznik;
    
+
+
     void Awake()
     {
-        GameObject gameControllerObj = GameObject.Find("Main Camera");
+         gameControllerObj = GameObject.Find("Main Camera");
         sciezka = gameControllerObj.GetComponent<PlacePath>();
         listaSciezki = sciezka.getSciezka();
         
+    }
+    void Start()
+    {
+        //currentLife = HP;
+        CreateLifeText();
+        UpdateLifeText();
+       
+    }
+    void CreateLifeText()
+    {
+        lifeText = new GameObject("LifeText").AddComponent<TextMeshPro>();
+        lifeText.transform.SetParent(transform);
+        lifeText.transform.localPosition = Vector3.up * 2f;
+        lifeText.alignment = TextAlignmentOptions.Center;
+        lifeText.fontSize = 600;
+        lifeText.color = Color.red;
+        lifeText.rectTransform.sizeDelta = new Vector2(100, 50); // Ustawienie rozmiaru
+        lifeText.rectTransform.localScale = new Vector3(0.01f, 0.01f, 0.01f); // Ustawienie skali
+        lifeText.rectTransform.rotation = Quaternion.LookRotation(transform.position - gameControllerObj.transform.position);
+
+    }
+
+    void UpdateLifeText()
+    {
+        lifeText.text = "Life: " + currentLife.ToString();
+    }
+
+    public void TakeDamage(int damageAmount)
+    {
+        currentLife -= damageAmount;
+        UpdateLifeText();
+
+        // Dodaj dodatkow¹ logikê, np. sprawdzenie czy postaæ umar³a, itp.
     }
     public PlacePath getPath()
     {
         return sciezka;
     }
+    public void sprawdzCzyMinalCzas(float czas)
+    {
+       if(czas>1.0f )
+        {
+
+            czasSpowolnienia = false;
+            czasPodpalenia = false;
+            timer = 0.0f;
+            speed = 6f;
+        }
+    }
+
+    void OnTriggerEnter(Collider other)
+    {
+       
+    
+        if (other.gameObject.tag == "Kolce")
+        {
+           //currentLife = currentLife - 20;
+            Debug.Log("Wlazlem w kolce-"+currentLife);
+            TakeDamage(20);
+
+            // Kod obs³uguj¹cy kolizjê z obiektem o tagu "Przeszkoda"
+        }
+       else if (other.gameObject.tag == "Icing")
+        {
+            speed = 2f;
+            Debug.Log("Wlazlem lod-" + currentLife);
+            czasSpowolnienia = true;
+         
+            // Kod obs³uguj¹cy kolizjê z obiektem o tagu "Przeszkoda"
+        }
+        else if (other.gameObject.tag == "lawa")
+        {
+            licznik = 1;
+            Debug.Log("Wlazlem lawa-" + currentLife);
+            czasPodpalenia = true;
+            
+        }
+
+    }
+    void OnCollisionEnter(Collision collision)
+    {
+
+        //currentLife = currentLife - 40;
+        Debug.Log("Trafiony przez strza³e-" + currentLife);
+        Destroy(collision.gameObject);
+        TakeDamage(40);
+    }
+
+
     void Update()
     {
+        lifeText.rectTransform.rotation = Quaternion.LookRotation(transform.position - gameControllerObj.transform.position);
+        if (czasSpowolnienia == true )
+        {
+            timer += Time.deltaTime;
+            sprawdzCzyMinalCzas(timer);
+        }
+        if(czasPodpalenia == true)
+        {
+            if (timer > 0.3f*licznik)
+            {
+                TakeDamage(10);
+                licznik++;
+            }
+           
+            timer += Time.deltaTime;
+            sprawdzCzyMinalCzas(timer);
+        }
+
         aktualnaPozycja = transform.position;
         if (aktualnyKafelek < listaSciezki.Count && aktualnyKafelek >= 0)
         {
@@ -86,6 +198,11 @@ public class enemy : MonoBehaviour
             powrot = true;
             aktualnyKafelek--;
         }
+        if(currentLife<0)
+        {
+            Destroy(gameObject);
+        }
+
     }
 
 
