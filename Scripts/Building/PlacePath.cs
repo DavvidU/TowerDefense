@@ -73,7 +73,7 @@ public class PlacePath : MonoBehaviour
     {
         Vector3 pozycja;
         pozycja = StartPosition;
-        pozycja.y += 2;
+        pozycja.y = 0.5f;
         return pozycja;
     }
     public Vector3 getStopPosition()
@@ -101,16 +101,7 @@ public class PlacePath : MonoBehaviour
             GridGenerator.ModifyTitlePath((int)listasciezki[listasciezki.Count - 1].x, (int)listasciezki[listasciezki.Count - 1].y, false, false);
 
  
-           //sprawdzamy czy dotarlismy do mety
-        if (gridTile.x == StopPosition.x - 1 && gridTile.y == StopPosition.z || gridTile.x == StopPosition.x + 1 && gridTile.y == StopPosition.z || gridTile.y == StopPosition.z - 1 && gridTile.x == StopPosition.x)
-        {
-            //jesli tak to usuwamy mozliwosc tworzenia sciezki
-            GridGenerator.ModifyTitlePath(gridTile.x, gridTile.y, false, false);
-            czySciezkaStworzona = true;
-            listasciezki.Add(gridTileStop);
-
-        }else
-            GridGenerator.ModifyTitlePath(gridTile.x, gridTile.y, false, true);
+       
         //jesli nie to umo¿liwiamy stawianie sciezki obok nowego obiektu
         
         gridTile.SetisPath(true);
@@ -123,6 +114,17 @@ public class PlacePath : MonoBehaviour
             Sciezka.transform.position = new Vector3(gridTile.x, 0f, gridTile.y);
         gridTile.BuildPath(Sciezka);
 
+        //sprawdzamy czy dotarlismy do mety
+        if (gridTile.x == StopPosition.x - 1 && gridTile.y == StopPosition.z || gridTile.x == StopPosition.x + 1 && gridTile.y == StopPosition.z || gridTile.y == StopPosition.z - 1 && gridTile.x == StopPosition.x)
+        {
+            //jesli tak to usuwamy mozliwosc tworzenia sciezki
+            GridGenerator.ModifyTitlePath(gridTile.x, gridTile.y, false, false);
+            czySciezkaStworzona = true;
+            listasciezki.Add(gridTileStop);
+
+        }
+        else
+            GridGenerator.ModifyTitlePath(gridTile.x, gridTile.y, false, true);
 
     }
 }
