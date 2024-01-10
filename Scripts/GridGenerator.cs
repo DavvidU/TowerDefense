@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -29,6 +30,9 @@ public class GridGenerator : MonoBehaviour
    
     //public GameObject obiektsciezki ;
     public GameObject gridTileObject;
+    public GameObject pillar;
+
+    private int liczbaFilarow = 8;
 
     private static GridTile[,] gridTiles;
     
@@ -44,6 +48,25 @@ public class GridGenerator : MonoBehaviour
     void GenerateGrid()
  {
      gridTiles = new GridTile[mapWidth, mapHeight];
+
+     var pillars = new bool[mapWidth, mapHeight];
+
+        int minWartosc = 1;
+
+        for(int i=0; i< mapWidth; i++)
+        {
+            for (int j = 0; j < mapHeight; j++)
+            {
+                pillars[i, j] = false;
+            }
+        }
+
+        for (int i = 0; i < liczbaFilarow; i++)
+        {
+            int wylosowanaLiczbaW = UnityEngine.Random.Range(minWartosc, mapWidth - 1);
+            int wylosowanaLiczbaH = UnityEngine.Random.Range(minWartosc, mapHeight - 1);
+            pillars[wylosowanaLiczbaW, wylosowanaLiczbaH] = true;
+        }
 
      for (int x = 0; x < mapWidth; x++)
      {
@@ -62,7 +85,15 @@ public class GridGenerator : MonoBehaviour
                  gridTile.Initialize(x, y, true, false, false);
 
              }
-             
+                if (pillars[x, y])
+                {
+                    Instantiate(pillar, tilePosition, Quaternion.identity);
+                    gridTile.buildedPillar = pillar;
+                    gridTile.removable = false;
+                    gridTile.isBorder = true;
+                }
+           
+
              gridTiles[x, y] = gridTile;
          }
      } 
@@ -114,6 +145,7 @@ public class GridTile : MonoBehaviour
     public GameObject buildedWall;
     public GameObject buildedTrap;
     public GameObject buildedPath;
+    public GameObject buildedPillar;
 
     public bool isBorder;
 
@@ -131,6 +163,7 @@ public class GridTile : MonoBehaviour
         buildedWall = null;
         buildedTrap = null;
         buildedPath = null;
+        buildedPillar = null;
 	    
         this.isBorder = isBorder;
     }
