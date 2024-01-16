@@ -65,7 +65,7 @@ public class EnemyManager : MonoBehaviour
             postac = Instantiate(AssetDatabase.LoadAssetAtPath<GameObject>(pelnaSciezkaWariant2), sciezka.getStopPosition(), Quaternion.identity);
             postac.AddComponent<enemy>();
             enemy pierwsza = postac.GetComponent<enemy>();
-            pierwsza.aktualnyKafelek = 14;
+            pierwsza.aktualnyKafelek = sciezka.getSciezka().Count-1;
             pierwsza.powrot = true;
            
         }
