@@ -8,6 +8,8 @@ public class SimplePushing : MonoBehaviour
 {
 
     public GameObject strza³a;
+    public int ArrowLimit = 10;
+    private int ArrowCounter = 0;
     public Transform spawnPoint;
     public float shootingSpeed;
     private float timer;
@@ -41,8 +43,9 @@ public class SimplePushing : MonoBehaviour
     void Update()
     {
         timer += Time.deltaTime;
-        if(timer >= shootingSpeed)
+        if(timer >= shootingSpeed && ArrowCounter<=ArrowLimit)
         {
+            ArrowCounter++;
             shoot();
             timer = 0f;
         }
