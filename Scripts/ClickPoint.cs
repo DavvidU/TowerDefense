@@ -67,8 +67,6 @@ public class ClickPoint : MonoBehaviour
     private float Mousex = 0f;
     private float Mouser = 0f;
 
-    public float Money = 100f;
-
     private TrapPrice[] trapPrice;
 
     private GlobalFunctions GlobalFunctions;
@@ -128,6 +126,7 @@ public class ClickPoint : MonoBehaviour
                         if (GlobalFunctions.removeMoney(trapPrice[1].getPrice()))
                         {
                             pulapka.getTrap(1, trapPoint);
+                            Debug.Log("Pozostało pieniedzy: " + GlobalFunctions.getMoney());
                         }
                         else
                         {
@@ -154,10 +153,11 @@ public class ClickPoint : MonoBehaviour
                                 if (GlobalFunctions.removeMoney(trapPrice[(int)WybranaPułapka].getPrice()))
                                 {
                                     pulapka.getTrap((int)WybranaPułapka, gridTile);
+                                    Debug.Log("Pozostało pieniedzy: " + GlobalFunctions.getMoney());
                                 }
                                 else
                                 {
-                                    Debug.Log("Nie masz wystarczająco dużo pieniędzy!");
+                                    Debug.Log("Nie masz wystarczająco dużo pieniędzy! "+GlobalFunctions.getMoney());
                                 }
                             }
                                 

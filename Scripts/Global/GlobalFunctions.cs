@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class GlobalFunctions : MonoBehaviour
 {
-    [SerializeField] private float Money;
+    [SerializeField] private float Money = 100f;
 
     // Start is called before the first frame update
     void Start()
@@ -15,7 +15,7 @@ public class GlobalFunctions : MonoBehaviour
 
     public float getMoney()
     {
-        return Money;
+        return this.Money;
     }
     public bool removeMoney(float amount)
     {
