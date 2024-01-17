@@ -11,7 +11,7 @@ public class BuildingControl : MonoBehaviour
         clickPointScript.inBuildMode = true;
         clickPointScript.inDestroyingMode = false;
     }
-//siema
+
     public void SetDestroyMode()
     {
         clickPointScript.inBuildMode = false;

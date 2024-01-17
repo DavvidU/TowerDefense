@@ -125,8 +125,17 @@ public class ClickPoint : MonoBehaviour
                 else if (inDestroyingMode && !inBuildMode)
                 {
                     //w przypadku trybu rozbiórki niszczy obiekt na siatce i ponownie robi z niej movable
-                    
+
                     GridTile gridTile = hit.collider.GetComponent<GridTile>();
+
+                    // TD-34: Poprawka bledu wynikajacego z wprowadzenia TD-24.
+                    if (gridTile == null)
+                    {
+                        Transform tr = hit.collider.transform;
+
+                        gridTile = GridGenerator.GetOneTile((int)tr.position.x, (int)tr.position.z);
+                    }
+
                     if (gridTile.removable)
                     {
                         gridTile.movable = true;
