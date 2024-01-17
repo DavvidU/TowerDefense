@@ -1,7 +1,10 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
+using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.TextCore.LowLevel;
 using static ClickPoint;
 
 
@@ -14,6 +17,22 @@ using static ClickPoint;
 * </span>
 * @author <i><span style="font-size: 1rem; font-weight: bold; color: #fff;">Artur Leszczak</span></i>
 */
+
+public class TrapPrice
+{
+    private int Id;
+    private float Price;
+
+    public TrapPrice(int id, float price)
+    {
+        this.Id = id;
+        this.Price = price;
+    }
+    public float getPrice()
+    {
+        return Price;
+    }
+}
 
 public class ClickPoint : MonoBehaviour
 {
@@ -48,6 +67,12 @@ public class ClickPoint : MonoBehaviour
     private float Mousex = 0f;
     private float Mouser = 0f;
 
+    public float Money = 100f;
+
+    private TrapPrice[] trapPrice;
+
+    private GlobalFunctions GlobalFunctions;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -57,6 +82,14 @@ public class ClickPoint : MonoBehaviour
         this.pulapka = new PlaceTrap();
         this.zarzadzanieObiektamiGlobalnymi = new ZarzadzajObiektami();
         this.ManagerEnemy = obiektEnemyManager.GetComponent<EnemyManager>();
+        this.GlobalFunctions = new GlobalFunctions();
+
+        TrapPrice trap1 = new TrapPrice(1, 10f);
+        TrapPrice trap2 = new TrapPrice(2, 20f);
+        TrapPrice trap3 = new TrapPrice(3, 10f);
+        TrapPrice trap4 = new TrapPrice(4, 8f);
+
+        this.trapPrice = new TrapPrice[] { trap1, trap2, trap3, trap4 };
 
     }
 
@@ -92,8 +125,15 @@ public class ClickPoint : MonoBehaviour
                     {
                         //Debug.Log("xd");
                         TrapPoint trapPoint = hit.collider.GetComponent<TrapPoint>();
+                        if (GlobalFunctions.removeMoney(trapPrice[1].getPrice()))
+                        {
+                            pulapka.getTrap(1, trapPoint);
+                        }
+                        else
+                        {
+                            Debug.Log("Nie masz wystarczająco dużo pieniędzy!");
+                        }
                         
-                        pulapka.getTrap(1, trapPoint);
                     }
                     else
                     {
@@ -110,7 +150,17 @@ public class ClickPoint : MonoBehaviour
                         {
                             //wywołuje metodę tworzącą pułapkę
                             if (gridTile.buildedTrap == null)
-                                pulapka.getTrap((int)WybranaPułapka, gridTile);
+                            {
+                                if (GlobalFunctions.removeMoney(trapPrice[(int)WybranaPułapka].getPrice()))
+                                {
+                                    pulapka.getTrap((int)WybranaPułapka, gridTile);
+                                }
+                                else
+                                {
+                                    Debug.Log("Nie masz wystarczająco dużo pieniędzy!");
+                                }
+                            }
+                                
 
                         }
                         else if (this.TrybBudowania == BuldableObjects.Sciezka && gridTile.movable == true && gridTile.pathable == true)

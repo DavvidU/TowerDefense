@@ -5,16 +5,57 @@ using UnityEngine;
 
 public class GlobalFunctions : MonoBehaviour
 {
+    [SerializeField] private float Money;
+
     // Start is called before the first frame update
     void Start()
     {
-        
+        Money = 100.0f;
     }
 
-    // Update is called once per frame
-    void Update()
+    public float getMoney()
     {
-        
+        return Money;
+    }
+    public bool removeMoney(float amount)
+    {
+        if (this.Money < amount)
+        {
+            return false;
+        }
+        else
+        {
+            this.Money -= amount;
+            return true;
+        }
+
+    }
+    public bool addMoney(float amount)
+    {
+        if (amount >= 0)
+        {
+            this.Money += amount;
+            return true;
+        }
+        else
+        {
+            
+            return false;
+        }
+
+    }
+    public bool setMoney(float amount)
+    {
+        if (amount >= 0)
+        {
+            this.Money = amount;
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+
     }
 }
 
