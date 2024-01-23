@@ -105,10 +105,8 @@ public class GridGenerator : MonoBehaviour
     {
         
     }
-    public static GridTile[,] GetMapTiles()
-    {
-        return gridTiles;
-    }
+    public static GridTile[,] GetAllTiles() { return gridTiles; }
+    public static GridTile GetOneTile(int x, int y) { return gridTiles[x, y]; }
     public static void ModifyTitlePath(int x,int y,bool movable,bool pathable)
     {
 
