@@ -9,6 +9,7 @@ using UnityEditor.XR;
 using UnityEngine;
 using UnityEngine.UIElements;
 using TMPro;
+using System;
 
 public class enemy : MonoBehaviour
 {
@@ -167,8 +168,6 @@ public class enemy : MonoBehaviour
                     transform.rotation = Quaternion.Slerp(transform.rotation, lookRotation, Time.deltaTime * speed);
                 }
             }
-
-            
             if (aktualnaPozycja.x == listaSciezki[aktualnyKafelek].x && aktualnaPozycja.z == listaSciezki[aktualnyKafelek].y)
             {
                 if (powrot == false)
@@ -184,8 +183,6 @@ public class enemy : MonoBehaviour
                 }
             }
 
-           
-
         }
         else
         {
@@ -200,7 +197,16 @@ public class enemy : MonoBehaviour
         }
         if(currentLife<0)
         {
+            float pozycjaX = (float)Math.Truncate(this.aktualnaPozycja.x);
+            float pozycjaZ = (float)Math.Truncate(this.aktualnaPozycja.z);
+
+            Vector3 deathpostion = new Vector3(pozycjaX, this.aktualnaPozycja.y, pozycjaZ);
+
+            if (this.gameObject.tag == "EnemyWithStatue")
+
+            Instantiate(PlacePath.pobierzObiektPosagu(), deathpostion, Quaternion.identity);
             Destroy(gameObject);
+                        
         }
 
     }

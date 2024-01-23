@@ -32,9 +32,30 @@ public class PlacePath : MonoBehaviour
     GridTile gridTileStop;
     public GameObject posag;
     public GameObject postawionyPosag;
+    public static GameObject obiektPosag;
+     
     // Start is called before the first frame update
     void Start()
     {
+        string katologdoposagu = "Assets/Prefabs/Allay";
+
+        string[] sciezkadoposagu = AssetDatabase.FindAssets("", new[] { katologdoposagu });
+
+        foreach (string sciezka in sciezkadoposagu)
+        {
+            string pelnaSciezka = AssetDatabase.GUIDToAssetPath(sciezka);
+
+            GameObject zasob = AssetDatabase.LoadAssetAtPath<GameObject>(pelnaSciezka);
+
+            if (zasob != null && PrefabUtility.IsPartOfPrefabAsset(zasob))
+            {
+                if (zasob.name == "Posag")
+                {
+                    obiektPosag = zasob;
+                }
+            }
+        }
+
         StartPosition = new Vector3(5, 0, 0);
          StopPosition = new Vector3(10, 0, 9);
          PozycjaSciezki = new Vector3();
@@ -49,8 +70,10 @@ public class PlacePath : MonoBehaviour
         gridTileStop = Stop.AddComponent<GridTile>();
         gridTileStop.Initialize(10, 9, false, false, false);
         gridTileStop.SetisPath(true);
+        
         Vector3 pozycjaPosag = new Vector3(StopPosition.x, 0.5f, StopPosition.z);
         posag = Instantiate(posag, pozycjaPosag, Quaternion.identity);
+        
 
 
         GridGenerator.ModifyTitlePath(5,0, false,true);
@@ -126,6 +149,14 @@ public class PlacePath : MonoBehaviour
         else
             GridGenerator.ModifyTitlePath(gridTile.x, gridTile.y, false, true);
 
+    }
+    public static GameObject pobierzObiektPosagu()
+    {
+        return obiektPosag;
+    }
+    public static GameObject pobierzWektorPosagu()
+    {
+        return obiektPosag;
     }
 }
 
