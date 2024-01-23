@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using static ClickPoint;
+using UnityEngine.EventSystems;
 
 
 /**
@@ -72,8 +73,9 @@ public class ClickPoint : MonoBehaviour
             zarzadzanieObiektamiGlobalnymi.setObjectsVisibilityByTag("TrapPlaceRender", false);
         }
 
-            //reaguje/niszczy na wciśnięcie lewego klawisza myszy
-        if (Input.GetMouseButtonDown(0))
+        //reaguje/niszczy na wciśnięcie lewego klawisza myszy
+        if (!EventSystem.current.IsPointerOverGameObject())
+            if (Input.GetMouseButtonDown(0))
         {
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
 
