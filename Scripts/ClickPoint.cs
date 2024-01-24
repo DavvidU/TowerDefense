@@ -61,11 +61,17 @@ public class ClickPoint : MonoBehaviour
     private PlaceTrap pulapka;
     public Transform mainCamera;
     public Camera kamera;
+    public GameObject cameraMother;
     private EnemyManager ManagerEnemy;
     public GameObject obiektEnemyManager;
     private ZarzadzajObiektami zarzadzanieObiektamiGlobalnymi;
     private float Mousex = 0f;
+    private float Mousey = 0f;
     private float Mouser = 0f;
+    private float mouseRotationY = 0f;
+
+    private int mapWidth = 15;
+    private int mapHeight = 10;
 
     private TrapPrice[] trapPrice;
 
@@ -88,6 +94,8 @@ public class ClickPoint : MonoBehaviour
         TrapPrice trap4 = new TrapPrice(4, 8f);
 
         this.trapPrice = new TrapPrice[] { trap1, trap2, trap3, trap4 };
+
+
 
     }
 
@@ -229,44 +237,78 @@ public class ClickPoint : MonoBehaviour
         //zmienia pozycję kamery
         if(Input.GetMouseButton(1))
         {
+        
             if (Input.GetKey(KeyCode.LeftControl))
             {
-                float deltaPose = Input.mousePosition.x - (Screen.width / 2);
+                float rotationSpeed = 2.0f;
 
-                deltaPose -= Mouser;
+                float deltaPose = Input.GetAxis("Mouse X") * rotationSpeed;
 
-                deltaPose /= 10;
+                // Skoryguj rotację
+                Mouser += deltaPose;
 
-                Transform tr = this.GetComponent<Transform>();
+                Transform tr = cameraMother.GetComponent<Transform>();
 
-                Mouser = tr.rotation.y + deltaPose;
-                float rotY = tr.rotation.y - deltaPose;
-                if (rotY > 0f)
-                {
-                    rotY = 0f;
-                }
-                else if(rotY < -180f)
-                {
-                    rotY = -180f;
-                }
+                // Ustaw nową rotację kamery
+                cameraMother.transform.rotation = Quaternion.Euler(tr.eulerAngles.x, Mouser, tr.eulerAngles.z);
+            }else if (Input.GetKey(KeyCode.LeftAlt))
+            {
+                float rotationSpeed = 2.0f;
 
-                mainCamera.rotation = Quaternion.Euler(52.487f,rotY , tr.rotation.z);
+                float deltaPose = Input.GetAxis("Mouse Y") * rotationSpeed;
+
+                // Skoryguj rotację
+                Mouser += deltaPose;
+
+                Transform tr = cameraMother.GetComponent<Transform>();
+
+                // Ustaw nową rotację kamery
+                cameraMother.transform.rotation = Quaternion.Euler(tr.eulerAngles.x, tr.eulerAngles.y, tr.eulerAngles.z);
             }
             else
             {
-                float deltaPose = Input.mousePosition.x - (Screen.width / 2);
+                float moveSpeed = 2f;
+                float horizontalInput = Input.GetAxis("Horizontal"); // Pobierz wejście klawiszy A/D lub strzałki w lewo/prawo
+                float verticalInput = Input.GetAxis("Vertical"); // Pobierz wejście klawiszy W/S lub strzałki w górę/dół
 
-                deltaPose -= Mousex;
+                Vector3 moveDirection = new Vector3(horizontalInput, 0f, verticalInput).normalized;
 
-                deltaPose /= 10000;
+                Transform tr = cameraMother.GetComponent<Transform>();
 
-                Transform tr = this.GetComponent<Transform>();
-                Vector3 v3 = new Vector3(tr.position.x + deltaPose, tr.position.y, tr.position.z);
+                    Vector3 deltaPose = new Vector3(Input.mousePosition.x - (Screen.width / 2), 0, Input.mousePosition.y - (Screen.height / 2));
+                    deltaPose /= 20000;
 
-                Mousex = tr.position.x + deltaPose;
+                    Vector3 newPosition = tr.position + tr.TransformDirection(deltaPose) * moveSpeed;
 
-                mainCamera.position = v3;
+                    // Ogranicz nową pozycję do obszaru mapy
+                    newPosition.x = Mathf.Clamp(newPosition.x, 0f, (float)mapWidth);
+                    newPosition.z = Mathf.Clamp(newPosition.z, 0f, (float)mapHeight);
+
+                    // Ustaw nową pozycję kamery
+                    tr.position = newPosition;
+                
             }
+        }
+
+        float zoomSpeed = 15.0f; // Szybkość przybliżania i oddalania
+        float minZoom = 20.0f;    // Minimalne przybliżenie
+        float maxZoom = 60.0f;   // Maksymalne przybliżenie
+        float scrollDelta = Input.GetAxis("Mouse ScrollWheel");
+
+        // Sprawdź, czy użytkownik używa scrolla
+        if (Mathf.Abs(scrollDelta) > 0.0f)
+        {
+            // Pobierz aktualne przybliżenie kamery
+            float currentZoom = kamera.fieldOfView;
+
+            // Zmodyfikuj przybliżenie w zależności od kierunku ruchu scrolla
+            currentZoom -= scrollDelta * zoomSpeed;
+
+            // Ogranicz przybliżenie do określonych granic (min i max)
+            currentZoom = Mathf.Clamp(currentZoom, minZoom, maxZoom);
+
+            // Ustaw nowe przybliżenie kamery
+            kamera.fieldOfView = currentZoom;
         }
     }
         

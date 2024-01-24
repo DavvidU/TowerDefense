@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0, g: 0, b: 0, a: 1}
+  m_IndirectSpecularColor: {r: 0.18028378, g: 0.22571412, b: 0.30692285, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -786,7 +786,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 8300000, guid: 1561eebaceecffc4992c34e0daabf9e6, type: 3}
   m_PlayOnAwake: 0
-  m_Volume: 1
+  m_Volume: 0.252
   m_Pitch: 1
   Loop: 1
   Mute: 0
@@ -1910,12 +1910,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 797042535}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.59124696, y: -0, z: -0, w: 0.8064906}
-  m_LocalPosition: {x: -0.3631, y: -3.5092, z: 14.6388}
-  m_LocalScale: {x: 4.220523, y: 2.9445496, z: 1}
+  m_LocalRotation: {x: 0.1736834, y: -0, z: -0, w: 0.9848016}
+  m_LocalPosition: {x: -7.2030945, y: 4.8769665, z: 21.102703}
+  m_LocalScale: {x: 4.220523, y: 2.9445498, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 0}
+  m_Father: {fileID: 1662344386}
   m_LocalEulerAnglesHint: {x: 72.491, y: 0, z: 0}
 --- !u!1 &867400256
 GameObject:
@@ -2652,6 +2652,38 @@ MonoBehaviour:
   sciezka: {fileID: 0}
   interval: 2
   startFali: 0
+--- !u!1 &1217989079
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1217989080}
+  m_Layer: 0
+  m_Name: CameraMother
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1217989080
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1217989079}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 7, y: 0, z: 4.5}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 1662344386}
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1270854717
 GameObject:
   m_ObjectHideFlags: 0
@@ -3029,6 +3061,7 @@ MonoBehaviour:
   mapWidth: 0
   mapHeight: 0
   tileSize: 1
+  Money: 0
   gridTileObject: {fileID: 2523299889533896358, guid: 2bce1ef297e0ef745b466016b66022d3, type: 3}
   pillar: {fileID: 1434850035757002271, guid: 125adaf620d12db4d8a8ef42f57d4c26, type: 3}
 --- !u!4 &1593767706
@@ -3343,11 +3376,12 @@ Transform:
   m_GameObject: {fileID: 1662344383}
   serializedVersion: 2
   m_LocalRotation: {x: 0.44218686, y: -0, z: -0, w: 0.89692295}
-  m_LocalPosition: {x: 6.84, y: 10.26, z: -2.08}
+  m_LocalPosition: {x: 0, y: 9.8, z: -7}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
+  m_Children:
+  - {fileID: 797042537}
+  m_Father: {fileID: 1217989080}
   m_LocalEulerAnglesHint: {x: 52.487, y: 0, z: 0}
 --- !u!114 &1662344387
 MonoBehaviour:
@@ -3367,6 +3401,7 @@ MonoBehaviour:
   "WybranaPu\u0142apka": 0
   mainCamera: {fileID: 1662344386}
   kamera: {fileID: 1662344385}
+  cameraMother: {fileID: 1217989079}
   obiektEnemyManager: {fileID: 1190956052}
 --- !u!114 &1662344388
 MonoBehaviour:
@@ -3384,6 +3419,7 @@ MonoBehaviour:
   czySciezkaStworzona: 0
   posag: {fileID: 9050310926449869807, guid: 9a167533dc49d1b4d96f85083a373193, type: 3}
   postawionyPosag: {fileID: 0}
+  naKtorymKafelkuSciezkiLezyPosag: 0
 --- !u!1 &1684560882
 GameObject:
   m_ObjectHideFlags: 0
@@ -3873,11 +3909,10 @@ RectTransform:
 SceneRoots:
   m_ObjectHideFlags: 0
   m_Roots:
-  - {fileID: 1662344386}
   - {fileID: 996108702}
   - {fileID: 212499227}
   - {fileID: 1190956054}
   - {fileID: 1684560886}
   - {fileID: 152696936}
-  - {fileID: 797042537}
   - {fileID: 362865983}
+  - {fileID: 1217989080}

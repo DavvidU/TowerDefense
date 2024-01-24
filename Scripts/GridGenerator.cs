@@ -130,7 +130,6 @@ public class GridGenerator : MonoBehaviour
         this.Money -= amount;
         return true;
     }
-        
     public bool addMoney(float amount)
     {
         this.Money += amount;
