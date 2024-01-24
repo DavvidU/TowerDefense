@@ -148,7 +148,7 @@ public class enemy : MonoBehaviour
         }
 
         aktualnaPozycja = transform.position;
-        if (aktualnyKafelek < listaSciezki.Count && aktualnyKafelek >= 0)
+        if (aktualnyKafelek < sciezka.naKtorymKafelkuSciezkiLezyPosag && aktualnyKafelek >= 0)
         {
             Vector3 targetPosition = new Vector3();
             if (listaSciezki[aktualnyKafelek] != null)
@@ -202,11 +202,17 @@ public class enemy : MonoBehaviour
 
             Vector3 deathpostion = new Vector3(pozycjaX, this.aktualnaPozycja.y, pozycjaZ);
 
-            if (this.gameObject.tag == "EnemyWithStatue")
 
-            Instantiate(PlacePath.pobierzObiektPosagu(), deathpostion, Quaternion.identity);
+            if (this.gameObject.tag == "EnemyWithStatue") // Czy umierajacy niosl posag
+            {
+                PlacePath.pozycjaPosagu = deathpostion;
+                sciezka.posag = Instantiate(PlacePath.pobierzObiektPosagu(), deathpostion, Quaternion.identity);
+                sciezka.naKtorymKafelkuSciezkiLezyPosag = aktualnyKafelek;
+                //sciezka.SetStopPosition(deathpostion); //TD-39: To chyba nie potrzebne do podnoszenia posagu
+            }
             Destroy(gameObject);
-                        
+
+            EnemyManager.SetCzyPosagZabrany(false);
         }
 
     }
