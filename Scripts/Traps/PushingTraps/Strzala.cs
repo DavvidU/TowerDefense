@@ -23,7 +23,7 @@ public class Strzala : MonoBehaviour
     {
         this.thisArrow = gameObject;
         this.damage = 15f;
-        speed = 8.0f;
+        speed = 16.0f;
         range = 5f;
         time = range / speed; 
         predkoscOpadania = 0f;

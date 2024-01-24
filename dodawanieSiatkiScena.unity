@@ -3988,7 +3988,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   kamera: {fileID: 1662344385}
   sciezka: {fileID: 0}
-  interval: 2
+  interval: 0.7
   startFali: 0
 --- !u!1 &1270854717
 GameObject:

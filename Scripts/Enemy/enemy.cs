@@ -8,6 +8,7 @@ using UnityEditor.Experimental.GraphView;
 using UnityEditor.XR;
 using UnityEngine;
 using UnityEngine.UIElements;
+using UnityEngine.UI;
 using TMPro;
 using System;
 
@@ -19,7 +20,7 @@ public class enemy : MonoBehaviour
     List<GridTile> listaSciezki=new List<GridTile>();
     private Vector3 aktualnaPozycja;
     public int aktualnyKafelek=1;
-    public float speed = 6f;
+    public float speed = 3f;
     public bool powrot = false;
    // public int HP=100;
     private bool czasSpowolnienia = false;
@@ -28,6 +29,7 @@ public class enemy : MonoBehaviour
     private GameObject gameControllerObj;
     private int currentLife = 100; // Aktualna iloœæ ¿ycia
     private TextMeshPro lifeText;
+
     private int licznik;
    
 
@@ -48,16 +50,22 @@ public class enemy : MonoBehaviour
     }
     void CreateLifeText()
     {
+        
         lifeText = new GameObject("LifeText").AddComponent<TextMeshPro>();
         lifeText.transform.SetParent(transform);
         lifeText.transform.localPosition = Vector3.up * 2f;
         lifeText.alignment = TextAlignmentOptions.Center;
         lifeText.fontSize = 600;
         lifeText.color = Color.red;
-        lifeText.rectTransform.sizeDelta = new Vector2(100, 50); // Ustawienie rozmiaru
+        lifeText.rectTransform.sizeDelta = new Vector2(200, 50); // Ustawienie rozmiaru
         lifeText.rectTransform.localScale = new Vector3(0.01f, 0.01f, 0.01f); // Ustawienie skali
         lifeText.rectTransform.rotation = Quaternion.LookRotation(transform.position - gameControllerObj.transform.position);
+        //image = new GameObject("Tlo").AddComponent<UnityEngine.UI.Image>();
+       // image.transform.SetParent(lifeText.transform);
+       // image.rectTransform.sizeDelta = new Vector2(100, 50);
 
+       
+        //lifeText.rectTransform.rotation = Quaternion.LookRotation(transform.position - GameController.instance.transform.position);
     }
 
     void UpdateLifeText()
@@ -78,13 +86,13 @@ public class enemy : MonoBehaviour
     }
     public void sprawdzCzyMinalCzas(float czas)
     {
-       if(czas>1.0f )
+       if(czas>0.5f )
         {
 
             czasSpowolnienia = false;
             czasPodpalenia = false;
             timer = 0.0f;
-            speed = 6f;
+            speed = 3f;
         }
     }
 
@@ -102,6 +110,7 @@ public class enemy : MonoBehaviour
         }
        else if (other.gameObject.tag == "Icing")
         {
+            timer = 0.0f;
             speed = 2f;
             Debug.Log("Wlazlem lod-" + currentLife);
             czasSpowolnienia = true;
@@ -110,6 +119,7 @@ public class enemy : MonoBehaviour
         }
         else if (other.gameObject.tag == "lawa")
         {
+            timer=0.0f;
             licznik = 1;
             Debug.Log("Wlazlem lawa-" + currentLife);
             czasPodpalenia = true;
@@ -129,7 +139,9 @@ public class enemy : MonoBehaviour
 
     void Update()
     {
-        lifeText.rectTransform.rotation = Quaternion.LookRotation(transform.position - gameControllerObj.transform.position);
+         lifeText.rectTransform.rotation = Quaternion.LookRotation(transform.position - gameControllerObj.transform.position);
+        
+        
         if (czasSpowolnienia == true )
         {
             timer += Time.deltaTime;
@@ -137,7 +149,7 @@ public class enemy : MonoBehaviour
         }
         if(czasPodpalenia == true)
         {
-            if (timer > 0.3f*licznik)
+            if (timer > 0.15f*licznik)
             {
                 TakeDamage(10);
                 licznik++;

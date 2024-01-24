@@ -8,7 +8,7 @@ public class SimplePushing : MonoBehaviour
 {
 
     public GameObject strza³a;
-    public int ArrowLimit = 10;
+    public int ArrowLimit = 50;
     private int ArrowCounter = 0;
     public Transform spawnPoint;
     public float shootingSpeed;
@@ -37,7 +37,7 @@ public class SimplePushing : MonoBehaviour
         }
 
 
-        shootingSpeed = 2f; //jedna sekunda
+        shootingSpeed = 1f; //jedna sekunda
         timer = 0f;
     }
     void Update()
