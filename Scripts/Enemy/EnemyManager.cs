@@ -22,7 +22,7 @@ public class EnemyManager : MonoBehaviour
     string[] sciezkiDoZasobow;
     string pelnaSciezkaWariant1;
     string pelnaSciezkaWariant2;
-    bool czyPosagZabrany;
+    static bool czyPosagZabrany;
 
    
 
@@ -62,15 +62,18 @@ public class EnemyManager : MonoBehaviour
         {
             czyPosagZabrany = true;
             GameObject postac;
-            postac = Instantiate(AssetDatabase.LoadAssetAtPath<GameObject>(pelnaSciezkaWariant2), sciezka.getStopPosition(), Quaternion.identity);
+            postac = Instantiate(AssetDatabase.LoadAssetAtPath<GameObject>(pelnaSciezkaWariant2), PlacePath.pozycjaPosagu, Quaternion.identity);
             postac.AddComponent<enemy>();
             postac.tag = "EnemyWithStatue";
             enemy pierwsza = postac.GetComponent<enemy>();
+            //pierwsza.aktualnyKafelek = sciezka.getSciezka().Count-1; // Wersja sprzed TD-39
             pierwsza.aktualnyKafelek = sciezka.getSciezka().Count-1;
             pierwsza.powrot = true;
-           
+
+            // Znisz posag po podniesieniu
+            Destroy(sciezka.posag);
         }
 
     }
-
+    public static void SetCzyPosagZabrany(bool czyPosagZabrany) { EnemyManager.czyPosagZabrany = czyPosagZabrany; }
 }

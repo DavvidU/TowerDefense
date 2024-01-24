@@ -33,6 +33,9 @@ public class PlacePath : MonoBehaviour
     public GameObject posag;
     public GameObject postawionyPosag;
     public static GameObject obiektPosag;
+
+    public static Vector3 pozycjaPosagu;
+    public int naKtorymKafelkuSciezkiLezyPosag;
      
     // Start is called before the first frame update
     void Start()
@@ -72,6 +75,7 @@ public class PlacePath : MonoBehaviour
         gridTileStop.SetisPath(true);
         
         Vector3 pozycjaPosag = new Vector3(StopPosition.x, 0.5f, StopPosition.z);
+        pozycjaPosagu = pozycjaPosag;
         posag = Instantiate(posag, pozycjaPosag, Quaternion.identity);
         
 
@@ -149,6 +153,8 @@ public class PlacePath : MonoBehaviour
         else
             GridGenerator.ModifyTitlePath(gridTile.x, gridTile.y, false, true);
 
+        naKtorymKafelkuSciezkiLezyPosag = listasciezki.Count;
+
     }
     public static GameObject pobierzObiektPosagu()
     {
@@ -158,6 +164,7 @@ public class PlacePath : MonoBehaviour
     {
         return obiektPosag;
     }
+    //public void SetStopPosition(Vector3 nowaPozycja) { StopPosition = nowaPozycja; } //TD-39: To chyba nie potrzebne do podnoszenia posagu
 }
 
 
