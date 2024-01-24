@@ -27,6 +27,7 @@ public class GridGenerator : MonoBehaviour
     [SerializeField] public int mapWidth;
     [SerializeField] public int mapHeight;
     [SerializeField] public float tileSize;
+    [SerializeField] public float Money;
    
     //public GameObject obiektsciezki ;
     public GameObject gridTileObject;
@@ -41,6 +42,7 @@ public class GridGenerator : MonoBehaviour
     {
         mapHeight = 10;
         mapWidth = 15;
+        Money = 100;
         GenerateGrid();
        
     }
@@ -117,6 +119,26 @@ public class GridGenerator : MonoBehaviour
             gridTiles[x -1, y].pathable = pathable;
         if(y< 9)
             gridTiles[x, y+1].pathable = pathable;
+    }
+
+    public float getMoney()
+    {
+        return this.Money;
+    }
+    public bool removeMoney(float amount)
+    {
+        this.Money -= amount;
+        return true;
+    }
+    public bool addMoney(float amount)
+    {
+        this.Money += amount;
+        return true;
+    }
+    public bool setMoney(float amount)
+    {
+        this.Money = amount;
+        return true;
     }
 
 }
@@ -200,5 +222,7 @@ public class GridTile : MonoBehaviour
     }
     public void SetPathable(bool pathable) {  this.pathable = pathable; }
     public void SetisPath(bool path) { this.isPath = path; }
+
+
 }
 

@@ -37,7 +37,6 @@ public class PlaceTrap : MonoBehaviour
         string[] sciezkiDoZasobowLawa = AssetDatabase.FindAssets("", new[] { katalogZasobowLawa });
         string[] sciezkiDoZasobowOblodzenie = AssetDatabase.FindAssets("", new[] { katalogZasobowOblodzenie });
 
-
         // Znajdowanie prefabu Kolcow w odpowiednich zasobach
         foreach (string sciezka in sciezkiDoZasobowKolce)
         {
@@ -164,7 +163,8 @@ public class PlaceTrap : MonoBehaviour
         // Podaj informacjê do Tile, jaki obiekt przechowuje
         if (this.trap != null)
         {
-            gridTile.BuildTrap(trap);
+                gridTile.BuildTrap(trap);   
+            
         }
     }
 
@@ -180,9 +180,11 @@ public class PlaceTrap : MonoBehaviour
             {
                 case 1:
                     ob = Instantiate(PushingTrap);
+                   
                     break;
                 default:
                     ob = Instantiate(PushingTrap);
+               
                     break;
             }
             ob.transform.SetParent(trapPoint.getTransform());
@@ -192,8 +194,10 @@ public class PlaceTrap : MonoBehaviour
 
             if (this.trap != null)
             {
-                trapPoint.setBuildedObject(this.trap);
-                trapPoint.setIsFree(false); //jest zajety
+
+                    trapPoint.setBuildedObject(this.trap);
+                    trapPoint.setIsFree(false); //jest zajety
+                    
             }
 
         }
