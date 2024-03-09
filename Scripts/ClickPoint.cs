@@ -133,29 +133,31 @@ public class ClickPoint : MonoBehaviour
                     {
                         //Debug.Log("xd");
                         TrapPoint trapPoint = hit.collider.GetComponent<TrapPoint>();
-                        if (GlobalFunctions.removeMoney(trapPrice[1].getPrice()))
+
+                        if (trapPoint == null)
+                            Debug.Log("Nie mozna w tym miejscu postawic pulapki strzelajacej");
+                        else if (trapPoint.getIsFree() == false)
+                            Debug.Log("Pułapka juz istnieje w tym punkcie");
+                        else if (GlobalFunctions.removeMoney(trapPrice[1].getPrice())) // Poprawne miejsce && wolne miejsce && wystarczajaco pieniedzy
                         {
                             pulapka.getTrap(1, trapPoint);
                             Debug.Log("Pozostało pieniedzy: " + GlobalFunctions.getMoney());
                         }
                         else
-                        {
                             Debug.Log("Nie masz wystarczająco dużo pieniędzy!");
-                        }
-                        
                     }
                     else
                     {
                         GridTile gridTile = hit.collider.GetComponent<GridTile>();
                         //sprawdza czy wybraną opcją jest budowa ścian, pułapek czy ścieżki
 
-                        if (this.TrybBudowania == BuldableObjects.Sciany && gridTile.movable == true) // aktualnie(13.12.) sciane mozna postawic na pulapce (gridTile.buildedObject == true)
+                        if (this.TrybBudowania == BuldableObjects.Sciany && gridTile.movable == true)
                         {
                             //wywołuje metodę tworząca ścianę
                             sciana.getWall(gridTile);
 
                         }
-                        else if (this.TrybBudowania == BuldableObjects.Pułapki && gridTile.movable == true) // aktualnie(13.12.) pulapke mozna postawic na scianie
+                        else if (this.TrybBudowania == BuldableObjects.Pułapki && gridTile.movable == true) // aktualnie(09.03.2024r.) pulapke mozna postawic "pod" GENEROWANYMI filarami
                         {
                             //wywołuje metodę tworzącą pułapkę
                             if (gridTile.buildedTrap == null)
