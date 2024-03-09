@@ -151,13 +151,13 @@ public class ClickPoint : MonoBehaviour
                         GridTile gridTile = hit.collider.GetComponent<GridTile>();
                         //sprawdza czy wybraną opcją jest budowa ścian, pułapek czy ścieżki
 
-                        if (this.TrybBudowania == BuldableObjects.Sciany && gridTile.movable == true)
+                        if (this.TrybBudowania == BuldableObjects.Sciany && gridTile.movable == true && gridTile.buildedPillar == null)
                         {
                             //wywołuje metodę tworząca ścianę
                             sciana.getWall(gridTile);
 
                         }
-                        else if (this.TrybBudowania == BuldableObjects.Pułapki && gridTile.movable == true) // aktualnie(09.03.2024r.) pulapke mozna postawic "pod" GENEROWANYMI filarami
+                        else if (this.TrybBudowania == BuldableObjects.Pułapki && gridTile.movable == true && gridTile.buildedPillar == null)
                         {
                             //wywołuje metodę tworzącą pułapkę
                             if (gridTile.buildedTrap == null)
@@ -175,7 +175,7 @@ public class ClickPoint : MonoBehaviour
                                 
 
                         }
-                        else if (this.TrybBudowania == BuldableObjects.Sciezka && gridTile.movable == true && gridTile.pathable == true)
+                        else if (this.TrybBudowania == BuldableObjects.Sciezka && gridTile.movable == true && gridTile.pathable == true && gridTile.buildedPillar == null)
                         {
                             sciezka.GetPath(gridTile);
 
