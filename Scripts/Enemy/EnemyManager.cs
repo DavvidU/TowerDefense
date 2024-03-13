@@ -24,26 +24,46 @@ public class EnemyManager : MonoBehaviour
     string pelnaSciezkaWariant2;
     static bool czyPosagZabrany;
 
-   
+    private EnemyFactory enemyVillager;
+    private EnemyFactory enemyKnite;
+
 
     void Start()
     {
         sciezka = kamera.GetComponent<PlacePath>();
-        string katalogZasobow = "Assets/Prefabs/Enemy";
+        string katalogZasobow = "Assets/Prefabs/Enemy/Villager";
         czyPosagZabrany = false;
         sciezkiDoZasobow = AssetDatabase.FindAssets("", new[] { katalogZasobow });
         pelnaSciezkaWariant1 = AssetDatabase.GUIDToAssetPath(sciezkiDoZasobow[0]);
         pelnaSciezkaWariant2 = AssetDatabase.GUIDToAssetPath(sciezkiDoZasobow[1]);
+
+        this.enemyVillager = new DefaultEnemyFactory();
+        this.enemyKnite = new KniteEnemyFactory();
+
     }
   
-    public void GetEnemy()
+    public void GetEnemyVillager()
     {
         GameObject postac;
-        postac = Instantiate(AssetDatabase.LoadAssetAtPath<GameObject>(pelnaSciezkaWariant1), sciezka.getStartPosition(), Quaternion.identity);
-        postac.AddComponent<enemy>();
+        this.enemyVillager.setStartPoint(sciezka.getStartPosition());
+        postac = this.enemyVillager.createEnemy();
        
     }
-   
+    public void GetEnemyVillagerBoss()
+    {
+        GameObject postac;
+        this.enemyVillager.setStartPoint(sciezka.getStartPosition());
+        postac = this.enemyVillager.createEnemyBoss();
+
+    }
+    public void GetEnemyKnite()
+    {
+        GameObject postac;
+        this.enemyKnite.setStartPoint(sciezka.getStartPosition());
+        postac = this.enemyKnite.createEnemy();
+
+    }
+
     void FixedUpdate()
     {
         elapsedTime += Time.fixedDeltaTime;
@@ -53,7 +73,7 @@ public class EnemyManager : MonoBehaviour
         {
             iloscodmierzacz++;
             // Wykonaj kod, który ma byæ wywo³any po danym interwale czasowym
-            GetEnemy();
+            GetEnemyVillagerBoss();
 
             // Zresetuj licznik czasu
             elapsedTime = 0f;
