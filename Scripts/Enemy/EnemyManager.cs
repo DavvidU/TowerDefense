@@ -11,9 +11,9 @@ using UnityEngine.UIElements;
 
 public class EnemyManager : MonoBehaviour
 {
-    private List<enemy> listaPrzeciwnikow = new List<enemy>();
+    public static List<enemy> listaPrzeciwnikow = new List<enemy>();
     public Camera kamera;
-    public PlacePath sciezka;
+    public static PlacePath sciezka;
     private float elapsedTime = 0f;
     public float interval = 0f;
     int ilosc = 20;
@@ -22,7 +22,8 @@ public class EnemyManager : MonoBehaviour
     string[] sciezkiDoZasobow;
     string pelnaSciezkaWariant1;
     string pelnaSciezkaWariant2;
-    static bool czyPosagZabrany;
+    public static bool czyPosagZabrany;
+    
 
    
 
@@ -41,6 +42,9 @@ public class EnemyManager : MonoBehaviour
         GameObject postac;
         postac = Instantiate(AssetDatabase.LoadAssetAtPath<GameObject>(pelnaSciezkaWariant1), sciezka.getStartPosition(), Quaternion.identity);
         postac.AddComponent<enemy>();
+        listaPrzeciwnikow.Add(postac.GetComponent<enemy>());
+
+
        
     }
    
@@ -60,8 +64,10 @@ public class EnemyManager : MonoBehaviour
         }
         if (sciezka.posag == null && czyPosagZabrany == false)
         {
+            Debug.Log("Tworze postac z posagiem"+ PlacePath.pozycjaPosagu);
             czyPosagZabrany = true;
             GameObject postac;
+            
             postac = Instantiate(AssetDatabase.LoadAssetAtPath<GameObject>(pelnaSciezkaWariant2), PlacePath.pozycjaPosagu, Quaternion.identity);
             postac.AddComponent<enemy>();
             postac.tag = "EnemyWithStatue";
@@ -75,5 +81,6 @@ public class EnemyManager : MonoBehaviour
         }
 
     }
+
     public static void SetCzyPosagZabrany(bool czyPosagZabrany) { EnemyManager.czyPosagZabrany = czyPosagZabrany; }
 }
