@@ -6,6 +6,7 @@ using UnityEngine;
 public class GlobalFunctions : MonoBehaviour
 {
     [SerializeField] private float Money = 100f;
+   
 
     // Start is called before the first frame update
     void Start()

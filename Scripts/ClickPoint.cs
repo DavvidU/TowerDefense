@@ -7,6 +7,7 @@ using UnityEngine;
 using UnityEngine.TextCore.LowLevel;
 using static ClickPoint;
 using UnityEngine.EventSystems;
+using TMPro;
 
 
 /**
@@ -52,7 +53,7 @@ public class ClickPoint : MonoBehaviour
         Lawa,
         Oblodzenie
     }
-
+    public TextMeshProUGUI pieniadze;
     public bool inBuildMode = true;
     public bool inDestroyingMode = false;
     public BuldableObjects TrybBudowania;
@@ -96,7 +97,7 @@ public class ClickPoint : MonoBehaviour
 
         this.trapPrice = new TrapPrice[] { trap1, trap2, trap3, trap4 };
 
-
+        pieniadze.text = GlobalFunctions.getMoney().ToString();
 
     }
 
@@ -166,6 +167,7 @@ public class ClickPoint : MonoBehaviour
                                 {
                                     pulapka.getTrap((int)WybranaPułapka, gridTile);
                                     Debug.Log("Pozostało pieniedzy: " + GlobalFunctions.getMoney());
+                                        pieniadze.text = GlobalFunctions.getMoney().ToString();
                                 }
                                 else
                                 {
