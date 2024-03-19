@@ -230,6 +230,8 @@ public class enemy : MonoBehaviour
             float pozycjaZ = (float)Math.Truncate(this.aktualnaPozycja.z);
 
 
+            GlobalFunctions.addMoney(10);
+
             Vector3 deathpostion = new Vector3(pozycjaX, this.aktualnaPozycja.y, pozycjaZ);
 
             if (this.gameObject.tag == "EnemyWithStatue") // Czy umierajacy niosl posag

@@ -3,39 +3,36 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
-public class GlobalFunctions : MonoBehaviour
+public static class GlobalFunctions 
 {
-    [SerializeField] private float Money = 100f;
+    [SerializeField] private static float Money = 100f;
    
 
     // Start is called before the first frame update
-    void Start()
-    {
-        Money = 100.0f;
-    }
+    
 
-    public float getMoney()
+    public static float getMoney()
     {
-        return this.Money;
+        return Money;
     }
-    public bool removeMoney(float amount)
+    public static bool removeMoney(float amount)
     {
-        if (this.Money < amount)
+        if (Money < amount)
         {
             return false;
         }
         else
         {
-            this.Money -= amount;
+            Money -= amount;
             return true;
         }
 
     }
-    public bool addMoney(float amount)
+    public static bool addMoney(float amount)
     {
         if (amount >= 0)
         {
-            this.Money += amount;
+            Money += amount;
             return true;
         }
         else
@@ -45,11 +42,11 @@ public class GlobalFunctions : MonoBehaviour
         }
 
     }
-    public bool setMoney(float amount)
+    public static bool setMoney(float amount)
     {
         if (amount >= 0)
         {
-            this.Money = amount;
+            Money = amount;
             return true;
         }
         else

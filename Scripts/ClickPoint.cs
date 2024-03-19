@@ -77,7 +77,7 @@ public class ClickPoint : MonoBehaviour
 
     private TrapPrice[] trapPrice;
 
-    private GlobalFunctions GlobalFunctions;
+   // private GlobalFunctions GlobalFunctions;
 
     // Start is called before the first frame update
     void Start()
@@ -88,7 +88,7 @@ public class ClickPoint : MonoBehaviour
         this.pulapka = new PlaceTrap();
         this.zarzadzanieObiektamiGlobalnymi = new ZarzadzajObiektami();
         this.ManagerEnemy = obiektEnemyManager.GetComponent<EnemyManager>();
-        this.GlobalFunctions = new GlobalFunctions();
+       // this.GlobalFunctions = new GlobalFunctions();
 
         TrapPrice trap1 = new TrapPrice(1, 10f);
         TrapPrice trap2 = new TrapPrice(2, 20f);
@@ -100,10 +100,14 @@ public class ClickPoint : MonoBehaviour
         pieniadze.text = GlobalFunctions.getMoney().ToString();
 
     }
-
+    void ZaktualizujPieniadze()
+    {
+        pieniadze.text = GlobalFunctions.getMoney().ToString();
+    }
       
     void Update()
     {
+        ZaktualizujPieniadze();
         if(this.WybranaPułapka == BuldableTraps.Strzelajaca && this.TrybBudowania == BuldableObjects.Pułapki)
         {
             zarzadzanieObiektamiGlobalnymi.setObjectsVisibilityByTag("TrapPlaceRender", true);
