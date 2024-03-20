@@ -108,6 +108,10 @@ public class ClickPoint : MonoBehaviour
     void Update()
     {
         ZaktualizujPieniadze();
+        if (sciezka.czySkonczonaSciezka())
+        {
+            ManagerEnemy.enabled = true;
+        }
         if(this.WybranaPułapka == BuldableTraps.Strzelajaca && this.TrybBudowania == BuldableObjects.Pułapki)
         {
             zarzadzanieObiektamiGlobalnymi.setObjectsVisibilityByTag("TrapPlaceRender", true);
@@ -238,12 +242,13 @@ public class ClickPoint : MonoBehaviour
             }
                 
         }
+        /*
         else if(Input.GetKeyDown(KeyCode.Space) && sciezka.czySciezkaStworzona==true )
         {
             ManagerEnemy.enabled = true;
            
         }
-        
+        */
         //zmienia pozycję kamery
         if(Input.GetMouseButton(1))
         {

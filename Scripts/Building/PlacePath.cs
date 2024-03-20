@@ -34,6 +34,7 @@ public class PlacePath : MonoBehaviour
     public GameObject postawionyPosag;
     public static GameObject obiektPosag;
     public int licznikZyciaPosag;
+    private bool czySkonczona = false;
 
     public static Vector3 pozycjaPosagu;
     public int naKtorymKafelkuSciezkiLezyPosag;
@@ -149,7 +150,7 @@ public class PlacePath : MonoBehaviour
             GridGenerator.ModifyTitlePath(gridTile.x, gridTile.y, false, false);
             czySciezkaStworzona = true;
             listasciezki.Add(gridTileStop);
-
+            czySkonczona = true;
         }
         else
             GridGenerator.ModifyTitlePath(gridTile.x, gridTile.y, false, true);
@@ -165,6 +166,7 @@ public class PlacePath : MonoBehaviour
     {
         return obiektPosag;
     }
+    public bool czySkonczonaSciezka() { return czySkonczona;}
     //public void SetStopPosition(Vector3 nowaPozycja) { StopPosition = nowaPozycja; } //TD-39: To chyba nie potrzebne do podnoszenia posagu
 }
 
