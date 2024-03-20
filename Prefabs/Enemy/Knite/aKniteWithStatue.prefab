@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 3164464845870664438}
   - component: {fileID: 1088283813080810278}
   m_Layer: 0
-  m_Name: KniteWithStatue
+  m_Name: aKniteWithStatue
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

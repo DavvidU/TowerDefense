@@ -77,10 +77,11 @@ public class DefaultEnemyFactory : MonoBehaviour, EnemyFactory
         this.startPoint = startPoint;
     }
 
+    GameObject villager;
+
     public GameObject createEnemy()
     {
         loadAssets();
-        GameObject villager;
         villager = Instantiate(AssetDatabase.LoadAssetAtPath<GameObject>(pelnaSciezkaWariant1), startPoint, Quaternion.identity);
         villager.AddComponent<enemyVillager>();
 
@@ -90,13 +91,32 @@ public class DefaultEnemyFactory : MonoBehaviour, EnemyFactory
     public GameObject createEnemyBoss()
     {
         loadAssets();
-        GameObject villager;
         villager = Instantiate(AssetDatabase.LoadAssetAtPath<GameObject>(pelnaSciezkaWariant1), startPoint, Quaternion.identity);
         villager.AddComponent<enemyVillagerBoss>();
 
         return villager;
     }
 
+    public GameObject createEnemyWithStatue()
+    {
+        loadAssets();
+
+        villager = Instantiate(AssetDatabase.LoadAssetAtPath<GameObject>(pelnaSciezkaWariant2), startPoint, Quaternion.identity);
+        villager.AddComponent<enemyVillagerBoss>();
+
+        return villager;
+    }
+
+
+    public GameObject createEnemyBossWithStatue()
+    {
+        loadAssets();
+        
+        villager = Instantiate(AssetDatabase.LoadAssetAtPath<GameObject>(pelnaSciezkaWariant2), startPoint, Quaternion.identity);
+        villager.AddComponent<enemyVillagerBoss>();
+
+        return villager;
+    }
 
 }
 
@@ -126,6 +146,7 @@ public class KniteEnemyFactory : MonoBehaviour, EnemyFactory
         sciezkiDoZasobow = AssetDatabase.FindAssets("", new[] { katalogZasobow });
         try
         {
+           
             if (sciezkiDoZasobow.Length == 0)
             {
                 throw new Exception("Nie znaleziono zasobów w katalogu: " + katalogZasobow);
@@ -134,7 +155,7 @@ public class KniteEnemyFactory : MonoBehaviour, EnemyFactory
             {
                 try
                 {
-                    this.pelnaSciezkaWariant1 = AssetDatabase.GUIDToAssetPath(sciezkiDoZasobow[0]);
+                    this.pelnaSciezkaWariant1 = AssetDatabase.GUIDToAssetPath(sciezkiDoZasobow[0]);    
                 }
                 catch (ArgumentException e)
                 {
@@ -166,7 +187,7 @@ public class KniteEnemyFactory : MonoBehaviour, EnemyFactory
     {
         loadAssets();
         GameObject knite;
-        knite = Instantiate(AssetDatabase.LoadAssetAtPath<GameObject>(pelnaSciezkaWariant1), startPoint, Quaternion.identity);
+        knite = Instantiate(AssetDatabase.LoadAssetAtPath<GameObject>(this.pelnaSciezkaWariant1), startPoint, Quaternion.identity);
         knite.AddComponent<enemyKnite>();
 
         return knite;
@@ -176,7 +197,7 @@ public class KniteEnemyFactory : MonoBehaviour, EnemyFactory
     {
         loadAssets();
         GameObject knite;
-        knite = Instantiate(AssetDatabase.LoadAssetAtPath<GameObject>(pelnaSciezkaWariant1), startPoint, Quaternion.identity);
+        knite = Instantiate(AssetDatabase.LoadAssetAtPath<GameObject>(this.pelnaSciezkaWariant1), startPoint, Quaternion.identity);
         knite.AddComponent<enemyKniteBoss>();
 
         return knite;

@@ -41,26 +41,42 @@ public class EnemyManager : MonoBehaviour
         this.enemyKnite = new KniteEnemyFactory();
 
     }
-  
+    GameObject postac;
+
     public void GetEnemyVillager()
     {
-        GameObject postac;
-        this.enemyVillager.setStartPoint(sciezka.getStartPosition());
+        Vector3 newStart = sciezka.getStartPosition();
+        newStart = new Vector3(newStart.x, newStart.y, newStart.z);
+
+        this.enemyVillager.setStartPoint(newStart);
         postac = this.enemyVillager.createEnemy();
        
     }
     public void GetEnemyVillagerBoss()
     {
-        GameObject postac;
-        this.enemyVillager.setStartPoint(sciezka.getStartPosition());
+        Vector3 newStart = sciezka.getStartPosition();
+        newStart = new Vector3(newStart.x, newStart.y, newStart.z);
+
+        this.enemyVillager.setStartPoint(newStart);
         postac = this.enemyVillager.createEnemyBoss();
 
     }
     public void GetEnemyKnite()
     {
-        GameObject postac;
-        this.enemyKnite.setStartPoint(sciezka.getStartPosition());
+        Vector3 newStart = sciezka.getStartPosition();
+        newStart = new Vector3(newStart.x, newStart.y, newStart.z);
+
+        this.enemyKnite.setStartPoint(newStart);
         postac = this.enemyKnite.createEnemy();
+
+    }
+    public void GetEnemyKniteBoss()
+    {
+        Vector3 newStart = sciezka.getStartPosition();
+        newStart = new Vector3(newStart.x, newStart.y, newStart.z);
+
+        this.enemyKnite.setStartPoint(newStart);
+        postac = this.enemyKnite.createEnemyBoss();
 
     }
 
@@ -73,7 +89,15 @@ public class EnemyManager : MonoBehaviour
         {
             iloscodmierzacz++;
             // Wykonaj kod, który ma byæ wywo³any po danym interwale czasowym
-            GetEnemyVillagerBoss();
+            if (iloscodmierzacz == 10 || iloscodmierzacz == 20)
+            {
+                GetEnemyKnite();
+            } 
+            else
+            {
+                GetEnemyVillager();
+            }
+           
 
             // Zresetuj licznik czasu
             elapsedTime = 0f;
@@ -82,11 +106,11 @@ public class EnemyManager : MonoBehaviour
         {
             czyPosagZabrany = true;
             GameObject postac;
-            postac = Instantiate(AssetDatabase.LoadAssetAtPath<GameObject>(pelnaSciezkaWariant2), PlacePath.pozycjaPosagu, Quaternion.identity);
+
+            postac = Instantiate(AssetDatabase.LoadAssetAtPath<GameObject>(pelnaSciezkaWariant2),PlacePath.pozycjaPosagu, Quaternion.identity);
             postac.AddComponent<enemy>();
             postac.tag = "EnemyWithStatue";
             enemy pierwsza = postac.GetComponent<enemy>();
-            //pierwsza.aktualnyKafelek = sciezka.getSciezka().Count-1; // Wersja sprzed TD-39
             pierwsza.aktualnyKafelek = sciezka.getSciezka().Count-1;
             pierwsza.powrot = true;
 

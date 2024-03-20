@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 7976078835544224831}
   - component: {fileID: 8290967290610732308}
   m_Layer: 0
-  m_Name: Knite
+  m_Name: aKnite
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

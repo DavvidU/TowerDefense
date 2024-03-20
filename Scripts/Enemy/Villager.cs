@@ -264,7 +264,7 @@ public class enemyVillagerBoss : MonoBehaviour
         //currentLife = HP;
         CreateLifeText();
         UpdateLifeText();
-        Vector3 skala = new Vector3(1.3f, 1.3f, 1.3f);
+        Vector3 skala = new Vector3(postac.transform.localScale.x + 0.2f, postac.transform.localScale.y + 0.2f, postac.transform.localScale.z + 0.2f);
         postac.transform.localScale = skala;
     }
     void CreateLifeText()

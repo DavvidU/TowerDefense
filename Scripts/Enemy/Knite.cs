@@ -264,7 +264,7 @@ public class enemyKniteBoss : MonoBehaviour
         //currentLife = HP;
         CreateLifeText();
         UpdateLifeText();
-        Vector3 skala = new Vector3(1.3f, 1.3f, 1.3f);
+        Vector3 skala = new Vector3(1.1f, 1.1f, 1.1f);
         postac.transform.localScale = skala;
 
     }
