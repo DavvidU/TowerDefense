@@ -11,43 +11,84 @@ using UnityEngine.UIElements;
 
 public class EnemyManager : MonoBehaviour
 {
-    public static List<enemy> listaPrzeciwnikow = new List<enemy>();
+    public static List<GameObject> listaPrzeciwnikow = new List<GameObject>();
     public Camera kamera;
     public static PlacePath sciezka;
     private float elapsedTime = 0f;
     public float interval = 0f;
     int ilosc = 20;
     int iloscodmierzacz = 0;
-   public bool startFali = false;
+    public bool startFali = false;
     string[] sciezkiDoZasobow;
     string pelnaSciezkaWariant1;
     string pelnaSciezkaWariant2;
     public static bool czyPosagZabrany;
     
 
-   
+    private EnemyFactory enemyVillager;
+    private EnemyFactory enemyKnite;
+
 
     void Start()
     {
         sciezka = kamera.GetComponent<PlacePath>();
-        string katalogZasobow = "Assets/Prefabs/Enemy";
+        string katalogZasobow = "Assets/Prefabs/Enemy/Villager";
         czyPosagZabrany = false;
         sciezkiDoZasobow = AssetDatabase.FindAssets("", new[] { katalogZasobow });
         pelnaSciezkaWariant1 = AssetDatabase.GUIDToAssetPath(sciezkiDoZasobow[0]);
         pelnaSciezkaWariant2 = AssetDatabase.GUIDToAssetPath(sciezkiDoZasobow[1]);
+
+        this.enemyVillager = new DefaultEnemyFactory();
+        this.enemyKnite = new KniteEnemyFactory();
+
     }
-  
-    public void GetEnemy()
+    GameObject postac;
+
+    public void GetEnemyVillager()
     {
-        GameObject postac;
-        postac = Instantiate(AssetDatabase.LoadAssetAtPath<GameObject>(pelnaSciezkaWariant1), sciezka.getStartPosition(), Quaternion.identity);
-        postac.AddComponent<enemy>();
-        listaPrzeciwnikow.Add(postac.GetComponent<enemy>());
+        Vector3 newStart = sciezka.getStartPosition();
+        newStart = new Vector3(newStart.x, newStart.y, newStart.z);
 
+        this.enemyVillager.setStartPoint(newStart);
+        postac = this.enemyVillager.createEnemy();
 
-       
+        listaPrzeciwnikow.Add(postac);
+
     }
-   
+    public void GetEnemyVillagerBoss()
+    {
+        Vector3 newStart = sciezka.getStartPosition();
+        newStart = new Vector3(newStart.x, newStart.y, newStart.z);
+
+        this.enemyVillager.setStartPoint(newStart);
+        postac = this.enemyVillager.createEnemyBoss();
+
+        listaPrzeciwnikow.Add(postac);
+
+    }
+    public void GetEnemyKnite()
+    {
+        Vector3 newStart = sciezka.getStartPosition();
+        newStart = new Vector3(newStart.x, newStart.y, newStart.z);
+
+        this.enemyKnite.setStartPoint(newStart);
+        postac = this.enemyKnite.createEnemy();
+
+        listaPrzeciwnikow.Add(postac);
+
+    }
+    public void GetEnemyKniteBoss()
+    {
+        Vector3 newStart = sciezka.getStartPosition();
+        newStart = new Vector3(newStart.x, newStart.y, newStart.z);
+
+        this.enemyKnite.setStartPoint(newStart);
+        postac = this.enemyKnite.createEnemyBoss();
+
+        listaPrzeciwnikow.Add(postac);
+
+    }
+
     void FixedUpdate()
     {
         elapsedTime += Time.fixedDeltaTime;
@@ -57,7 +98,15 @@ public class EnemyManager : MonoBehaviour
         {
             iloscodmierzacz++;
             // Wykonaj kod, który ma byæ wywo³any po danym interwale czasowym
-            GetEnemy();
+            if (iloscodmierzacz == 10 || iloscodmierzacz == 20)
+            {
+                GetEnemyKnite();
+            } 
+            else
+            {
+                GetEnemyVillager();
+            }
+           
 
             // Zresetuj licznik czasu
             elapsedTime = 0f;
@@ -67,12 +116,10 @@ public class EnemyManager : MonoBehaviour
             Debug.Log("Tworze postac z posagiem"+ PlacePath.pozycjaPosagu);
             czyPosagZabrany = true;
             GameObject postac;
-            
             postac = Instantiate(AssetDatabase.LoadAssetAtPath<GameObject>(pelnaSciezkaWariant2), PlacePath.pozycjaPosagu, Quaternion.identity);
             postac.AddComponent<enemy>();
             postac.tag = "EnemyWithStatue";
             enemy pierwsza = postac.GetComponent<enemy>();
-            //pierwsza.aktualnyKafelek = sciezka.getSciezka().Count-1; // Wersja sprzed TD-39
             pierwsza.aktualnyKafelek = sciezka.getSciezka().Count-1;
             pierwsza.powrot = true;
 
