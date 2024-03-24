@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
+using TMPro;
 using Unity.VisualScripting;
 using UnityEditor;
 using UnityEditor.Experimental.GraphView;
@@ -11,23 +12,26 @@ using UnityEngine.UIElements;
 
 public class EnemyManager : MonoBehaviour
 {
-    private List<enemy> listaPrzeciwnikow = new List<enemy>();
+    public static List<enemy> listaPrzeciwnikow = new List<enemy>();
     public Camera kamera;
-    public PlacePath sciezka;
+    public static PlacePath sciezka;
     private float elapsedTime = 0f;
     public float interval = 0f;
+   // public int dlugoscfali=0;
+   // private int licznikfali=0;
     int ilosc = 20;
-    int iloscodmierzacz = 0;
-   public bool startFali = false;
+    int iloscodmierzacz = 20;
+  // public bool startFali = false;
     string[] sciezkiDoZasobow;
     string pelnaSciezkaWariant1;
     string pelnaSciezkaWariant2;
-    static bool czyPosagZabrany;
-
-   
+    public static bool czyPosagZabrany;
+    public TextMeshProUGUI tekst;
+    private int numerfali=0;
 
     void Start()
     {
+       // dlugoscfali = 10;
         sciezka = kamera.GetComponent<PlacePath>();
         string katalogZasobow = "Assets/Prefabs/Enemy";
         czyPosagZabrany = false;
@@ -41,6 +45,9 @@ public class EnemyManager : MonoBehaviour
         GameObject postac;
         postac = Instantiate(AssetDatabase.LoadAssetAtPath<GameObject>(pelnaSciezkaWariant1), sciezka.getStartPosition(), Quaternion.identity);
         postac.AddComponent<enemy>();
+        listaPrzeciwnikow.Add(postac.GetComponent<enemy>());
+
+
        
     }
    
@@ -49,19 +56,34 @@ public class EnemyManager : MonoBehaviour
         elapsedTime += Time.fixedDeltaTime;
 
         // SprawdŸ, czy up³yn¹³ okreœlony interwa³ czasowy
-        if (elapsedTime >= interval && iloscodmierzacz!=ilosc  )
+        if ( elapsedTime >= interval && iloscodmierzacz!=ilosc  )
         {
+            tekst.text = "Fala " + numerfali;
             iloscodmierzacz++;
             // Wykonaj kod, który ma byæ wywo³any po danym interwale czasowym
+
             GetEnemy();
 
             // Zresetuj licznik czasu
             elapsedTime = 0f;
         }
+        if(iloscodmierzacz==ilosc)
+        {
+            tekst.text = "Do fali: " + (15f - Mathf.Floor(elapsedTime)) + "s";
+            if (elapsedTime >= 15f)
+            {
+                iloscodmierzacz = 0;
+                numerfali += 1;
+            }
+            
+
+        }
         if (sciezka.posag == null && czyPosagZabrany == false)
         {
+            Debug.Log("Tworze postac z posagiem"+ PlacePath.pozycjaPosagu);
             czyPosagZabrany = true;
             GameObject postac;
+            
             postac = Instantiate(AssetDatabase.LoadAssetAtPath<GameObject>(pelnaSciezkaWariant2), PlacePath.pozycjaPosagu, Quaternion.identity);
             postac.AddComponent<enemy>();
             postac.tag = "EnemyWithStatue";
@@ -75,5 +97,6 @@ public class EnemyManager : MonoBehaviour
         }
 
     }
+
     public static void SetCzyPosagZabrany(bool czyPosagZabrany) { EnemyManager.czyPosagZabrany = czyPosagZabrany; }
 }
