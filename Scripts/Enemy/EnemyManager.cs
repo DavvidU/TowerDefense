@@ -32,6 +32,7 @@ public class EnemyManager : MonoBehaviour
     private EnemyFactory enemyVillager;
     private EnemyFactory enemyKnite;
 
+
     void Start()
     {
        // dlugoscfali = 10;
