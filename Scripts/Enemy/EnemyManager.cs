@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using TMPro;
+using Unity.AI.Navigation;
 using Unity.VisualScripting;
 using UnityEditor;
 using UnityEditor.Experimental.GraphView;
@@ -12,6 +13,7 @@ using UnityEngine.UIElements;
 
 public class EnemyManager : MonoBehaviour
 {
+    public NavMeshSurface mesh;
     public static List<GameObject> listaPrzeciwnikow = new List<GameObject>();
     public Camera kamera;
     public static PlacePath sciezka;
@@ -101,6 +103,9 @@ public class EnemyManager : MonoBehaviour
         // SprawdŸ, czy up³yn¹³ okreœlony interwa³ czasowy
         if ( elapsedTime >= interval && iloscodmierzacz!=ilosc  )
         {
+            if(iloscodmierzacz==0)
+            mesh.BuildNavMesh();
+
             tekst.text = "Fala " + numerfali;
             iloscodmierzacz++;
             // Wykonaj kod, który ma byæ wywo³any po danym interwale czasowym

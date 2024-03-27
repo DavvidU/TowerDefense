@@ -11,6 +11,7 @@ using UnityEngine.UIElements;
 using UnityEngine.UI;
 using TMPro;
 using System;
+using UnityEngine.AI;
 
 public class enemyVillager : MonoBehaviour
 {
@@ -29,6 +30,7 @@ public class enemyVillager : MonoBehaviour
     private GameObject gameControllerObj;
     private int currentLife = 100; // Aktualna iloœæ ¿ycia
     private TextMeshPro lifeText;
+    public NavMeshAgent NavMeshAgent;
 
     private int licznik;
 
@@ -39,14 +41,14 @@ public class enemyVillager : MonoBehaviour
         gameControllerObj = GameObject.Find("Main Camera");
         sciezka = gameControllerObj.GetComponent<PlacePath>();
         listaSciezki = sciezka.getSciezka();
-
+        NavMeshAgent = gameObject.AddComponent<NavMeshAgent>();
     }
     void Start()
     {
         //currentLife = HP;
         CreateLifeText();
         UpdateLifeText();
-
+        NavMeshAgent.SetDestination(sciezka.StopPosition);
     }
     void CreateLifeText()
     {
@@ -159,6 +161,7 @@ public class enemyVillager : MonoBehaviour
             sprawdzCzyMinalCzas(timer);
         }
 
+        /*
         aktualnaPozycja = transform.position;
         if (aktualnyKafelek < sciezka.naKtorymKafelkuSciezkiLezyPosag && aktualnyKafelek >= 0)
         {
@@ -207,6 +210,7 @@ public class enemyVillager : MonoBehaviour
             powrot = true;
             aktualnyKafelek--;
         }
+        */
         if (currentLife < 0)
         {
             float pozycjaX = (float)Math.Truncate(this.aktualnaPozycja.x);
