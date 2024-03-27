@@ -69,14 +69,18 @@ public class enemy : MonoBehaviour
     }
 
     void UpdateLifeText()
-    {
+    { if(lifeText!=null)
         lifeText.text = "Life: " + currentLife.ToString();
     }
 
     public void TakeDamage(int damageAmount)
     {
         currentLife -= damageAmount;
-        UpdateLifeText();
+        if (currentLife > 0)
+        {
+            Debug.Log("updatuje zycie"+currentLife);
+            UpdateLifeText();
+        }
 
         // Dodaj dodatkow¹ logikê, np. sprawdzenie czy postaæ umar³a, itp.
     }
@@ -185,7 +189,7 @@ public class enemy : MonoBehaviour
         }
 
         aktualnaPozycja = transform.position;
-        if (aktualnyKafelek < sciezka.naKtorymKafelkuSciezkiLezyPosag && aktualnyKafelek >= 0)
+        if (aktualnyKafelek < EnemyManager.sciezka.naKtorymKafelkuSciezkiLezyPosag && aktualnyKafelek >= 0)
         {
             Vector3 targetPosition = new Vector3();
             if (listaSciezki[aktualnyKafelek] != null)
@@ -207,6 +211,10 @@ public class enemy : MonoBehaviour
             }
             if (aktualnaPozycja.x == listaSciezki[aktualnyKafelek].x && aktualnaPozycja.z == listaSciezki[aktualnyKafelek].y)
             {
+                if(EnemyManager.czyPosagZabrany==true)
+                {
+                    powrot = true;
+                }
                 if (powrot == false)
                     aktualnyKafelek++;
                 else
@@ -223,33 +231,50 @@ public class enemy : MonoBehaviour
         }
         else
         {
-            if (sciezka.posag != null)
+            if(EnemyManager.sciezka.licznikZyciaPosag>0)
             {
-                Destroy(sciezka.posag);
+                EnemyManager.sciezka.licznikZyciaPosag--;
+                Destroy(gameObject);
+
+            }else
+            { 
+            if (EnemyManager.sciezka.posag != null && EnemyManager.sciezka.licznikZyciaPosag==0)
+            {
+                Destroy(EnemyManager.sciezka.posag);
                 Destroy(gameObject);
 
             }
+            
             powrot = true;
             aktualnyKafelek--;
+            }
         }
         if(currentLife<0)
         {
             float pozycjaX = (float)Math.Truncate(this.aktualnaPozycja.x);
             float pozycjaZ = (float)Math.Truncate(this.aktualnaPozycja.z);
 
-            Vector3 deathpostion = new Vector3(pozycjaX, this.aktualnaPozycja.y, pozycjaZ);
 
+            GlobalFunctions.addMoney(10);
+
+            Vector3 deathpostion = new Vector3(pozycjaX, this.aktualnaPozycja.y, pozycjaZ);
 
             if (this.gameObject.tag == "EnemyWithStatue") // Czy umierajacy niosl posag
             {
+               
+                Debug.Log("Umieram z posagiem");
+                Debug.Log("bla" + deathpostion.x + deathpostion.z);
                 PlacePath.pozycjaPosagu = deathpostion;
-                sciezka.posag = Instantiate(PlacePath.pobierzObiektPosagu(), deathpostion, Quaternion.identity);
-                sciezka.naKtorymKafelkuSciezkiLezyPosag = aktualnyKafelek;
-                //sciezka.SetStopPosition(deathpostion); //TD-39: To chyba nie potrzebne do podnoszenia posagu
+                EnemyManager.sciezka.posag = Instantiate(PlacePath.pobierzObiektPosagu(), deathpostion, Quaternion.identity);
+                EnemyManager.sciezka.naKtorymKafelkuSciezkiLezyPosag = aktualnyKafelek;
+                EnemyManager.sciezka.StopPosition=(deathpostion); //TD-39: To chyba nie potrzebne do podnoszenia posagu
+                EnemyManager.SetCzyPosagZabrany(false);
             }
+            Debug.Log("usuwam sie");
+            
             Destroy(gameObject);
 
-            EnemyManager.SetCzyPosagZabrany(false);
+            
         }
 
     }

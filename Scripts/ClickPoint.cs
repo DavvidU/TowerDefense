@@ -7,6 +7,7 @@ using UnityEngine;
 using UnityEngine.TextCore.LowLevel;
 using static ClickPoint;
 using UnityEngine.EventSystems;
+using TMPro;
 
 
 /**
@@ -52,7 +53,7 @@ public class ClickPoint : MonoBehaviour
         Lawa,
         Oblodzenie
     }
-
+    public TextMeshProUGUI pieniadze;
     public bool inBuildMode = true;
     public bool inDestroyingMode = false;
     public BuldableObjects TrybBudowania;
@@ -76,7 +77,7 @@ public class ClickPoint : MonoBehaviour
 
     private TrapPrice[] trapPrice;
 
-    private GlobalFunctions GlobalFunctions;
+   // private GlobalFunctions GlobalFunctions;
 
     // Start is called before the first frame update
     void Start()
@@ -87,7 +88,7 @@ public class ClickPoint : MonoBehaviour
         this.pulapka = new PlaceTrap();
         this.zarzadzanieObiektamiGlobalnymi = new ZarzadzajObiektami();
         this.ManagerEnemy = obiektEnemyManager.GetComponent<EnemyManager>();
-        this.GlobalFunctions = new GlobalFunctions();
+       // this.GlobalFunctions = new GlobalFunctions();
 
         TrapPrice trap1 = new TrapPrice(1, 10f);
         TrapPrice trap2 = new TrapPrice(2, 20f);
@@ -96,13 +97,21 @@ public class ClickPoint : MonoBehaviour
 
         this.trapPrice = new TrapPrice[] { trap1, trap2, trap3, trap4 };
 
-
+        pieniadze.text = GlobalFunctions.getMoney().ToString();
 
     }
-
+    void ZaktualizujPieniadze()
+    {
+        pieniadze.text = GlobalFunctions.getMoney().ToString();
+    }
       
     void Update()
     {
+        ZaktualizujPieniadze();
+        if (sciezka.czySkonczonaSciezka())
+        {
+            ManagerEnemy.enabled = true;
+        }
         if(this.WybranaPułapka == BuldableTraps.Strzelajaca && this.TrybBudowania == BuldableObjects.Pułapki)
         {
             zarzadzanieObiektamiGlobalnymi.setObjectsVisibilityByTag("TrapPlaceRender", true);
@@ -166,6 +175,7 @@ public class ClickPoint : MonoBehaviour
                                 {
                                     pulapka.getTrap((int)WybranaPułapka, gridTile);
                                     Debug.Log("Pozostało pieniedzy: " + GlobalFunctions.getMoney());
+                                        pieniadze.text = GlobalFunctions.getMoney().ToString();
                                 }
                                 else
                                 {
@@ -232,12 +242,13 @@ public class ClickPoint : MonoBehaviour
             }
                 
         }
+        /*
         else if(Input.GetKeyDown(KeyCode.Space) && sciezka.czySciezkaStworzona==true )
         {
             ManagerEnemy.enabled = true;
            
         }
-        
+        */
         //zmienia pozycję kamery
         if(Input.GetMouseButton(1))
         {
