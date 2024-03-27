@@ -6053,7 +6053,7 @@ RectTransform:
   - {fileID: 898219695}
   - {fileID: 1787276332}
   - {fileID: 118313181}
-<<<<<<< HEAD
+
   - {fileID: 1574871217}
   - {fileID: 1155411257}
   - {fileID: 693347197}
@@ -6063,10 +6063,10 @@ RectTransform:
   - {fileID: 1943672317}
   - {fileID: 833967624}
   - {fileID: 482223808}
-=======
+
   - {fileID: 184138782}
   - {fileID: 1422697884}
->>>>>>> ac69b3f2ea1ab5ea15be59701c8bd8452e28f128
+
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
