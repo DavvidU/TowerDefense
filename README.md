@@ -1,7 +1,7 @@
-Assigning nicknames to surnames
-Dawid Ugniewski - DavvidU
-Adam Bagiński - adambag
-Marcin Żamojda - CinekTV
-Artur Leszczak - Artur
-Nikola Osińska - 
-Konrad Kondracki - 
+Assigning nicknames to surnames<br /><br />
+Dawid Ugniewski - DavvidU<br />
+Adam Bagiński - adambag<br />
+Marcin Żamojda - CinekTV<br />
+Artur Leszczak - Artur<br />
+Nikola Osińska - <br />
+Konrad Kondracki - <br />
