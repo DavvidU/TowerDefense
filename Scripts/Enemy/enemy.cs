@@ -31,8 +31,6 @@ public class enemy : MonoBehaviour
     private TextMeshPro lifeText;
 
     private int licznik;
-   
-
 
     void Awake()
     {
