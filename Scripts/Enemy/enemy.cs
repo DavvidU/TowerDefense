@@ -254,8 +254,10 @@ public class enemy : MonoBehaviour
             float pozycjaX = (float)Math.Truncate(this.aktualnaPozycja.x);
             float pozycjaZ = (float)Math.Truncate(this.aktualnaPozycja.z);
 
-
-            GlobalFunctions.addMoney(10);
+            if (PatronType.PatronGoldActive)
+                GlobalFunctions.addMoney(15);
+            else
+                GlobalFunctions.addMoney(10);
 
             Vector3 deathpostion = new Vector3(pozycjaX, this.aktualnaPozycja.y, pozycjaZ);
 

@@ -16,6 +16,8 @@ public class PatronType : MonoBehaviour
         PatronDmgActive = true;
         PatronSlowActive = false;
         PatronGoldActive = false;
+
+        Debug.Log("Wybor patrona: Wojownik");
     }
 
     public static void DeactivateDmgPatron()
@@ -27,6 +29,8 @@ public class PatronType : MonoBehaviour
         PatronSlowActive = true;
         PatronDmgActive = false;
         PatronGoldActive = false;
+
+        Debug.Log("Wybor patrona: Balwan");
     }
 
     public static void DeactivateSlowPatron()
@@ -38,6 +42,8 @@ public class PatronType : MonoBehaviour
         PatronGoldActive = true;
         PatronDmgActive = false;
         PatronSlowActive = false;
+
+        Debug.Log("Wybor patrona: Zlodziej");
     }
 
     public static void DeactivateGoldPatron()
