@@ -129,6 +129,9 @@ public class EnemyManager : MonoBehaviour
             {
                 iloscodmierzacz = 0;
                 numerfali += 1;
+
+                FloorManager floor = new FloorManager();
+                floor.hideGrid();
             }
             
 

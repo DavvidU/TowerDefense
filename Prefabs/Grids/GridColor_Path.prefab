@@ -52,6 +52,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: sciezka
       objectReference: {fileID: 0}
+    - target: {fileID: 8164078558771037576, guid: f973e4a1d21776d44901e3176ce94768, type: 3}
+      propertyPath: m_TagString
+      value: GridDefaultMesh
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

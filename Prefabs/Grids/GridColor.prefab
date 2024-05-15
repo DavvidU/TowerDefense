@@ -135,6 +135,10 @@ PrefabInstance:
       propertyPath: m_LocalPosition.y
       value: -0.05
       objectReference: {fileID: 0}
+    - target: {fileID: 8164078558771037576, guid: f90cac7215b11bc499c960886977f288, type: 3}
+      propertyPath: m_TagString
+      value: GridDefaultMesh
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
