@@ -12,9 +12,11 @@ using UnityEngine.UI;
 using TMPro;
 using System;
 using UnityEngine.AI;
+using static UnityEngine.GraphicsBuffer;
 
 public class enemyVillager : MonoBehaviour
 {
+
 
     private PlacePath sciezka;
     public GameObject postac;
@@ -31,24 +33,31 @@ public class enemyVillager : MonoBehaviour
     private int currentLife = 100; // Aktualna iloœæ ¿ycia
     private TextMeshPro lifeText;
     public NavMeshAgent NavMeshAgent;
-
+    public static Vector3 cel;
     private int licznik;
 
 
-
+    public Transform target; // Cel, np. gracz
+    public float moveSpeed = 3f;
     void Awake()
     {
         gameControllerObj = GameObject.Find("Main Camera");
         sciezka = gameControllerObj.GetComponent<PlacePath>();
         listaSciezki = sciezka.getSciezka();
         NavMeshAgent = gameObject.AddComponent<NavMeshAgent>();
+        CreateLifeText();
+        
     }
     void Start()
     {
         //currentLife = HP;
-        CreateLifeText();
         UpdateLifeText();
-        NavMeshAgent.SetDestination(sciezka.StopPosition);
+        NavMeshAgent = GetComponent<NavMeshAgent>();
+        NavMeshAgent.speed = moveSpeed;
+        cel = sciezka.StopPosition;
+        
+        NavMeshAgent.SetDestination(PlacePath.pozycjaPosagu);
+        Debug.Log("Moj poczatkowycel to :" + enemyVillager.cel);
     }
     void CreateLifeText()
     {
@@ -77,8 +86,10 @@ public class enemyVillager : MonoBehaviour
 
     public void TakeDamage(int damageAmount)
     {
+        Debug.Log("Dosta³em damage");
         currentLife -= damageAmount;
         UpdateLifeText();
+       
 
         // Dodaj dodatkow¹ logikê, np. sprawdzenie czy postaæ umar³a, itp.
     }
@@ -105,7 +116,7 @@ public class enemyVillager : MonoBehaviour
         if (other.gameObject.tag == "Kolce")
         {
             //currentLife = currentLife - 20;
-            Debug.Log("Wlazlem w kolce-" + currentLife);
+            //Debug.Log("Wlazlem w kolce-" + currentLife);
             TakeDamage(20);
 
             // Kod obs³uguj¹cy kolizjê z obiektem o tagu "Przeszkoda"
@@ -114,7 +125,7 @@ public class enemyVillager : MonoBehaviour
         {
             timer = 0.0f;
             speed = 2f;
-            Debug.Log("Wlazlem lod-" + currentLife);
+           // Debug.Log("Wlazlem lod-" + currentLife);
             czasSpowolnienia = true;
 
             // Kod obs³uguj¹cy kolizjê z obiektem o tagu "Przeszkoda"
@@ -123,7 +134,7 @@ public class enemyVillager : MonoBehaviour
         {
             timer = 0.0f;
             licznik = 1;
-            Debug.Log("Wlazlem lawa-" + currentLife);
+            //Debug.Log("Wlazlem lawa-" + currentLife);
             czasPodpalenia = true;
 
         }
@@ -211,26 +222,95 @@ public class enemyVillager : MonoBehaviour
             aktualnyKafelek--;
         }
         */
+        if (NavMeshAgent.isActiveAndEnabled && NavMeshAgent.isOnNavMesh && NavMeshAgent != null)
+        {
+            if (sciezka.posag != null && NavMeshAgent.remainingDistance < 0.5f)
+            {
+                EnemyManager.listaPrzeciwnikow.Remove(gameObject);
+                if (EnemyManager.listaPrzeciwnikow.Count == 0)
+                {
+                    EnemyManager.rozpocznijPrzygotowanie = true;
+                }
+                Destroy(NavMeshAgent);
+                Destroy(sciezka.posag);
+                //EnemyManager.SetCzyPosagZabrany(true);
+
+
+                Destroy(gameObject);
+               // Debug.Log("Zniszczy³em sie");
+            }
+            else
+            if (powrot==true && NavMeshAgent.remainingDistance < 0.5f)
+            {
+                EnemyManager.listaPrzeciwnikow.Remove(gameObject);
+                if (EnemyManager.listaPrzeciwnikow.Count == 0)
+                {
+                    EnemyManager.rozpocznijPrzygotowanie = true;
+                }
+                Destroy(NavMeshAgent);
+                
+                Destroy(gameObject);
+                Debug.Log("Zniszczy³em sie");
+            }else 
+            
+            if (NavMeshAgent!= null &&!NavMeshAgent.pathPending && NavMeshAgent.remainingDistance < 0.5f )
+            {
+                GetDesiredPoint();
+                // Zmieñ cel na ¿¹dany punkt
+                NavMeshAgent.SetDestination(cel);
+                powrot = true;
+            }
+        }
         if (currentLife < 0)
         {
-            float pozycjaX = (float)Math.Truncate(this.aktualnaPozycja.x);
-            float pozycjaZ = (float)Math.Truncate(this.aktualnaPozycja.z);
+           // Vector3 pozycjaDocelowa = NavMeshAgent.destination;
+            float pozycjaX = transform.position.x;
+            float pozycjaZ = transform.position.z;
+           // float pozycjaX = (float)Math.Truncate(this.aktualnaPozycja.x);
+            //float pozycjaZ = (float)Math.Truncate(this.aktualnaPozycja.z);
+            Debug.Log(pozycjaZ + ". " + pozycjaZ);
 
-            Vector3 deathpostion = new Vector3(pozycjaX, this.aktualnaPozycja.y, pozycjaZ);
+            Vector3 deathpostion = new Vector3(pozycjaX, 0.5f, pozycjaZ);
 
 
             if (this.gameObject.tag == "EnemyWithStatue") // Czy umierajacy niosl posag
             {
+                Debug.Log("Umar³emze statuetka"+ deathpostion);
                 PlacePath.pozycjaPosagu = deathpostion;
                 sciezka.posag = Instantiate(PlacePath.pobierzObiektPosagu(), deathpostion, Quaternion.identity);
                 sciezka.naKtorymKafelkuSciezkiLezyPosag = aktualnyKafelek;
+                ustawCelDlaPrzeciwnikow(deathpostion);
                 //sciezka.SetStopPosition(deathpostion); //TD-39: To chyba nie potrzebne do podnoszenia posagu
+            }
+            EnemyManager.listaPrzeciwnikow.Remove(gameObject);
+            if (EnemyManager.listaPrzeciwnikow.Count == 0)
+            {
+                EnemyManager.rozpocznijPrzygotowanie = true;
             }
             Destroy(gameObject);
 
             EnemyManager.SetCzyPosagZabrany(false);
         }
 
+    }
+    public void GetDesiredPoint()
+    {
+        cel= sciezka.getStartPosition();
+       
+    }
+       
+    
+    public void ustawCelDlaPrzeciwnikow(Vector3 cel2)
+    {
+            enemyVillager.cel = cel2;
+        Debug.Log("cel" + cel);
+        foreach(GameObject przeciwnik in EnemyManager.listaPrzeciwnikow )
+        {
+            Debug.Log("lecimy znowu na statuetke");
+            enemyVillager enemy = przeciwnik.GetComponent<enemyVillager>();
+            enemy.powrot = false;
+            enemy.NavMeshAgent.SetDestination(cel2);
+        }
     }
 
 
