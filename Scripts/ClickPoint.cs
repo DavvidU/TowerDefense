@@ -8,6 +8,7 @@ using UnityEngine.TextCore.LowLevel;
 using static ClickPoint;
 using UnityEngine.EventSystems;
 using TMPro;
+using Unity.AI.Navigation;
 
 
 /**
@@ -164,7 +165,6 @@ public class ClickPoint : MonoBehaviour
                         {
                             //wywołuje metodę tworząca ścianę
                             sciana.getWall(gridTile);
-
                         }
                         else if (this.TrybBudowania == BuldableObjects.Pułapki && gridTile.movable == true && gridTile.buildedPillar == null)
                         {

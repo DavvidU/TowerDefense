@@ -36,7 +36,6 @@ public class SimplePushing : MonoBehaviour
             }
         }
 
-
         shootingSpeed = 1f; //jedna sekunda
         timer = 0f;
     }

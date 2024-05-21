@@ -9,6 +9,8 @@ using UnityEditor.Experimental.GraphView;
 using UnityEditor.XR;
 using UnityEngine;
 using UnityEngine.UIElements;
+using UnityEngine.AI;
+using Unity.AI.Navigation;
 
 /**
  * @brief Klasa generuje obiekty siatki i przechowuje tablicê indywidualnie do³¹czonych do nich komponentów
@@ -44,8 +46,8 @@ public class GridGenerator : MonoBehaviour
         mapWidth = 15;
         Money = 100;
         GenerateGrid();
-       
     }
+    
 
     void GenerateGrid()
  {

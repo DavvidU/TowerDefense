@@ -108,17 +108,30 @@ public class enemy : MonoBehaviour
         {
            //currentLife = currentLife - 20;
             Debug.Log("Wlazlem w kolce-"+currentLife);
-            TakeDamage(20);
+            if (PatronType.PatronDmgActive)
+            {
+                TakeDamage(30);
+            }
+            else { TakeDamage(20); }
 
             // Kod obs³uguj¹cy kolizjê z obiektem o tagu "Przeszkoda"
         }
        else if (other.gameObject.tag == "Icing")
         {
-            timer = 0.0f;
-            speed = 2f;
-            Debug.Log("Wlazlem lod-" + currentLife);
-            czasSpowolnienia = true;
-         
+            if(PatronType.PatronSlowActive) 
+            {
+                timer = 0.0f;
+                speed = 1.5f;
+                Debug.Log("Wlazlem lod-" + currentLife);
+                czasSpowolnienia = true;
+            }
+            else {
+                timer = 0.0f;
+                speed = 2f;
+                Debug.Log("Wlazlem lod-" + currentLife);
+                czasSpowolnienia = true;
+            }
+
             // Kod obs³uguj¹cy kolizjê z obiektem o tagu "Przeszkoda"
         }
         else if (other.gameObject.tag == "lawa")
@@ -137,6 +150,9 @@ public class enemy : MonoBehaviour
         //currentLife = currentLife - 40;
         Debug.Log("Trafiony przez strza³e-" + currentLife);
         Destroy(collision.gameObject);
+        if(PatronType.PatronDmgActive)
+        { TakeDamage(50); }
+        else
         TakeDamage(40);
     }
 
@@ -155,8 +171,17 @@ public class enemy : MonoBehaviour
         {
             if (timer > 0.15f*licznik)
             {
-                TakeDamage(10);
-                licznik++;
+                if(PatronType.PatronDmgActive) 
+                {
+                    TakeDamage(15);
+                    licznik++;
+                }
+                else
+                {
+                    TakeDamage(10);
+                    licznik++;
+                }
+                
             }
            
             timer += Time.deltaTime;
