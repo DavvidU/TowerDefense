@@ -7,7 +7,6 @@ using UnityEditor;
 using UnityEditor.Experimental.GraphView;
 using UnityEditor.XR;
 using UnityEngine;
-using UnityEngine.UIElements;
 using UnityEngine.UI;
 using TMPro;
 using System;
@@ -39,19 +38,27 @@ public class enemyVillager : MonoBehaviour
 
     public Transform target; // Cel, np. gracz
     public float moveSpeed = 3f;
+
+     /* Pasek zdrowia */
+
+    private Image lifeBar;
+    private GameObject lifeBarBackground;
+
+    private GameObject fireEffect;
+    private GameObject iceEffect;
+
     void Awake()
     {
         gameControllerObj = GameObject.Find("Main Camera");
         sciezka = gameControllerObj.GetComponent<PlacePath>();
         listaSciezki = sciezka.getSciezka();
         NavMeshAgent = gameObject.AddComponent<NavMeshAgent>();
-        CreateLifeText();
-        
+        CreateLifeBar();
+
     }
     void Start()
     {
-        //currentLife = HP;
-        UpdateLifeText();
+        UpdateLifeBar();
         NavMeshAgent = GetComponent<NavMeshAgent>();
         NavMeshAgent.speed = moveSpeed;
         cel = sciezka.StopPosition;
@@ -59,39 +66,80 @@ public class enemyVillager : MonoBehaviour
         NavMeshAgent.SetDestination(PlacePath.pozycjaPosagu);
         Debug.Log("Moj poczatkowycel to :" + enemyVillager.cel);
     }
-    void CreateLifeText()
+    void CreateLifeBar()
     {
+        // Tworzenie t³a paska ¿ycia
+        lifeBarBackground = new GameObject("LifeBarBackground");
+        lifeBarBackground.transform.SetParent(transform);
+        lifeBarBackground.transform.localPosition = Vector3.up * 2f;
+        lifeBarBackground.AddComponent<Canvas>().renderMode = RenderMode.WorldSpace;
+        lifeBarBackground.AddComponent<CanvasScaler>().dynamicPixelsPerUnit = 10;
+        lifeBarBackground.AddComponent<GraphicRaycaster>();
 
-        lifeText = new GameObject("LifeText").AddComponent<TextMeshPro>();
-        lifeText.transform.SetParent(transform);
-        lifeText.transform.localPosition = Vector3.up * 2f;
-        lifeText.alignment = TextAlignmentOptions.Center;
-        lifeText.fontSize = 600;
-        lifeText.color = Color.red;
-        lifeText.rectTransform.sizeDelta = new Vector2(200, 50); // Ustawienie rozmiaru
-        lifeText.rectTransform.localScale = new Vector3(0.01f, 0.01f, 0.01f); // Ustawienie skali
-        lifeText.rectTransform.rotation = Quaternion.LookRotation(transform.position - gameControllerObj.transform.position);
-        //image = new GameObject("Tlo").AddComponent<UnityEngine.UI.Image>();
-        // image.transform.SetParent(lifeText.transform);
-        // image.rectTransform.sizeDelta = new Vector2(100, 50);
+        // Tworzenie paska ¿ycia
+        GameObject lifeBarObject = new GameObject("LifeBar");
+        lifeBarObject.transform.SetParent(lifeBarBackground.transform);
+        lifeBarObject.AddComponent<CanvasRenderer>();
+        lifeBar = lifeBarObject.AddComponent<Image>();
+        lifeBar.color = Color.green;
 
+        RectTransform rectTransform = lifeBar.GetComponent<RectTransform>();
+        rectTransform.sizeDelta = new Vector2(200, 20);
+        rectTransform.localScale = new Vector3(0.01f, 0.01f, 0.01f);
+        rectTransform.localPosition = Vector3.zero;
 
-        //lifeText.rectTransform.rotation = Quaternion.LookRotation(transform.position - GameController.instance.transform.position);
+        // Tworzenie efektu ognia
+        fireEffect = new GameObject("FireEffect");
+        fireEffect.transform.SetParent(lifeBarObject.transform);
+        ParticleSystem fireParticleSystem = fireEffect.AddComponent<ParticleSystem>();
+        var main = fireParticleSystem.main;
+        main.startColor = Color.red;
+        main.loop = true;
+        fireParticleSystem.Stop();
+
+        // Tworzenie efektu lodu
+        iceEffect = new GameObject("IceEffect");
+        iceEffect.transform.SetParent(lifeBarObject.transform);
+        ParticleSystem iceParticleSystem = iceEffect.AddComponent<ParticleSystem>();
+        var iceMain = iceParticleSystem.main;
+        iceMain.startColor = Color.cyan;
+        iceMain.loop = true;
+        iceParticleSystem.Stop();
     }
 
-    void UpdateLifeText()
+    void UpdateLifeBar()
     {
-        lifeText.text = "Life: " + currentLife.ToString();
+        if (lifeBar != null)
+        {
+            lifeBar.fillAmount = (float)currentLife / 100f;
+            if (currentLife > 50)
+                lifeBar.color = Color.green;
+            else if (currentLife > 20)
+                lifeBar.color = Color.yellow;
+            else
+                lifeBar.color = Color.red;
+        }
     }
 
     public void TakeDamage(int damageAmount)
     {
         Debug.Log("Dosta³em damage");
+        
         currentLife -= damageAmount;
-        UpdateLifeText();
-       
 
-        // Dodaj dodatkow¹ logikê, np. sprawdzenie czy postaæ umar³a, itp.
+
+        if (currentLife > 0)
+        {
+            Debug.Log("updatuje zycie " + currentLife);
+            UpdateLifeBar();
+        }
+        else
+        {
+            // Przeciwnik ginie
+            currentLife = 0;
+            UpdateLifeBar();
+            Destroy(gameObject);
+        }
     }
     public PlacePath getPath()
     {
@@ -101,11 +149,12 @@ public class enemyVillager : MonoBehaviour
     {
         if (czas > 0.5f)
         {
-
             czasSpowolnienia = false;
             czasPodpalenia = false;
             timer = 0.0f;
             speed = 3f;
+            fireEffect.GetComponent<ParticleSystem>().Stop();
+            iceEffect.GetComponent<ParticleSystem>().Stop();
         }
     }
 
@@ -118,25 +167,30 @@ public class enemyVillager : MonoBehaviour
             //currentLife = currentLife - 20;
             //Debug.Log("Wlazlem w kolce-" + currentLife);
             TakeDamage(20);
-
-            // Kod obs³uguj¹cy kolizjê z obiektem o tagu "Przeszkoda"
         }
         else if (other.gameObject.tag == "Icing")
         {
-            timer = 0.0f;
-            speed = 2f;
-           // Debug.Log("Wlazlem lod-" + currentLife);
-            czasSpowolnienia = true;
+            if (PatronType.PatronSlowActive)
+            {
+                timer = 0.0f;
+                speed = 1.5f;
+                czasSpowolnienia = true;
+            }
+            else
+            {
+                timer = 0.0f;
+                speed = 2f;
+                czasSpowolnienia = true;
+            }
 
-            // Kod obs³uguj¹cy kolizjê z obiektem o tagu "Przeszkoda"
+            iceEffect.GetComponent<ParticleSystem>().Play();
         }
         else if (other.gameObject.tag == "lawa")
         {
             timer = 0.0f;
             licznik = 1;
-            //Debug.Log("Wlazlem lawa-" + currentLife);
             czasPodpalenia = true;
-
+            fireEffect.GetComponent<ParticleSystem>().Play();
         }
 
     }
@@ -152,7 +206,7 @@ public class enemyVillager : MonoBehaviour
 
     void Update()
     {
-        lifeText.rectTransform.rotation = Quaternion.LookRotation(transform.position - gameControllerObj.transform.position);
+        lifeBarBackground.transform.rotation = Quaternion.LookRotation(transform.position - gameControllerObj.transform.position);
 
 
         if (czasSpowolnienia == true)
@@ -164,8 +218,17 @@ public class enemyVillager : MonoBehaviour
         {
             if (timer > 0.15f * licznik)
             {
-                TakeDamage(10);
-                licznik++;
+                if (PatronType.PatronDmgActive)
+                {
+                    TakeDamage(15);
+                    licznik++;
+                }
+                else
+                {
+                    TakeDamage(10);
+                    licznik++;
+                }
+
             }
 
             timer += Time.deltaTime;
