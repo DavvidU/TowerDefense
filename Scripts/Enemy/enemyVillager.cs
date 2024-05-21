@@ -163,9 +163,33 @@ public class enemyVillager : MonoBehaviour
             // Przeciwnik ginie
             currentLife = 0;
             UpdateLifeBar();
+            ShowDeathText();
             Destroy(gameObject);
         }
     }
+
+    void ShowDeathText()
+    {
+        // Tworzenie napisu
+        GameObject deathTextObj = new GameObject("DeathText");
+        TextMeshPro deathText = deathTextObj.AddComponent<TextMeshPro>();
+        deathText.transform.SetParent(null); // Ustawiamy jako niezale¿ny obiekt
+        deathText.transform.position = transform.position + Vector3.up * 2.5f; // Pozycja powy¿ej przeciwnika
+        deathText.transform.rotation = Quaternion.Euler(30, 0, 0);
+        deathText.alignment = TextAlignmentOptions.Center;
+        deathText.fontSize = 5;
+        deathText.color = Color.yellow;
+        deathText.fontStyle = FontStyles.Bold;
+        deathText.outlineWidth = 5.2f;
+        deathText.outlineColor = Color.black;
+
+        // Ustawienie tekstu
+        int goldAmount = PatronType.PatronGoldActive ? 15 : 10;
+        deathText.text = "+" + goldAmount;
+
+        Destroy(deathTextObj, 1.5f);
+    }
+
     public PlacePath getPath()
     {
         return sciezka;
