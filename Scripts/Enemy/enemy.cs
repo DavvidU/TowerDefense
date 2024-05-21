@@ -70,7 +70,7 @@ public class enemy : MonoBehaviour
         lifeBar.color = Color.green;
 
         RectTransform rectTransform = lifeBar.GetComponent<RectTransform>();
-        rectTransform.sizeDelta = new Vector2(200, 20);
+        rectTransform.sizeDelta = new Vector2(100, 20);
         rectTransform.localScale = new Vector3(0.01f, 0.01f, 0.01f);
         rectTransform.localPosition = Vector3.zero;
 
