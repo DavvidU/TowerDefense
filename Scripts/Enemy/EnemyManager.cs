@@ -194,9 +194,6 @@ public class EnemyManager : MonoBehaviour
 
             pierwsza.NavMeshAgent.SetDestination(enemyVillager.cel);
             listaPrzeciwnikow.Add(postac);
-            //Debug.Log("Moj cel to- " + pierwsza.GetDesiredPoint());
-            // pierwsza.aktualnyKafelek = sciezka.getSciezka().Count-1;
-            // pierwsza.powrot = true;
 
             // Znisz posag po podniesieniu
             zmianaKierunkuWszystkich();
