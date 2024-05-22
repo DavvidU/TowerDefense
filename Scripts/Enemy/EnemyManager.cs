@@ -35,6 +35,7 @@ public class EnemyManager : MonoBehaviour
     private EnemyFactory enemyKnite;
     public Vector3 cel;
     public static bool rozpocznijPrzygotowanie = true;
+    private bool widocznoscPaskuZycia = true;
 
 
     void Start()
@@ -51,7 +52,40 @@ public class EnemyManager : MonoBehaviour
         this.enemyKnite = new KniteEnemyFactory();
 
     }
+    private void Awake()
+    {
+        //Application.targetFrameRate = 60;
+    }
+    private void Update()
+    {
+        
+        if (Input.GetButtonDown("zycie"))
+        {
+            if(widocznoscPaskuZycia == true)
+            widocznoscPaskuZycia = false;
+            else
+            {
+                widocznoscPaskuZycia = true;
+            }
+        }
+        if(widocznoscPaskuZycia==true)
+        {
+            WidocznoscPaskowZycia(true);
+        }
+        else
+        {
+            WidocznoscPaskowZycia(false);
+        }
+
+    }
     GameObject postac;
+    public void WidocznoscPaskowZycia(bool stan)
+    {
+        foreach( GameObject przeciwnik in listaPrzeciwnikow){
+           enemyVillager enemy= przeciwnik.GetComponent<enemyVillager>();
+            enemy.UstawWidocznoscObiektów(stan);
+        }
+    }
 
     public void GetEnemyVillager()
     {
@@ -108,7 +142,7 @@ public class EnemyManager : MonoBehaviour
             if(iloscodmierzacz==0)
             mesh.BuildNavMesh();
 
-            tekst.text = "Fala " + numerfali;
+            
             iloscodmierzacz++;
             // Wykonaj kod, który ma byæ wywo³any po danym interwale czasowym
 
@@ -126,14 +160,21 @@ public class EnemyManager : MonoBehaviour
             elapsedTime = 0f;
         }
         if(listaPrzeciwnikow.Count==0 && rozpocznijPrzygotowanie==true)
-        {
+        {   tekst.text = "Fala " + numerfali;
             tekst.text = "Do fali: " + (15f - Mathf.Floor(elapsedTime)) + "s";
+            tekst.GetComponent<Animator>().SetTrigger("odpalAnimacje");
+
+            //tekst.GetComponent<Animation>().Play();
             if (elapsedTime >= 15f)
             {
                 licznik = 0;
                 iloscodmierzacz = 0;
                 rozpocznijPrzygotowanie = false;
                 numerfali += 1;
+                tekst.GetComponent<Animator>().ResetTrigger("odpalAnimacje");
+                tekst.GetComponent<Animator>().SetTrigger("wylaczAnimacje");
+                tekst.text = "Fala " + (numerfali-1);
+
             }
             
 

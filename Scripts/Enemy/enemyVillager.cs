@@ -68,6 +68,26 @@ public class enemyVillager : MonoBehaviour
         NavMeshAgent.SetDestination(PlacePath.pozycjaPosagu);
         Debug.Log("Moj poczatkowycel to :" + enemyVillager.cel);
     }
+    GameObject lifeBarObject;
+     public void UstawWidocznoscObiektów(bool stan)
+    {
+        if (stan)
+        {
+            //Debug.Log("zmienaim widocznosc na true");
+           // lifeBarObject.SetActive(true);
+            lifeBarBackground.SetActive(true);
+            fireEffect.GetComponent<ParticleSystem>().Stop();
+           iceEffect.GetComponent<ParticleSystem>().Stop();
+            //lifeBar.GetComponent<Image>().enabled = true;
+        }
+        else
+        {
+           // Debug.Log("zmienaim widocznosc na false");
+           // lifeBarObject.SetActive(false);
+            lifeBarBackground.SetActive(false);
+            //lifeBar.GetComponent<Image>().enabled = false;
+        }
+    }
     void CreateLifeBar()
     {
         // Tworzenie t³a paska ¿ycia
@@ -79,7 +99,7 @@ public class enemyVillager : MonoBehaviour
         lifeBarBackground.AddComponent<GraphicRaycaster>();
 
         // Tworzenie paska ¿ycia
-        GameObject lifeBarObject = new GameObject("LifeBar");
+         lifeBarObject = new GameObject("LifeBar");
         lifeBarObject.transform.SetParent(lifeBarBackground.transform);
         lifeBarObject.AddComponent<CanvasRenderer>();
         lifeBar = lifeBarObject.AddComponent<Image>();
