@@ -135,13 +135,38 @@ PrefabInstance:
       propertyPath: m_LocalPosition.y
       value: -0.05
       objectReference: {fileID: 0}
+    - target: {fileID: 8164078558771037576, guid: f90cac7215b11bc499c960886977f288, type: 3}
+      propertyPath: m_TagString
+      value: DefaultGridFloor
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: f90cac7215b11bc499c960886977f288, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 312273471212450586}
   m_SourcePrefab: {fileID: 100100000, guid: f90cac7215b11bc499c960886977f288, type: 3}
 --- !u!4 &3491426697418830508 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: f90cac7215b11bc499c960886977f288, type: 3}
   m_PrefabInstance: {fileID: 4034859576574317895}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &4269371462563309590 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: f90cac7215b11bc499c960886977f288, type: 3}
+  m_PrefabInstance: {fileID: 4034859576574317895}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &312273471212450586
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4269371462563309590}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8b853e4b8c62ab24888ad3b461ec9b0c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  alpha: 0.05
