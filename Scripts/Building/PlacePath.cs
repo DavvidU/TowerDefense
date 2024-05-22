@@ -61,8 +61,8 @@ public class PlacePath : MonoBehaviour
             }
         }
         licznikZyciaPosag = 3;
-        StartPosition = new Vector3(5, 0, 0);
-         StopPosition = new Vector3(10, 0, 9);
+        StartPosition = new Vector3(0, 0, 8);
+         StopPosition = new Vector3(14, 0, 5);
          PozycjaSciezki = new Vector3();
         czySciezkaStworzona = false;
         GameObject start = Instantiate(obiektsciezki, StartPosition, Quaternion.identity);
@@ -102,7 +102,7 @@ public class PlacePath : MonoBehaviour
     {
         Vector3 pozycja;
         pozycja = StartPosition;
-        pozycja.y = 0.5f;
+        pozycja.y = 0.7f;
         return pozycja;
     }
     public Vector3 getStopPosition()
