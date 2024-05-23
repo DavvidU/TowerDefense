@@ -49,7 +49,7 @@ public class DefaultEnemyFactory : MonoBehaviour, EnemyFactory
             {
                 try
                 {
-                    this.pelnaSciezkaWariant1 = AssetDatabase.GUIDToAssetPath(sciezkiDoZasobow[0]);
+                    this.pelnaSciezkaWariant1 = AssetDatabase.GUIDToAssetPath(AssetDatabase.FindAssets("EnemyVillager", new[] { katalogZasobow })[0]);
                 }
                 catch (ArgumentException e)
                 {
@@ -58,7 +58,7 @@ public class DefaultEnemyFactory : MonoBehaviour, EnemyFactory
 
                 try
                 {
-                    this.pelnaSciezkaWariant2 = AssetDatabase.GUIDToAssetPath(sciezkiDoZasobow[1]);
+                    this.pelnaSciezkaWariant2 = AssetDatabase.GUIDToAssetPath(AssetDatabase.FindAssets("EnemyVillagerWithSth", new[] { katalogZasobow })[0]);
                 }
                 catch (ArgumentException e)
                 {

@@ -32,8 +32,6 @@ public class enemyKnite : MonoBehaviour
 
     private int licznik;
 
-
-
     void Awake()
     {
         gameControllerObj = GameObject.Find("Main Camera");
@@ -60,12 +58,7 @@ public class enemyKnite : MonoBehaviour
         lifeText.rectTransform.sizeDelta = new Vector2(200, 50); // Ustawienie rozmiaru
         lifeText.rectTransform.localScale = new Vector3(0.01f, 0.01f, 0.01f); // Ustawienie skali
         lifeText.rectTransform.rotation = Quaternion.LookRotation(transform.position - gameControllerObj.transform.position);
-        //image = new GameObject("Tlo").AddComponent<UnityEngine.UI.Image>();
-        // image.transform.SetParent(lifeText.transform);
-        // image.rectTransform.sizeDelta = new Vector2(100, 50);
-
-
-        //lifeText.rectTransform.rotation = Quaternion.LookRotation(transform.position - GameController.instance.transform.position);
+       
     }
 
     void UpdateLifeText()
@@ -280,12 +273,7 @@ public class enemyKniteBoss : MonoBehaviour
         lifeText.rectTransform.sizeDelta = new Vector2(200, 50); // Ustawienie rozmiaru
         lifeText.rectTransform.localScale = new Vector3(0.01f, 0.01f, 0.01f); // Ustawienie skali
         lifeText.rectTransform.rotation = Quaternion.LookRotation(transform.position - gameControllerObj.transform.position);
-        //image = new GameObject("Tlo").AddComponent<UnityEngine.UI.Image>();
-        // image.transform.SetParent(lifeText.transform);
-        // image.rectTransform.sizeDelta = new Vector2(100, 50);
-
-
-        //lifeText.rectTransform.rotation = Quaternion.LookRotation(transform.position - GameController.instance.transform.position);
+      
     }
 
     void UpdateLifeText()
@@ -355,7 +343,6 @@ public class enemyKniteBoss : MonoBehaviour
         Destroy(collision.gameObject);
         TakeDamage(40);
     }
-
 
     void Update()
     {

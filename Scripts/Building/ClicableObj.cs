@@ -11,7 +11,7 @@ public class ClickableObject : MonoBehaviour
         if (objectData != null)
         {
          
-            Debug.Log("X: " + objectData.position.x + ", Y: " + objectData.position.z);
+           // Debug.Log("X: " + objectData.position.x + ", Y: " + objectData.position.z);
         }
         else
         {
