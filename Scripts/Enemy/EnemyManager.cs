@@ -21,7 +21,6 @@ public class EnemyManager : MonoBehaviour
     public float interval = 0f;
     int ilosc = 20;
     int iloscodmierzacz = 20;
-  // public bool startFali = false;
 
     string[] sciezkiDoZasobow;
     string pelnaSciezkaWariant1;
@@ -29,6 +28,7 @@ public class EnemyManager : MonoBehaviour
     public static bool czyPosagZabrany;
 
     public TextMeshProUGUI tekst;
+    public TextMeshProUGUI levelText;
     private int numerfali=0;
 
     private EnemyFactory enemyVillager1;
@@ -59,11 +59,11 @@ public class EnemyManager : MonoBehaviour
     }
     private void Update()
     {
-        
-        if (Input.GetButtonDown("zycie"))
+        //Input.GetButtonDown("zycie")
+        if (false)
         {
             if(widocznoscPaskuZycia == true)
-            widocznoscPaskuZycia = false;
+                widocznoscPaskuZycia = false;
             else
             {
                 widocznoscPaskuZycia = true;
@@ -139,6 +139,7 @@ public class EnemyManager : MonoBehaviour
 
         FloorManager siatkaPlanszy = new FloorManager();
 
+        levelText.text = "" + numerfali;
 
         // SprawdŸ, czy up³yn¹³ okreœlony interwa³ czasowy
         if ( elapsedTime >= interval && iloscodmierzacz!=ilosc  )
@@ -148,7 +149,7 @@ public class EnemyManager : MonoBehaviour
 
             siatkaPlanszy.Hide();
 
-            tekst.text = "Fala " + numerfali;
+            tekst.text = "Walka!";
             iloscodmierzacz++;
             // Wykonaj kod, który ma byæ wywo³any po danym interwale czasowym
 
@@ -166,10 +167,10 @@ public class EnemyManager : MonoBehaviour
             elapsedTime = 0f;
         }
         if(listaPrzeciwnikow.Count==0 && rozpocznijPrzygotowanie==true)
-        {   tekst.text = "Fala " + numerfali;
+        {   tekst.text = ""+numerfali;
 
             siatkaPlanszy.Show();
-            tekst.text = "Do fali: " + (15f - Mathf.Floor(elapsedTime)) + "s";
+            tekst.text = (15f - Mathf.Floor(elapsedTime)) + "s";
             tekst.GetComponent<Animator>().SetTrigger("odpalAnimacje");
 
             //tekst.GetComponent<Animation>().Play();
@@ -181,7 +182,7 @@ public class EnemyManager : MonoBehaviour
                 numerfali += 1;
                 tekst.GetComponent<Animator>().ResetTrigger("odpalAnimacje");
                 tekst.GetComponent<Animator>().SetTrigger("wylaczAnimacje");
-                tekst.text = "Fala " + (numerfali-1);
+                tekst.text = "Walka!";
 
             }
             
