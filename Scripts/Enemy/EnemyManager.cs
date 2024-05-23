@@ -38,6 +38,7 @@ public class EnemyManager : MonoBehaviour
     private bool widocznoscPaskuZycia = true;
 
 
+
     void Start()
     {
        // dlugoscfali = 10;
@@ -136,13 +137,18 @@ public class EnemyManager : MonoBehaviour
     {
         elapsedTime += Time.fixedDeltaTime;
 
+        FloorManager siatkaPlanszy = new FloorManager();
+
+
         // SprawdŸ, czy up³yn¹³ okreœlony interwa³ czasowy
         if ( elapsedTime >= interval && iloscodmierzacz!=ilosc  )
         {
             if(iloscodmierzacz==0)
             mesh.BuildNavMesh();
 
-            
+            siatkaPlanszy.Hide();
+
+            tekst.text = "Fala " + numerfali;
             iloscodmierzacz++;
             // Wykonaj kod, który ma byæ wywo³any po danym interwale czasowym
 
@@ -161,6 +167,8 @@ public class EnemyManager : MonoBehaviour
         }
         if(listaPrzeciwnikow.Count==0 && rozpocznijPrzygotowanie==true)
         {   tekst.text = "Fala " + numerfali;
+
+            siatkaPlanszy.Show();
             tekst.text = "Do fali: " + (15f - Mathf.Floor(elapsedTime)) + "s";
             tekst.GetComponent<Animator>().SetTrigger("odpalAnimacje");
 

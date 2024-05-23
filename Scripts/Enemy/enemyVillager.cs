@@ -22,7 +22,7 @@ public class enemyVillager : MonoBehaviour
     List<GridTile> listaSciezki = new List<GridTile>();
     private Vector3 aktualnaPozycja;
     public int aktualnyKafelek = 1;
-    public float speed = 3f;
+    public float speed = 0.5f;
     public bool powrot = false;
     // public int HP=100;
     private bool czasSpowolnienia = false;
@@ -61,6 +61,7 @@ public class enemyVillager : MonoBehaviour
     void Start()
     {
         UpdateLifeBar();
+     
         NavMeshAgent = GetComponent<NavMeshAgent>();
         NavMeshAgent.speed = moveSpeed;
         cel = sciezka.StopPosition;
@@ -169,9 +170,7 @@ public class enemyVillager : MonoBehaviour
     public void TakeDamage(int damageAmount)
     {
         Debug.Log("Dosta³em damage");
-        
         currentLife -= damageAmount;
-
 
         if (currentLife > 0)
         {
