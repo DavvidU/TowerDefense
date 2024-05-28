@@ -1,13 +1,8 @@
-using System.Collections;
+
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Runtime.CompilerServices;
-using Unity.VisualScripting;
 using UnityEditor;
-using UnityEditor.Experimental.GraphView;
-using UnityEditor.XR;
 using UnityEngine;
-using UnityEngine.UIElements;
+
 
 /**
  * @brief Klasa pozwala na ustawianie scie¿ki na siatce [GridTile] mapy
@@ -30,8 +25,10 @@ public class PlacePath : MonoBehaviour
     GameObject Sciezka;
    public bool czySciezkaStworzona;
     GridTile gridTileStop;
+
     public GameObject posag;
-    public GameObject postawionyPosag;
+    [SerializeField]
+    public GameObject PosagPrefab;
     public static GameObject obiektPosag;
     public int licznikZyciaPosag;
     private bool czySkonczona = false;
@@ -42,24 +39,7 @@ public class PlacePath : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        string katologdoposagu = "Assets/Prefabs/Allay";
-
-        string[] sciezkadoposagu = AssetDatabase.FindAssets("", new[] { katologdoposagu });
-
-        foreach (string sciezka in sciezkadoposagu)
-        {
-            string pelnaSciezka = AssetDatabase.GUIDToAssetPath(sciezka);
-
-            GameObject zasob = AssetDatabase.LoadAssetAtPath<GameObject>(pelnaSciezka);
-
-            if (zasob != null && PrefabUtility.IsPartOfPrefabAsset(zasob))
-            {
-                if (zasob.name == "Posag")
-                {
-                    obiektPosag = zasob;
-                }
-            }
-        }
+        
         licznikZyciaPosag = 3;
         StartPosition = new Vector3(0, 0, 5);
          StopPosition = new Vector3(14, 0, 5);

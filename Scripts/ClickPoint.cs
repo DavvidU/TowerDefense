@@ -86,6 +86,7 @@ public class ClickPoint : MonoBehaviour
         Debug.Log("Wykonuje start");
         this.TrybBudowania = BuldableObjects.Sciany;
         this.sciana = gameObject.GetComponent<PlaceWall>();
+        sciana.Zaladuj();
         this.sciezka = kamera.GetComponent<PlacePath>();
         this.pulapka = gameObject.GetComponent<PlaceTrap>();
         this.zarzadzanieObiektamiGlobalnymi = gameObject.AddComponent<ZarzadzajObiektami>();

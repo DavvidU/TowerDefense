@@ -45,7 +45,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 07a4885303ba26f4282b148e660c4c3b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  "strza\u0142a": {fileID: 0}
+  "strza\u0142a": {fileID: 2367628233720967935, guid: 2f8f4698218a0c2409aab7d239c1a88c, type: 3}
+  ArrowLimit: 50
   spawnPoint: {fileID: 2461187970814542454}
   shootingSpeed: 2
 --- !u!1 &3594343663713366923

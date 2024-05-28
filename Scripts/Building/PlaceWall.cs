@@ -1,13 +1,5 @@
-using System.Collections;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Runtime.CompilerServices;
-using Unity.VisualScripting;
-using UnityEditor;
-using UnityEditor.Experimental.GraphView;
-using UnityEditor.XR;
 using UnityEngine;
-using UnityEngine.UIElements;
+
 
 /**
  * @brief Klasa pozwala na ustawianie przeszkód na siatce [GridTile] mapy
@@ -60,7 +52,7 @@ public class PlaceWall : MonoBehaviour
    * @author <i><span style="font-size: 1rem; font-weight: bold; color: #fff;">Artur Leszczak</span></i>
    */
     
-    void Awake()
+    public void Zaladuj()
     {
         
         

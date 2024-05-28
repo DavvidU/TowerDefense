@@ -6,8 +6,10 @@ using UnityEngine;
 
 public class SimplePushing : MonoBehaviour
 {
+    [SerializeField]
+    GameObject StrzalaPrefab;
 
-    public GameObject strza³a;
+    
     public int ArrowLimit = 50;
     private int ArrowCounter = 0;
     public Transform spawnPoint;
@@ -17,24 +19,7 @@ public class SimplePushing : MonoBehaviour
     void Start()
     {
 
-        string katalogZasobowStrzelajacych = "Assets/Prefabs/Traps/Arrows";
-        string[] sciezkiDoZasobowStrzelajacych = AssetDatabase.FindAssets("", new[] { katalogZasobowStrzelajacych });
-
-        foreach (string sciezka in sciezkiDoZasobowStrzelajacych)
-        {
-            //narazie tylko jedna pulapka w Traps/Spikes
-            string pelnaSciezka = AssetDatabase.GUIDToAssetPath(sciezka);
-
-            GameObject zasob = AssetDatabase.LoadAssetAtPath<GameObject>(pelnaSciezka);
-
-            if (zasob != null && PrefabUtility.IsPartOfPrefabAsset(zasob))
-            {
-                if (zasob.name == "Strza³a")
-                {
-                    this.strza³a= zasob;
-                }
-            }
-        }
+        
 
         shootingSpeed = 1f; //jedna sekunda
         timer = 0f;
@@ -52,7 +37,7 @@ public class SimplePushing : MonoBehaviour
     }
     void shoot()
     {
-        GameObject arrow = Instantiate(strza³a, spawnPoint.position, spawnPoint.rotation);
+        GameObject arrow = Instantiate(StrzalaPrefab, spawnPoint.position, spawnPoint.rotation);
 
         // Ustawienie kierunku strza³y zgodnie z kierunkiem pu³apki
         Strzala arrowScript = arrow.GetComponent<Strzala>();

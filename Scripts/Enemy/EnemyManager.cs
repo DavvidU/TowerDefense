@@ -1,15 +1,9 @@
-using System.Collections;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Runtime.CompilerServices;
 using TMPro;
 using Unity.AI.Navigation;
-using Unity.VisualScripting;
 using UnityEditor;
-using UnityEditor.Experimental.GraphView;
-using UnityEditor.XR;
 using UnityEngine;
-using UnityEngine.UIElements;
+
 
 public class EnemyManager : MonoBehaviour
 {
@@ -22,38 +16,35 @@ public class EnemyManager : MonoBehaviour
     int ilosc = 20;
     int iloscodmierzacz = 20;
 
-    string[] sciezkiDoZasobow;
-    string pelnaSciezkaWariant1;
-    string pelnaSciezkaWariant2;
+    [SerializeField]
+    GameObject PrefabVillager;
     public static bool czyPosagZabrany;
 
     public TextMeshProUGUI tekst;
     public TextMeshProUGUI levelText;
     private int numerfali=0;
 
+    [SerializeField]
     private EnemyFactory enemyVillager1;
+    [SerializeField]
     private EnemyFactory enemyKnite;
     public Vector3 cel;
     public static bool rozpocznijPrzygotowanie = true;
     private bool widocznoscPaskuZycia = true;
-
+    FloorManager siatkaPlanszy;
 
 
     void Start()
     {
        // dlugoscfali = 10;
         sciezka = kamera.GetComponent<PlacePath>();
-        string katalogZasobow = "Assets/Prefabs/Enemy/Villager";
         czyPosagZabrany = false;
-        sciezkiDoZasobow = AssetDatabase.FindAssets("", new[] { katalogZasobow });
-        pelnaSciezkaWariant1 = AssetDatabase.GUIDToAssetPath(sciezkiDoZasobow[0]);
-        pelnaSciezkaWariant2 = AssetDatabase.GUIDToAssetPath(sciezkiDoZasobow[1]);
 
         
 
-        this.enemyVillager1 = gameObject.AddComponent<DefaultEnemyFactory>();
-        this.enemyKnite = gameObject.AddComponent<KniteEnemyFactory>();
-
+        this.enemyVillager1 = gameObject.GetComponent<DefaultEnemyFactory>();
+        this.enemyKnite = gameObject.GetComponent<KniteEnemyFactory>();
+        siatkaPlanszy = gameObject.GetComponent<FloorManager>();
     }
     private void Awake()
     {
@@ -130,7 +121,7 @@ public class EnemyManager : MonoBehaviour
     {
         elapsedTime += Time.fixedDeltaTime;
 
-        FloorManager siatkaPlanszy = gameObject.AddComponent<FloorManager>();
+        
 
         levelText.text = "" + numerfali;
 
@@ -187,7 +178,7 @@ public class EnemyManager : MonoBehaviour
             czyPosagZabrany = true;
             GameObject postac;
             Debug.Log("posag zabrany??: ");
-            EnemyFactory ef = new DefaultEnemyFactory();
+            EnemyFactory ef = gameObject.GetComponent<DefaultEnemyFactory>();
             postac = Instantiate(ef.createEnemy(), PlacePath.pozycjaPosagu, Quaternion.identity);
             postac.AddComponent<enemyVillager>();
             postac.tag = "EnemyWithStatue";

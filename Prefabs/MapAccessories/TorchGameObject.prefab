@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1544354061657933356}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: TorchGameObject
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -42,7 +42,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1979115736650722816}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Fire_gameobject
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -77,7 +77,7 @@ GameObject:
   - component: {fileID: 1439209010874267433}
   - component: {fileID: 1935609404966206431}
   - component: {fileID: 4976352392141501269}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Fire_PS_system
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4909,7 +4909,7 @@ GameObject:
   - component: {fileID: 652160474728981200}
   - component: {fileID: 8101584673286367687}
   - component: {fileID: 8546193475844571726}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Point Light
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5070,14 +5070,30 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 21.76
       objectReference: {fileID: 0}
+    - target: {fileID: -8391222552659086748, guid: c2a5bea49bfe89c44b9d175699ed2f12, type: 3}
+      propertyPath: m_Layer
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: -8143710011712545758, guid: c2a5bea49bfe89c44b9d175699ed2f12, type: 3}
       propertyPath: 'm_Materials.Array.data[0]'
       value: 
       objectReference: {fileID: 2100000, guid: 6156010d59d699c4fb26305d0bb5571a, type: 2}
+    - target: {fileID: -7640558969779515294, guid: c2a5bea49bfe89c44b9d175699ed2f12, type: 3}
+      propertyPath: m_Layer
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: -7146521406498821007, guid: c2a5bea49bfe89c44b9d175699ed2f12, type: 3}
+      propertyPath: m_Layer
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: -6093592463355912122, guid: c2a5bea49bfe89c44b9d175699ed2f12, type: 3}
       propertyPath: 'm_Materials.Array.data[0]'
       value: 
       objectReference: {fileID: 2100000, guid: b66c46460624a4c45a3baeaaca468b73, type: 2}
+    - target: {fileID: -5568371526223589888, guid: c2a5bea49bfe89c44b9d175699ed2f12, type: 3}
+      propertyPath: m_Layer
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: -4683669308469848369, guid: c2a5bea49bfe89c44b9d175699ed2f12, type: 3}
       propertyPath: 'm_Materials.Array.data[0]'
       value: 
@@ -5090,6 +5106,10 @@ PrefabInstance:
       propertyPath: 'm_Materials.Array.data[0]'
       value: 
       objectReference: {fileID: 2100000, guid: b66c46460624a4c45a3baeaaca468b73, type: 2}
+    - target: {fileID: -1599826595754709761, guid: c2a5bea49bfe89c44b9d175699ed2f12, type: 3}
+      propertyPath: m_Layer
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: -1461304994638716399, guid: c2a5bea49bfe89c44b9d175699ed2f12, type: 3}
       propertyPath: 'm_Materials.Array.data[0]'
       value: 
@@ -5106,9 +5126,37 @@ PrefabInstance:
       propertyPath: 'm_Materials.Array.data[0]'
       value: 
       objectReference: {fileID: 2100000, guid: b66c46460624a4c45a3baeaaca468b73, type: 2}
+    - target: {fileID: -516098083770646512, guid: c2a5bea49bfe89c44b9d175699ed2f12, type: 3}
+      propertyPath: m_Layer
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: -466329591000292508, guid: c2a5bea49bfe89c44b9d175699ed2f12, type: 3}
+      propertyPath: m_Layer
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: -391268320553695201, guid: c2a5bea49bfe89c44b9d175699ed2f12, type: 3}
+      propertyPath: m_Layer
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: -208595431880416365, guid: c2a5bea49bfe89c44b9d175699ed2f12, type: 3}
+      propertyPath: m_Layer
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 281855664364225751, guid: c2a5bea49bfe89c44b9d175699ed2f12, type: 3}
+      propertyPath: m_Layer
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: c2a5bea49bfe89c44b9d175699ed2f12, type: 3}
       propertyPath: m_Name
       value: torch
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: c2a5bea49bfe89c44b9d175699ed2f12, type: 3}
+      propertyPath: m_Layer
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 1365132098506396400, guid: c2a5bea49bfe89c44b9d175699ed2f12, type: 3}
+      propertyPath: m_Layer
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 3219882101630006985, guid: c2a5bea49bfe89c44b9d175699ed2f12, type: 3}
       propertyPath: 'm_Materials.Array.data[0]'
@@ -5122,6 +5170,10 @@ PrefabInstance:
       propertyPath: 'm_Materials.Array.data[0]'
       value: 
       objectReference: {fileID: 2100000, guid: b66c46460624a4c45a3baeaaca468b73, type: 2}
+    - target: {fileID: 8416272007918961125, guid: c2a5bea49bfe89c44b9d175699ed2f12, type: 3}
+      propertyPath: m_Layer
+      value: 3
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

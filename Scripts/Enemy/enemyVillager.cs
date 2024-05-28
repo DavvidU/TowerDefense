@@ -1,17 +1,9 @@
-using System.Collections;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Runtime.CompilerServices;
-using Unity.VisualScripting;
-using UnityEditor;
-using UnityEditor.Experimental.GraphView;
-using UnityEditor.XR;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using System;
 using UnityEngine.AI;
-using static UnityEngine.GraphicsBuffer;
 
 public class enemyVillager : MonoBehaviour
 {
