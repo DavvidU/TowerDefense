@@ -380,12 +380,13 @@ public class enemyVillager : MonoBehaviour
             {
                 if (tag == "EnemyWithStatue")
                 {
-                    Debug.Log("Chyba LOSE?");
                     SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1); // JESLI ZLA SCENA -> ZMIENIC INDEX (BuildSettings)
                 }
                 EnemyManager.listaPrzeciwnikow.Remove(gameObject);
                 if (EnemyManager.listaPrzeciwnikow.Count == 0)
                 {
+                    //if (EnemyManager.numerfali == 5)
+                        //SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 2); // JESLI ZLA SCENA -> ZMIENIC INDEX (BuildSettings)
                     EnemyManager.rozpocznijPrzygotowanie = true;
                 }
                 Destroy(NavMeshAgent);

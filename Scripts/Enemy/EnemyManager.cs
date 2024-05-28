@@ -29,7 +29,7 @@ public class EnemyManager : MonoBehaviour
 
     public TextMeshProUGUI tekst;
     public TextMeshProUGUI levelText;
-    private int numerfali=0;
+    public int numerfali=0;
 
     private EnemyFactory enemyVillager1;
     private EnemyFactory enemyKnite;
