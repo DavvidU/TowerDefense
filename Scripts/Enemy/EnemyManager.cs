@@ -193,7 +193,9 @@ public class EnemyManager : MonoBehaviour
             
             czyPosagZabrany = true;
             GameObject postac;
-            postac = Instantiate(AssetDatabase.LoadAssetAtPath<GameObject>(pelnaSciezkaWariant2), PlacePath.pozycjaPosagu, Quaternion.identity);
+            Debug.Log("posag zabrany??: ");
+            EnemyFactory ef = new DefaultEnemyFactory();
+            postac = Instantiate(ef.createEnemy(), PlacePath.pozycjaPosagu, Quaternion.identity);
             postac.AddComponent<enemyVillager>();
             postac.tag = "EnemyWithStatue";
             enemyVillager pierwsza = postac.GetComponent<enemyVillager>();
