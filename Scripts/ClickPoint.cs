@@ -68,10 +68,10 @@ public class ClickPoint : MonoBehaviour
     private EnemyManager ManagerEnemy;
     public GameObject obiektEnemyManager;
     private ZarzadzajObiektami zarzadzanieObiektamiGlobalnymi;
-    private float Mousex = 0f;
-    private float Mousey = 0f;
+    //private float Mousex = 0f;
+    //private float Mousey = 0f;
     private float Mouser = 0f;
-    private float mouseRotationY = 0f;
+    //private float mouseRotationY = 0f;
 
     private int mapWidth = 15;
     private int mapHeight = 10;
@@ -83,11 +83,12 @@ public class ClickPoint : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        Debug.Log("Wykonuje start");
         this.TrybBudowania = BuldableObjects.Sciany;
-        this.sciana = new PlaceWall();
+        this.sciana = gameObject.GetComponent<PlaceWall>();
         this.sciezka = kamera.GetComponent<PlacePath>();
-        this.pulapka = new PlaceTrap();
-        this.zarzadzanieObiektamiGlobalnymi = new ZarzadzajObiektami();
+        this.pulapka = gameObject.GetComponent<PlaceTrap>();
+        this.zarzadzanieObiektamiGlobalnymi = gameObject.AddComponent<ZarzadzajObiektami>();
         this.ManagerEnemy = obiektEnemyManager.GetComponent<EnemyManager>();
        // this.GlobalFunctions = new GlobalFunctions();
 

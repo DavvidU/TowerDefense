@@ -14,16 +14,20 @@ using UnityEngine;
 public class PlaceTrap : MonoBehaviour
 {
     /* Zmienne przechowujace prefaby pulapek */
-
+    [SerializeField]
     private GameObject SimpleSpikes;
+    [SerializeField]
     private GameObject PushingTrap; //strzelajaca
+    [SerializeField]
     private GameObject LavaTrap;
+    [SerializeField]
     private GameObject IcingTrap;
 
     private GameObject trap;
 
     private GameObject[] obiektySiatki;
 
+    /*
     public PlaceTrap()
     {
         //skanuje katalog zawieraj¹cy pliki Pulapek
@@ -100,7 +104,7 @@ public class PlaceTrap : MonoBehaviour
         //pobiera wszystkie obiekty opisane tagiem grid
         obiektySiatki = GameObject.FindGameObjectsWithTag("Grid");
     }
-
+    */
     /**
     * @brief [<span style="color: lightblue; font-weight: bold;">Publiczna</span>] Metoda tworzy instancjê obiektu i umieszcza go w odpowiednim miejscu na siatce
     * 

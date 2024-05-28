@@ -22,7 +22,7 @@ public interface EnemyFactory
 
 }
 
-public class DefaultEnemyFactory : MonoBehaviour, EnemyFactory
+public class DefaultEnemyFactory : MonoBehaviour,  EnemyFactory
 {
     private string katalogZasobow;
     private string[] sciezkiDoZasobow;

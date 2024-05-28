@@ -8,13 +8,13 @@ public class TrapPoint : MonoBehaviour
 {
     private bool isFree;
     private GameObject buildedObject;
-    private Transform transform;
+    //private Transform transform;
     private GameObject thisObject;
     // Start is called before the first frame update
     void Start()
     {
         this.isFree = true;
-        this.transform = GetComponent<Transform>();
+       // this.transform = GetComponent<Transform>();
         this.thisObject = gameObject;
     }
 

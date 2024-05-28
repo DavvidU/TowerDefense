@@ -49,8 +49,10 @@ public class EnemyManager : MonoBehaviour
         pelnaSciezkaWariant1 = AssetDatabase.GUIDToAssetPath(sciezkiDoZasobow[0]);
         pelnaSciezkaWariant2 = AssetDatabase.GUIDToAssetPath(sciezkiDoZasobow[1]);
 
-        this.enemyVillager1 = new DefaultEnemyFactory();
-        this.enemyKnite = new KniteEnemyFactory();
+        
+
+        this.enemyVillager1 = gameObject.AddComponent<DefaultEnemyFactory>();
+        this.enemyKnite = gameObject.AddComponent<KniteEnemyFactory>();
 
     }
     private void Awake()
@@ -59,16 +61,7 @@ public class EnemyManager : MonoBehaviour
     }
     private void Update()
     {
-        //Input.GetButtonDown("zycie")
-        if (false)
-        {
-            if(widocznoscPaskuZycia == true)
-                widocznoscPaskuZycia = false;
-            else
-            {
-                widocznoscPaskuZycia = true;
-            }
-        }
+       
         if(widocznoscPaskuZycia==true)
         {
             WidocznoscPaskowZycia(true);
@@ -137,7 +130,7 @@ public class EnemyManager : MonoBehaviour
     {
         elapsedTime += Time.fixedDeltaTime;
 
-        FloorManager siatkaPlanszy = new FloorManager();
+        FloorManager siatkaPlanszy = gameObject.AddComponent<FloorManager>();
 
         levelText.text = "" + numerfali;
 

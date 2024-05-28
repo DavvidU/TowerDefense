@@ -26,7 +26,7 @@ public class PlacePath : MonoBehaviour
     public GameObject obiektsciezki;
     Vector3 StartPosition;
     public Vector3 StopPosition;
-        Vector3 PozycjaSciezki;
+      //  Vector3 PozycjaSciezki;
     GameObject Sciezka;
    public bool czySciezkaStworzona;
     GridTile gridTileStop;
@@ -63,7 +63,7 @@ public class PlacePath : MonoBehaviour
         licznikZyciaPosag = 3;
         StartPosition = new Vector3(0, 0, 5);
          StopPosition = new Vector3(14, 0, 5);
-         PozycjaSciezki = new Vector3();
+        // PozycjaSciezki = new Vector3();
         czySciezkaStworzona = false;
         GameObject start = Instantiate(obiektsciezki, StartPosition, Quaternion.identity);
         GridTile gridTile = start.AddComponent<GridTile>();

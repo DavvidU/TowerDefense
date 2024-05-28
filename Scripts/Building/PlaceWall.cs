@@ -26,15 +26,23 @@ public class PlaceWall : MonoBehaviour
         Left, Right, Top, Bottom
     }
 
+    
+
+    [SerializeField]
     private GameObject SingleWallObject;
+    [SerializeField]
     private GameObject StraightWallObject;
+    [SerializeField]
     private GameObject TWallObject;
+    [SerializeField]
     private GameObject EndWallObject;
+    [SerializeField]
     private GameObject CrossWallObject;
+    [SerializeField]
     private GameObject CornerWallObject;
 
     private GameObject wall;
-    private string name;
+    private string nazwa;
 
     private GetNeaghbours sasiad;
 
@@ -51,57 +59,16 @@ public class PlaceWall : MonoBehaviour
    * 
    * @author <i><span style="font-size: 1rem; font-weight: bold; color: #fff;">Artur Leszczak</span></i>
    */
-    public PlaceWall()
+    
+    void Awake()
     {
-        //skanuje katalog zawierający pliki ścian
-        string katalogZasobow = "Assets/Prefabs/Walls";
-
-        string[] sciezkiDoZasobow = AssetDatabase.FindAssets("", new[] { katalogZasobow });
-
-        foreach (string sciezka in sciezkiDoZasobow)
-        {
-            
-            string pelnaSciezka = AssetDatabase.GUIDToAssetPath(sciezka);
-       
-            GameObject zasob = AssetDatabase.LoadAssetAtPath<GameObject>(pelnaSciezka);
-
-            if (zasob != null && PrefabUtility.IsPartOfPrefabAsset(zasob))
-            {
-
-                if (zasob.name == "Wall")
-                {
-                    this.StraightWallObject = zasob;
-                }
-                else if (zasob.name == "SingleWall")
-                {
-                    this.SingleWallObject = zasob;
-                }
-                else if (zasob.name == "TWall")
-                {
-                    this.TWallObject = zasob;
-                }
-                else if (zasob.name == "EndWall")
-                {
-                    this.EndWallObject = zasob;
-                }
-                else if (zasob.name == "CrossWall")
-                {
-                    this.CrossWallObject = zasob;
-                }
-                else if (zasob.name == "CornerWall")
-                {
-                    this.CornerWallObject = zasob;
-                }
-
-            }
-
-        }
-        //generuje sąsiada
+        
+        
         sasiad = new GetNeaghbours();
-        //pobiera wszystkie obiekty opisane tagiem grid
         obiektySiatki = GameObject.FindGameObjectsWithTag("Grid");
 
     }
+    
     /**
     * @brief [<span style="color: lightblue; font-weight: bold;">Publiczna</span>] Metoda tworzy instancję obiektu i umieszcza go w odpowiednim miejscu na siatce
     * 
@@ -412,7 +379,17 @@ public class PlaceWall : MonoBehaviour
      */
    private void CheckToEdit(GridTile gridTile, Pos parent)
     {
-
+        if(gridTile == null)
+        {
+            Debug.Log("Gridtile to null");
+        }else
+        {
+            Debug.Log("Gridtile to nie jest null");
+        }
+        if(obiektySiatki == null)
+        {
+            Debug.Log("Obiekty siatki to null");
+        }
         GetNeaghbours gn = new GetNeaghbours(gridTile, obiektySiatki);
 
         bool Left = gn.getMovableLeft();
@@ -746,8 +723,14 @@ public class PlaceWall : MonoBehaviour
 
         private void checkBorder()
         {
+
             int maxMapWidth = 15;
             int maxMapHeight = 10;
+
+            if(me == null)
+            {
+                Debug.Log("Jestem nullem");
+            }
 
             if (this.me.isBorder)
             {
