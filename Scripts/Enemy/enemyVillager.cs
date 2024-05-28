@@ -12,6 +12,7 @@ using TMPro;
 using System;
 using UnityEngine.AI;
 using static UnityEngine.GraphicsBuffer;
+using UnityEngine.SceneManagement;
 
 public class enemyVillager : MonoBehaviour
 {
@@ -377,6 +378,11 @@ public class enemyVillager : MonoBehaviour
             else
             if (powrot==true && NavMeshAgent.remainingDistance < 0.5f)
             {
+                if (tag == "EnemyWithStatue")
+                {
+                    Debug.Log("Chyba LOSE?");
+                    SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1); // JESLI ZLA SCENA -> ZMIENIC INDEX (BuildSettings)
+                }
                 EnemyManager.listaPrzeciwnikow.Remove(gameObject);
                 if (EnemyManager.listaPrzeciwnikow.Count == 0)
                 {
