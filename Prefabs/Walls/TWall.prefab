@@ -50,10 +50,10 @@ BoxCollider:
   m_LayerOverridePriority: 0
   m_IsTrigger: 0
   m_ProvidesContacts: 0
-  m_Enabled: 0
+  m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 0.75, y: 0.98, z: 1}
-  m_Center: {x: 0.124, y: 0.49, z: 0}
+  m_Size: {x: 0.75, y: 0.95777553, z: 1}
+  m_Center: {x: 0.12400001, y: 0.47888777, z: 0}
 --- !u!1001 &3395084140095843211
 PrefabInstance:
   m_ObjectHideFlags: 0

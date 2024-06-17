@@ -138,6 +138,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: EnemyVillagerWithSth
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 47566414facb0a24ab0ee558033cb35b, type: 3}
+      propertyPath: m_TagString
+      value: EnemyWithStatue
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects:
     - {fileID: -5770850338934133332, guid: 47566414facb0a24ab0ee558033cb35b, type: 3}
