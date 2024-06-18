@@ -27,84 +27,7 @@ public class PlaceTrap : MonoBehaviour
 
     private GameObject[] obiektySiatki;
 
-    /*
-    public PlaceTrap()
-    {
-        //skanuje katalog zawieraj¹cy pliki Pulapek
-        string katalogZasobowKolce = "Assets/Prefabs/Traps/Spikes";
-        string katalogZasobowStrzelajacych = "Assets/Prefabs/Traps/PushingTraps";
-        string katalogZasobowLawa = "Assets/Prefabs/Traps/Lava";
-        string katalogZasobowOblodzenie = "Assets/Prefabs/Traps/Icing";
-
-        string[] sciezkiDoZasobowKolce = AssetDatabase.FindAssets("", new[] { katalogZasobowKolce });
-        string[] sciezkiDoZasobowStrzelajacych = AssetDatabase.FindAssets("", new[] { katalogZasobowStrzelajacych });
-        string[] sciezkiDoZasobowLawa = AssetDatabase.FindAssets("", new[] { katalogZasobowLawa });
-        string[] sciezkiDoZasobowOblodzenie = AssetDatabase.FindAssets("", new[] { katalogZasobowOblodzenie });
-
-        // Znajdowanie prefabu Kolcow w odpowiednich zasobach
-        foreach (string sciezka in sciezkiDoZasobowKolce)
-        {
-            string pelnaSciezka = AssetDatabase.GUIDToAssetPath(sciezka);
-
-            GameObject zasob = AssetDatabase.LoadAssetAtPath<GameObject>(pelnaSciezka);
-
-            if (zasob != null && PrefabUtility.IsPartOfPrefabAsset(zasob))
-            {
-                if (zasob.name == "Spikes")
-                {
-                    SimpleSpikes = zasob;
-                }
-            }
-        }
-
-        //pobiera sciezki strzelajacych
-        foreach (string sciezka in sciezkiDoZasobowStrzelajacych)
-        {
-            string pelnaSciezka = AssetDatabase.GUIDToAssetPath(sciezka);
-
-            GameObject zasob = AssetDatabase.LoadAssetAtPath<GameObject>(pelnaSciezka);
-
-            if (zasob != null && PrefabUtility.IsPartOfPrefabAsset(zasob))
-            {
-                if (zasob.name == "PushingSimple")
-                {
-                    PushingTrap = zasob;
-                }
-            }
-        }
-
-        // Znajdowanie prefabu Lawy w odpowiednich zasobach
-        foreach (string sciezka in sciezkiDoZasobowLawa)
-        {
-            string pelnaSciezka = AssetDatabase.GUIDToAssetPath(sciezka);
-
-            GameObject zasob = AssetDatabase.LoadAssetAtPath<GameObject>(pelnaSciezka);
-
-            if (zasob != null && PrefabUtility.IsPartOfPrefabAsset(zasob))
-            {
-                if (zasob.name == "Lava 1")
-                    LavaTrap = zasob;
-            }
-        }
-
-        // Znajdowanie prefabu Oblodzenia w odpowiednich zasobach
-        foreach (string sciezka in sciezkiDoZasobowOblodzenie)
-        {
-            string pelnaSciezka = AssetDatabase.GUIDToAssetPath(sciezka);
-
-            GameObject zasob = AssetDatabase.LoadAssetAtPath<GameObject>(pelnaSciezka);
-
-            if (zasob != null && PrefabUtility.IsPartOfPrefabAsset(zasob))
-            {
-                if (zasob.name == "Icing 1")
-                    IcingTrap = zasob;
-            }
-        }
-
-        //pobiera wszystkie obiekty opisane tagiem grid
-        obiektySiatki = GameObject.FindGameObjectsWithTag("Grid");
-    }
-    */
+    
     /**
     * @brief [<span style="color: lightblue; font-weight: bold;">Publiczna</span>] Metoda tworzy instancjê obiektu i umieszcza go w odpowiednim miejscu na siatce
     * 
@@ -119,11 +42,6 @@ public class PlaceTrap : MonoBehaviour
     */
     public void getTrap(int rodzajPulapki, GridTile gridTile)
     {
-        /*if (gridTile.isPath)
-        {
-            return;
-
-        }*/
 
         this.trap = null;
 

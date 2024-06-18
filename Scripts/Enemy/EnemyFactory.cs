@@ -5,10 +5,10 @@ using UnityEditor;
 using UnityEngine;
 
 /**
- * @brief Fabryka przeciwników korzystaj¹ca ze wzorca kreacyjnego fabryka
- * @desc
+ * @brief Interfejs fabryki przeciwników korzystaj¹cy ze wzorca kreacyjnego fabryka 
  * 
  * @author Artur Leszczak
+ * @version 1.0.0
  */
 
 public interface EnemyFactory

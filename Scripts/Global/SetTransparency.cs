@@ -2,10 +2,16 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+/**
+ * Klasa s³u¿¹ca do ustawiania przezroczystoœci dla obiektów.
+ *
+ * @author Artur Leszczak
+ * @version 1.0.0
+ */
 public class SetTransparency : MonoBehaviour
 {
     [Range(0, 1)]
-    public float alpha = 0.5f; // Ustawienie przezroczystoœci (0 = ca³kowicie niewidoczny, 1 = ca³kowicie widoczny)
+    public float alpha = 0.5f; // Ustawienie przezroczystoœci (0 = niewidoczny, 1 = widoczny w 100%)
 
     void Start()
     {
@@ -14,11 +20,9 @@ public class SetTransparency : MonoBehaviour
 
     void SetObjectTransparency(float alpha)
     {
-        // Pobierz wszystkie renderery w prefabrykacie
         Renderer[] renderers = GetComponentsInChildren<Renderer>();
         foreach (Renderer renderer in renderers)
         {
-            // PrzejdŸ przez wszystkie materia³y przypisane do renderera
             foreach (Material mat in renderer.materials)
             {
                 // SprawdŸ, czy materia³ obs³uguje przezroczystoœæ

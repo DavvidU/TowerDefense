@@ -14,7 +14,6 @@ public class enemy : MonoBehaviour
     public int aktualnyKafelek=1;
     public float speed = 3f;
     public bool powrot = false;
-   // public int HP=100;
     private bool czasSpowolnienia = false;
     private bool czasPodpalenia = false;
         private float timer = 0.0f;

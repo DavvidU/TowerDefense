@@ -2,6 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+/**
+ * Domyœlna fabryka przeciwników.
+ *
+ * @author Artur Leszczak
+ * @version 1.0.0
+ */
 public class DefaultEnemyFactory : MonoBehaviour, EnemyFactory
 {
     [SerializeField]
@@ -14,8 +20,14 @@ public class DefaultEnemyFactory : MonoBehaviour, EnemyFactory
     {
     }
 
-
-
+     /**
+     * Ustawia punkt startowy dla obiektu.
+     *
+     * @param startPoint Wektor 3D reprezentuj¹cy punkt startowy.
+     *
+     * @author Artur Leszczak
+     * @version 1.0.0
+     */
     public void setStartPoint(Vector3 startPoint)
     {
         this.startPoint = startPoint;

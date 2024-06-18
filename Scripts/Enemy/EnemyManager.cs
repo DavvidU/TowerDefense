@@ -4,7 +4,12 @@ using Unity.AI.Navigation;
 using UnityEditor;
 using UnityEngine;
 
-
+/**
+ * Klasa odpowiedzialna za zarz¹dzanie przeciwnikiem
+ * 
+ * @author Artur Leszczak, Nikola Osiñska, Konrad Kondracki, Dawid Ugniewski
+ * @version 1.1.0
+ */
 public class EnemyManager : MonoBehaviour
 {
     public NavMeshSurface mesh;
@@ -36,14 +41,15 @@ public class EnemyManager : MonoBehaviour
 
     void Start()
     {
-       // dlugoscfali = 10;
         sciezka = kamera.GetComponent<PlacePath>();
         czyPosagZabrany = false;
-
         
-
+        /**
+         * Pobranie komponentów klas odpowiedzialnych za przeciwników
+         */
         this.enemyVillager1 = gameObject.GetComponent<DefaultEnemyFactory>();
         this.enemyKnite = gameObject.GetComponent<KniteEnemyFactory>();
+        
         siatkaPlanszy = gameObject.GetComponent<FloorManager>();
     }
     private void Awake()
@@ -72,6 +78,12 @@ public class EnemyManager : MonoBehaviour
         }
     }
 
+    /**
+     * Metoda dodaj¹ca nowego przeciwnika "wieœniaka" do listy przeciwników
+     *
+     * @author Artur Leszczak
+     * @version 1.0.0
+     */
     public void GetEnemyVillager()
     {
         Vector3 newStart = sciezka.getStartPosition();
@@ -81,8 +93,14 @@ public class EnemyManager : MonoBehaviour
         postac = this.enemyVillager1.createEnemy();
 
         listaPrzeciwnikow.Add(postac);
-
     }
+
+    /**
+    * Metoda dodaj¹ca nowego przeciwnika "wieœniaka bosa" do listy przeciwników
+    *
+    * @author Artur Leszczak
+    * @version 1.0.0
+    */
     public void GetEnemyVillagerBoss()
     {
         Vector3 newStart = sciezka.getStartPosition();
@@ -94,6 +112,13 @@ public class EnemyManager : MonoBehaviour
         listaPrzeciwnikow.Add(postac);
 
     }
+
+    /**
+    * Metoda dodaj¹ca nowego przeciwnika "rycerza" do listy przeciwników
+    *
+    * @author Artur Leszczak
+    * @version 1.0.0
+    */
     public void GetEnemyKnite()
     {
         Vector3 newStart = sciezka.getStartPosition();
@@ -105,6 +130,13 @@ public class EnemyManager : MonoBehaviour
         listaPrzeciwnikow.Add(postac);
 
     }
+
+    /**
+    * Metoda dodaj¹ca nowego przeciwnika "rycerza bosa" do listy przeciwników
+    *
+    * @author Artur Leszczak
+    * @version 1.0.0
+    */
     public void GetEnemyKniteBoss()
     {
         Vector3 newStart = sciezka.getStartPosition();

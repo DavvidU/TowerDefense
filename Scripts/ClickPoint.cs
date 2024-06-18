@@ -12,13 +12,13 @@ using Unity.AI.Navigation;
 
 
 /**
-* @brief Klasa ma za zadanie zarządzać trybem budoawnia/rozbiórki użytkownika 
+* Klasa ma za zadanie zarządzać trybem budoawnia/rozbiórki użytkownika 
 * 
-* <span style="font-size: 16px; text-indent: 30px;">
-*     śledzi promień kursora użytkownika i zaznacza pdpowieni element siatki na któym w przypadku trybu budowania stawia przeszkodę lub w przypadku 
-*     trybu rozbiórki przeszkodę usuwa.
-* </span>
-* @author <i><span style="font-size: 1rem; font-weight: bold; color: #fff;">Artur Leszczak</span></i>
+* śledzi promień kursora użytkownika i zaznacza pdpowieni element siatki na któym w przypadku 
+* trybu budowania stawia przeszkodę lub w przypadku trybu rozbiórki przeszkodę usuwa.
+* 
+* @author Artur Leszczak
+* @version 1.0.0
 */
 
 public class TrapPrice
@@ -26,27 +26,51 @@ public class TrapPrice
     private int Id;
     private float Price;
 
-    public TrapPrice(int id, float price)
-    {
-        this.Id = id;
-        this.Price = price;
-    }
+    /**
+ * Konstruktor klasy TrapPrice, który inicjalizuje identyfikator i cenę pułapki.
+ *
+ * @param id Identyfikator pułapki
+ * @param price Cena pułapki
+ * @author Artur Leszczak
+ * @version 1.0.0
+ */
+    public TrapPrice(int id, float price) {
+    this.Id = id;
+    this.Price = price;
+}
     public float getPrice()
     {
         return Price;
     }
 }
 
+/**
+ * Klasa reprezentująca punkt kliknięcia w grze, decydująca o ruchu kamery
+ * oraz o wybranym miejscu do postawienia obiektu.
+ *
+ * @author Artur Leszczak
+ * @version 1.0.0
+ */
 public class ClickPoint : MonoBehaviour
 {
-    //deklaruje obiekty możliwe do wyubudowania
-    public enum BuldableObjects
-    {
+    /**
+     * Enum reprezentujące obiekty, które mogą być budowane w grze.
+     *
+     * @author Artur Leszczak
+     * @version 1.0.0
+     */
+    public enum BuldableObjects {
         Sciany,
         Sciezka,
         Pułapki
     }
 
+    /**
+     * Enum reprezentujące pułapki, które mogą być budowane w grze.
+     *
+     * @author Artur Leszczak
+     * @version 1.0.0
+     */
     public enum BuldableTraps
     {
         Kolce,
@@ -54,6 +78,7 @@ public class ClickPoint : MonoBehaviour
         Lawa,
         Oblodzenie
     }
+
     public TextMeshProUGUI pieniadze;
     public bool inBuildMode = true;
     public bool inDestroyingMode = false;
@@ -68,17 +93,14 @@ public class ClickPoint : MonoBehaviour
     private EnemyManager ManagerEnemy;
     public GameObject obiektEnemyManager;
     private ZarzadzajObiektami zarzadzanieObiektamiGlobalnymi;
-    //private float Mousex = 0f;
-    //private float Mousey = 0f;
     private float Mouser = 0f;
-    //private float mouseRotationY = 0f;
 
     private int mapWidth = 15;
     private int mapHeight = 10;
 
     private TrapPrice[] trapPrice;
 
-   // private GlobalFunctions GlobalFunctions;
+    // private GlobalFunctions GlobalFunctions;
 
     // Start is called before the first frame update
     void Start()
@@ -91,7 +113,6 @@ public class ClickPoint : MonoBehaviour
         this.pulapka = gameObject.GetComponent<PlaceTrap>();
         this.zarzadzanieObiektamiGlobalnymi = gameObject.AddComponent<ZarzadzajObiektami>();
         this.ManagerEnemy = obiektEnemyManager.GetComponent<EnemyManager>();
-       // this.GlobalFunctions = new GlobalFunctions();
 
         TrapPrice trap1 = new TrapPrice(1, 10f);
         TrapPrice trap2 = new TrapPrice(2, 20f);
@@ -111,6 +132,7 @@ public class ClickPoint : MonoBehaviour
     void Update()
     {
         ZaktualizujPieniadze();
+
         if (sciezka.czySkonczonaSciezka())
         {
             ManagerEnemy.enabled = true;
@@ -143,7 +165,6 @@ public class ClickPoint : MonoBehaviour
 
                     if(this.WybranaPułapka == BuldableTraps.Strzelajaca && this.TrybBudowania == BuldableObjects.Pułapki)
                     {
-                        //Debug.Log("xd");
                         TrapPoint trapPoint = hit.collider.GetComponent<TrapPoint>();
 
                         if (trapPoint == null)
@@ -244,13 +265,8 @@ public class ClickPoint : MonoBehaviour
             }
                 
         }
-        /*
-        else if(Input.GetKeyDown(KeyCode.Space) && sciezka.czySciezkaStworzona==true )
-        {
-            ManagerEnemy.enabled = true;
-           
-        }
-        */
+        
+
         //zmienia pozycję kamery
         if(Input.GetMouseButton(1))
         {

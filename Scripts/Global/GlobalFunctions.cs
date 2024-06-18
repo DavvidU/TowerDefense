@@ -3,79 +3,107 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
-public static class GlobalFunctions 
-{
+/**
+ * Klasa zawieraj¹ca globalne funkcje, zmienne i sta³e 
+ * pozwalaj¹ce na przechowywanie informacji o funduszach gracza.
+ *
+ * @author Artur Leszczak
+ * @version 1.0.0
+ */
+public static class GlobalFunctions {
+    // G³ówna zmienna przechowuj¹ca pieni¹dze gracza
     [SerializeField] private static float Money = 100f;
-   
 
-    // Start is called before the first frame update
-    
-
-    public static float getMoney()
-    {
+    /**
+     * Metoda zwracaj¹ca iloœæ pieniêdzy gracza.
+     *
+     * @return Iloœæ pieniêdzy gracza
+     */
+    public static float getMoney() {
         return Money;
     }
-    public static bool removeMoney(float amount)
-    {
-        if (Money < amount)
-        {
+
+    /**
+     * Metoda odejmuj¹ca iloœæ pieniêdzy od gracza.
+     *
+     * @author Artur Leszczak
+     * @version 1.0.0
+     * @param amount Iloœæ pieniêdzy, któr¹ chcemy odj¹æ
+     * @return Zwraca true, jeœli operacja zakoñczy³a siê pomyœlnie 
+     * (gracz posiada wystarczaj¹c¹ iloœæ pieniêdzy), w przeciwnym razie zwraca false
+     */
+    public static bool removeMoney(float amount) {
+        if (Money < amount) {
             return false;
-        }
-        else
-        {
+        } else {
             Money -= amount;
             return true;
         }
-
     }
-    public static bool addMoney(float amount)
-    {
-        if (amount >= 0)
-        {
+
+    /**
+     * Metoda dodaj¹ca iloœæ pieniêdzy do gracza.
+     *
+     * @author Artur Leszczak
+     * @version 1.0.0
+     * @param amount Iloœæ pieniêdzy, któr¹ chcemy dodaæ
+     * @return Zwraca true, jeœli operacja zakoñczy³a siê pomyœlnie (iloœæ pieniêdzy jest nieujemna), w przeciwnym razie zwraca false
+     */
+    public static bool addMoney(float amount) {
+        if (amount >= 0) {
             Money += amount;
             return true;
-        }
-        else
-        {
-            
+        } else {
             return false;
         }
-
     }
-    public static bool setMoney(float amount)
-    {
-        if (amount >= 0)
-        {
+
+    /**
+     * Metoda ustawiaj¹ca iloœæ pieniêdzy gracza.
+     *
+     * @author Artur Leszczak
+     * @version 1.0.0
+     * @param amount Iloœæ pieniêdzy, któr¹ chcemy ustawiæ
+     * @return Zwraca true, jeœli operacja zakoñczy³a siê pomyœlnie (iloœæ pieniêdzy jest nieujemna), w przeciwnym razie zwraca false
+     */
+    public static bool setMoney(float amount) {
+        if (amount >= 0) {
             Money = amount;
             return true;
-        }
-        else
-        {
+        } else {
             return false;
         }
-
     }
 }
 
-public class ZarzadzajObiektami : MonoBehaviour
-{
+/**
+ * Klasa odpowiedzialna za zarz¹dzanie obiekatmi w œwiecie Unity.
+ *
+ * @author Artur Leszczak
+ * @version 1.0.0
+ */
+public class ZarzadzajObiektami : MonoBehaviour {
 
-    private void Start()
-    {
-        
+    private void Start() {
+        // Inicjalizacja
     }
 
-    public bool setObjectsVisibilityByTag(string tag, bool value)
-    {
+    /**
+     * Metoda ustawiaj¹ca widocznoœæ obiektów z okreœlonym tagiem.
+     *
+     * @author Artur Leszczak
+     * @version 1.0.0
+     * @param tag Tag obiektów, których widocznoœæ chcemy zmieniæ
+     * @param value Wartoœæ logiczna okreœlaj¹ca widocznoœæ (true - widoczne, false - niewidoczne)
+     * @return Zwraca true, jeœli operacja zakoñczy³a siê pomyœlnie
+     */
+    public bool setObjectsVisibilityByTag(string tag, bool value) {
         GameObject[] obiektyDoWylaczenia = GameObject.FindGameObjectsWithTag(tag);
 
-        foreach(GameObject obiekt in obiektyDoWylaczenia)
-        {
+        foreach(GameObject obiekt in obiektyDoWylaczenia) {
             obiekt.GetComponent<Renderer>().enabled = value;
         }
 
         return true;
-
     }
-
 }

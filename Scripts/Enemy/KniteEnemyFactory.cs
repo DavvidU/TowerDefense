@@ -4,8 +4,9 @@ using UnityEngine;
 
 /**
  * @brief Klasa tworz¹ca rycerzy - wzorzec fabryki
- * @desc 
+ *
  * @author Artur Leszczak
+ * @version 1.0.0
  */
 
 public class KniteEnemyFactory : MonoBehaviour, EnemyFactory
@@ -22,8 +23,6 @@ public class KniteEnemyFactory : MonoBehaviour, EnemyFactory
     private void loadAssets()
     {
         //this.katalogZasobow = "Assets/Prefabs/Enemy/Knite";
-
-
     }
 
     public void setStartPoint(Vector3 startPoint)

@@ -5,9 +5,14 @@ using TMPro;
 using System;
 using UnityEngine.AI;
 
+/**
+ * Klasa reprezentuj¹ca przeciwnika "Wiesniaka".
+ *
+ * @author Artur Leszczak, Dawid Ugniewski, Nikola Osiñska, Konrad Kondracki, Adam Bagiñski
+ * @version 1.0.0
+ */
 public class enemyVillager : MonoBehaviour
 {
-
 
     private PlacePath sciezka;
     public GameObject postac;
@@ -16,7 +21,6 @@ public class enemyVillager : MonoBehaviour
     public int aktualnyKafelek = 1;
     public float speed = 0.5f;
     public bool powrot = false;
-    // public int HP=100;
     private bool czasSpowolnienia = false;
     private bool czasPodpalenia = false;
     private float timer = 0.0f;
@@ -66,19 +70,15 @@ public class enemyVillager : MonoBehaviour
     {
         if (stan)
         {
-            //Debug.Log("zmienaim widocznosc na true");
-           // lifeBarObject.SetActive(true);
+            
             lifeBarBackground.SetActive(true);
             fireEffect.GetComponent<ParticleSystem>().Stop();
            iceEffect.GetComponent<ParticleSystem>().Stop();
-            //lifeBar.GetComponent<Image>().enabled = true;
+           
         }
         else
         {
-           // Debug.Log("zmienaim widocznosc na false");
-           // lifeBarObject.SetActive(false);
             lifeBarBackground.SetActive(false);
-            //lifeBar.GetComponent<Image>().enabled = false;
         }
     }
     void CreateLifeBar()
@@ -299,56 +299,6 @@ public class enemyVillager : MonoBehaviour
             sprawdzCzyMinalCzas(timer);
         }
 
-        /*
-        aktualnaPozycja = transform.position;
-        if (aktualnyKafelek < sciezka.naKtorymKafelkuSciezkiLezyPosag && aktualnyKafelek >= 0)
-        {
-            Vector3 targetPosition = new Vector3();
-            if (listaSciezki[aktualnyKafelek] != null)
-            {
-                targetPosition.x = listaSciezki[aktualnyKafelek].x;
-                targetPosition.z = listaSciezki[aktualnyKafelek].y;
-                targetPosition.y = 0.5f;
-                float krok = speed * Time.deltaTime;
-                transform.position = Vector3.MoveTowards(transform.position, targetPosition, krok);
-
-                // obliczamy wektor kierunku i tworzymy obrót na podstawie kierunku
-                Vector3 direction = (targetPosition - transform.position).normalized;
-                if (direction != Vector3.zero)
-                {
-                    // rotacja w stronê kierunkow¹
-                    Quaternion lookRotation = Quaternion.LookRotation(direction);
-                    transform.rotation = Quaternion.Slerp(transform.rotation, lookRotation, Time.deltaTime * speed);
-                }
-            }
-            if (aktualnaPozycja.x == listaSciezki[aktualnyKafelek].x && aktualnaPozycja.z == listaSciezki[aktualnyKafelek].y)
-            {
-                if (powrot == false)
-                    aktualnyKafelek++;
-                else
-                {
-                    if (aktualnyKafelek == 0)
-                    {
-                        Destroy(gameObject);
-                    }
-                    else
-                        aktualnyKafelek--;
-                }
-            }
-
-        }
-        else
-        {
-            if (sciezka.posag != null)
-            {
-                Destroy(sciezka.posag);
-                Destroy(gameObject);
-
-            }
-            powrot = true;
-            aktualnyKafelek--;
-        }
-        */
         if (NavMeshAgent.isActiveAndEnabled && NavMeshAgent.isOnNavMesh && NavMeshAgent != null)
         {
             if (sciezka.posag != null && NavMeshAgent.remainingDistance < 0.5f)
@@ -358,13 +308,11 @@ public class enemyVillager : MonoBehaviour
                 {
                     EnemyManager.rozpocznijPrzygotowanie = true;
                 }
+
                 Destroy(NavMeshAgent);
-                Destroy(sciezka.posag);
-                //EnemyManager.SetCzyPosagZabrany(true);
-
-
+                Destroy(sciezka.posag); 
                 Destroy(gameObject);
-               // Debug.Log("Zniszczy³em sie");
+
             }
             else
             if (powrot==true && NavMeshAgent.remainingDistance < 0.5f)
@@ -393,8 +341,7 @@ public class enemyVillager : MonoBehaviour
            // Vector3 pozycjaDocelowa = NavMeshAgent.destination;
             float pozycjaX = transform.position.x;
             float pozycjaZ = transform.position.z;
-           // float pozycjaX = (float)Math.Truncate(this.aktualnaPozycja.x);
-            //float pozycjaZ = (float)Math.Truncate(this.aktualnaPozycja.z);
+           
             Debug.Log(pozycjaZ + ". " + pozycjaZ);
 
             Vector3 deathpostion = new Vector3(pozycjaX, 0.5f, pozycjaZ);
@@ -407,7 +354,7 @@ public class enemyVillager : MonoBehaviour
                 sciezka.posag = Instantiate(PlacePath.pobierzObiektPosagu(), deathpostion, Quaternion.identity);
                 sciezka.naKtorymKafelkuSciezkiLezyPosag = aktualnyKafelek;
                 ustawCelDlaPrzeciwnikow(deathpostion);
-                //sciezka.SetStopPosition(deathpostion); //TD-39: To chyba nie potrzebne do podnoszenia posagu
+                
             }
             EnemyManager.listaPrzeciwnikow.Remove(gameObject);
             if (EnemyManager.listaPrzeciwnikow.Count == 0)
@@ -443,6 +390,12 @@ public class enemyVillager : MonoBehaviour
 
 }
 
+/**
+ * Klasa reprezentuj¹ca przeciwnika "Wiesniaka bosa".
+ *
+ * @author Artur Leszczak, Dawid Ugniewski, Nikola Osiñska, Konrad Kondracki, Adam Bagiñski
+ * @version 1.0.0
+ */
 public class enemyVillagerBoss : MonoBehaviour
 {
 
@@ -453,7 +406,6 @@ public class enemyVillagerBoss : MonoBehaviour
     public int aktualnyKafelek = 1;
     public float speed = 2f;
     public bool powrot = false;
-    // public int HP=100;
     private bool czasSpowolnienia = false;
     private bool czasPodpalenia = false;
     private float timer = 0.0f;
@@ -490,12 +442,7 @@ public class enemyVillagerBoss : MonoBehaviour
         lifeText.rectTransform.sizeDelta = new Vector2(200, 50); // Ustawienie rozmiaru
         lifeText.rectTransform.localScale = new Vector3(0.01f, 0.01f, 0.01f); // Ustawienie skali
         lifeText.rectTransform.rotation = Quaternion.LookRotation(transform.position - gameControllerObj.transform.position);
-        //image = new GameObject("Tlo").AddComponent<UnityEngine.UI.Image>();
-        // image.transform.SetParent(lifeText.transform);
-        // image.rectTransform.sizeDelta = new Vector2(100, 50);
-
-
-        //lifeText.rectTransform.rotation = Quaternion.LookRotation(transform.position - GameController.instance.transform.position);
+       
     }
 
     void UpdateLifeText()
@@ -508,7 +455,6 @@ public class enemyVillagerBoss : MonoBehaviour
         currentLife -= damageAmount;
         UpdateLifeText();
 
-        // Dodaj dodatkow¹ logikê, np. sprawdzenie czy postaæ umar³a, itp.
     }
     public PlacePath getPath()
     {
@@ -649,8 +595,7 @@ public class enemyVillagerBoss : MonoBehaviour
             {
                 PlacePath.pozycjaPosagu = deathpostion;
                 sciezka.posag = Instantiate(PlacePath.pobierzObiektPosagu(), deathpostion, Quaternion.identity);
-                sciezka.naKtorymKafelkuSciezkiLezyPosag = aktualnyKafelek;
-                //sciezka.SetStopPosition(deathpostion); //TD-39: To chyba nie potrzebne do podnoszenia posagu
+                sciezka.naKtorymKafelkuSciezkiLezyPosag = aktualnyKafelek; 
             }
             Destroy(gameObject);
 

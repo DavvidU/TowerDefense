@@ -2,6 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+/**
+ * Klasa reprezentuj¹ca oœwietlenie w pochodniach.
+ *
+ * @author Artur Leszczak
+ * @version 1.0.0
+ */
 public class TorchLight : MonoBehaviour
 {
     // Zmienna do przechowywania komponentu Light
@@ -15,7 +21,6 @@ public class TorchLight : MonoBehaviour
     public float changeInterval = 1.0f;
     public float transitionDuration = 1.0f;
 
-    // Start jest wywo³ywany przed pierwsz¹ klatk¹
     void Start()
     {
         // Pobieranie komponentu Light z obiektu
@@ -53,7 +58,7 @@ public class TorchLight : MonoBehaviour
         }
     }
 
-    // Korutyna do p³ynnej zmiany zasiêgu œwiat³a
+    // P³ynna zmiana zasiêgu œwiat³a
     IEnumerator ChangeLightRange()
     {
         while (true)

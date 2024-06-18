@@ -18,8 +18,6 @@ public class PlaceWall : MonoBehaviour
         Left, Right, Top, Bottom
     }
 
-    
-
     [SerializeField]
     private GameObject SingleWallObject;
     [SerializeField]
