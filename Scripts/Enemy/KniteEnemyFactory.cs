@@ -39,7 +39,15 @@ public class KniteEnemyFactory : MonoBehaviour, EnemyFactory
 
         return knite;
     }
+    public GameObject createEnemyWithStatue()
+    {
 
+        GameObject knite;
+        knite = Instantiate(PreafabKnite, startPoint, Quaternion.identity);
+        knite.AddComponent<enemyVillagerBoss>();
+
+        return knite;
+    }
     public GameObject createEnemyBoss()
     {
         loadAssets();

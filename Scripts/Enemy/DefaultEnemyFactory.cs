@@ -57,10 +57,12 @@ public class DefaultEnemyFactory : MonoBehaviour, EnemyFactory
     {
 
 
-        villager = Instantiate(EnemyPrefabStatua, startPoint, Quaternion.identity);
-        villager.AddComponent<enemyVillagerBoss>();
+        // villager = Instantiate(EnemyPrefabStatua, startPoint, Quaternion.identity);
+        // villager.AddComponent<enemyVillagerBos>();
 
-        return villager;
+       // villager = EnemyPrefabStatua;
+
+        return EnemyPrefabStatua;
     }
 
 

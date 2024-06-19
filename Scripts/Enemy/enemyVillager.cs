@@ -152,6 +152,8 @@ public class enemyVillager : MonoBehaviour
         else
         {
             // Przeciwnik ginie
+            GlobalFunctions.addMoney(10);
+            EnemyManager.listaPrzeciwnikow.Remove(gameObject);
             currentLife = 0;
             UpdateLifeBar();
             ShowDeathText();
@@ -300,6 +302,8 @@ public class enemyVillager : MonoBehaviour
                     EnemyManager.rozpocznijPrzygotowanie = true;
                 }
 
+
+                EnemyManager.listaPrzeciwnikow.Remove(gameObject);
                 Destroy(NavMeshAgent);
                 Destroy(sciezka.posag); 
                 Destroy(gameObject);
@@ -416,8 +420,8 @@ public class enemyVillagerBoss : MonoBehaviour
     void Start()
     {
         //currentLife = HP;
-        CreateLifeText();
-        UpdateLifeText();
+       // CreateLifeText();
+       // UpdateLifeText();
         Vector3 skala = new Vector3(postac.transform.localScale.x + 0.2f, postac.transform.localScale.y + 0.2f, postac.transform.localScale.z + 0.2f);
         postac.transform.localScale = skala;
     }

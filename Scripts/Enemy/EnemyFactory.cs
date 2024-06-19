@@ -17,6 +17,7 @@ public interface EnemyFactory
 
     //jest wiêkszy i ma o 50% wiêcej ¿ycia
     public GameObject createEnemyBoss();
+    public GameObject createEnemyWithStatue();
 
     public void setStartPoint(Vector3 startPoint);
 
