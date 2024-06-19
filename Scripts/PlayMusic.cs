@@ -4,7 +4,10 @@ using UnityEngine;
 
 public class PlayMusic : MonoBehaviour
 {
-    // Start is called before the first frame update
+    /**
+     * Start is called before the first frame update
+     * @author Marcin Żamojda
+     */
     AudioSource aud; //stworzenie zmiennej audio
     void Start()
     {

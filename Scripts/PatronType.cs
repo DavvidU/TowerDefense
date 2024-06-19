@@ -7,14 +7,18 @@ using UnityEngine;
 
 public class PatronType : MonoBehaviour
 {
-    //@author Adam Baginski
-    //ktory typ patrona jest aktywny
+    /**
+     * ktory typ patrona jest aktywny
+     * @author Adam Baginski
+     */
     public static bool PatronDmgActive { get; private set; }
     public static bool PatronSlowActive { get; private set; }
     public static bool PatronGoldActive { get; private set; }
 
 
-    //metoda aktywujaca patrona od obrazen
+    /**
+     * metoda aktywujaca patrona od obrazen
+     */
     public static void ActivateDmgPatron()
     {
         PatronDmgActive = true;
@@ -22,12 +26,16 @@ public class PatronType : MonoBehaviour
         PatronGoldActive = false;
     }
 
-    //metoda dezaktywujaca patrona od obrazen
+    /**
+     * metoda dezaktywujaca patrona od obrazen
+     */
     public static void DeactivateDmgPatron()
     {
         PatronDmgActive = false;
     }
-    //metoda aktywujaca patrona od spowolneinia
+    /**
+     * metoda aktywujaca patrona od spowolneinia
+     */
     public static void ActivateSlowPatron()
     {
         PatronSlowActive = true;
@@ -35,12 +43,16 @@ public class PatronType : MonoBehaviour
         PatronGoldActive = false;
     }
 
-    //metoda dezaktywujaca patrona od spowolnienia
+    /**
+     * metoda dezaktywujaca patrona od spowolnienia
+     */
     public static void DeactivateSlowPatron()
     {
         PatronSlowActive = false;
     }
-    //metoda aktywujaca patrona od zlota
+    /**
+     * metoda aktywujaca patrona od zlota
+     */
     public static void ActivateGoldPatron()
     {
         PatronGoldActive = true;
@@ -48,7 +60,9 @@ public class PatronType : MonoBehaviour
         PatronSlowActive = false;
     }
 
-    //metoda dezaktywujaca patrona od zlota
+    /**
+     * metoda dezaktywujaca patrona od zlota
+     */
     public static void DeactivateGoldPatron()
     {
         PatronGoldActive = false;
