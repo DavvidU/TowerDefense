@@ -8,10 +8,9 @@ public class PlayGame : MonoBehaviour
     // Start is called before the first frame updat
 
     public void Play_Game(){
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);//zmiana sceny z menu na gre
     }
     public void QuitGame(){
-        Debug.Log("Quit Game");
-        Application.Quit();
+        Application.Quit();//wyjście z gry
     }
 }

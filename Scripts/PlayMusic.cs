@@ -5,11 +5,11 @@ using UnityEngine;
 public class PlayMusic : MonoBehaviour
 {
     // Start is called before the first frame update
-    AudioSource aud;
+    AudioSource aud; //stworzenie zmiennej audio
     void Start()
     {
-        aud = GetComponent<AudioSource>();
-        aud.Play();
+        aud = GetComponent<AudioSource>(); //przypisanie audio
+        aud.Play(); //odpalenie muzyki
 
     }
 
