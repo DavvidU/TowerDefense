@@ -48,7 +48,7 @@ public class TrapPrice
  * Klasa reprezentująca punkt kliknięcia w grze, decydująca o ruchu kamery
  * oraz o wybranym miejscu do postawienia obiektu.
  *
- * @author Artur Leszczak
+ * @author Artur Leszczak, Dawid Ugniewski
  * @version 1.0.0
  */
 public class ClickPoint : MonoBehaviour
