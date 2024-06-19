@@ -18,7 +18,7 @@ public class enemy : MonoBehaviour
     private bool czasPodpalenia = false;
         private float timer = 0.0f;
     private GameObject gameControllerObj;
-    private int currentLife = 100; // Aktualna iloœæ ¿ycia
+    private int currentLife = 100; // Aktualna iloï¿½ï¿½ ï¿½ycia
     private TextMeshPro lifeText;
 
     private int licznik;
@@ -44,9 +44,15 @@ public class enemy : MonoBehaviour
         UpdateLifeBar();
        
     }
+    /**
+     * Metoda tworzÄ…ca pasek zdrowia przeciwnika 
+     *
+     * @author Dawid Ugniewski
+     * @version 1.0.0
+     */
     void CreateLifeBar()
     {
-        // Tworzenie t³a paska ¿ycia
+        // Tworzenie tï¿½a paska ï¿½ycia
         lifeBarBackground = new GameObject("LifeBarBackground");
         lifeBarBackground.transform.SetParent(transform);
         lifeBarBackground.transform.localPosition = Vector3.up * 2f;
@@ -54,7 +60,7 @@ public class enemy : MonoBehaviour
         lifeBarBackground.AddComponent<CanvasScaler>().dynamicPixelsPerUnit = 10;
         lifeBarBackground.AddComponent<GraphicRaycaster>();
 
-        // Tworzenie paska ¿ycia
+        // Tworzenie paska ï¿½ycia
         GameObject lifeBarObject = new GameObject("LifeBar");
         lifeBarObject.transform.SetParent(lifeBarBackground.transform);
         lifeBarObject.AddComponent<CanvasRenderer>();
@@ -84,7 +90,12 @@ public class enemy : MonoBehaviour
         iceMain.loop = true;
         iceParticleSystem.Stop();
     }
-
+    /**
+     * Metoda aktualizujÄ…ca pasek zdrowia przeciwnika 
+     *
+     * @author Dawid Ugniewski
+     * @version 1.0.0
+     */
     void UpdateLifeBar()
     {
         if (lifeBar != null)
@@ -176,7 +187,7 @@ public class enemy : MonoBehaviour
     {
 
         //currentLife = currentLife - 40;
-        Debug.Log("Trafiony przez strza³e-" + currentLife);
+        Debug.Log("Trafiony przez strzaï¿½e-" + currentLife);
         Destroy(collision.gameObject);
         if(PatronType.PatronDmgActive)
         { TakeDamage(50); }
@@ -184,7 +195,12 @@ public class enemy : MonoBehaviour
         TakeDamage(40);
     }
 
-
+    /**
+     * Metoda m.in. aktualizuje stan przeciwnika, obsÅ‚uguje zdarzenie upuszczenia posÄ…gu
+     *
+     * @author Dawid Ugniewski, Nikola OsiÅ„ska, Konrad, Kondracki
+     * @version 1.0.0
+     */
     void Update()
     {
         lifeBarBackground.transform.rotation = Quaternion.LookRotation(transform.position - gameControllerObj.transform.position);
@@ -228,11 +244,11 @@ public class enemy : MonoBehaviour
                 float krok = speed * Time.deltaTime;
                 transform.position = Vector3.MoveTowards(transform.position, targetPosition, krok);
 
-                // obliczamy wektor kierunku i tworzymy obrót na podstawie kierunku
+                // obliczamy wektor kierunku i tworzymy obrï¿½t na podstawie kierunku
                 Vector3 direction = (targetPosition - transform.position).normalized;
                 if (direction != Vector3.zero)
                 {
-                    // rotacja w stronê kierunkow¹
+                    // rotacja w stronï¿½ kierunkowï¿½
                     Quaternion lookRotation = Quaternion.LookRotation(direction);
                     transform.rotation = Quaternion.Slerp(transform.rotation, lookRotation, Time.deltaTime * speed);
                 }
