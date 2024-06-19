@@ -33,15 +33,15 @@ public class enemyVillager : MonoBehaviour
 
 
     public Transform target; // Cel, np. gracz
-    public float moveSpeed = 3f;
+    public float moveSpeed = 0.75f;
 
      /* Pasek zdrowia */
 
     private Image lifeBar;
     private GameObject lifeBarBackground;
 
-    private ParticleSystem fireEffect;
-    private ParticleSystem iceEffect;
+    //private ParticleSystem fireEffect;
+   // private ParticleSystem iceEffect;
 
     RectTransform rectTransform;
 
@@ -72,8 +72,8 @@ public class enemyVillager : MonoBehaviour
         {
             
             lifeBarBackground.SetActive(true);
-            fireEffect.GetComponent<ParticleSystem>().Stop();
-           iceEffect.GetComponent<ParticleSystem>().Stop();
+           // fireEffect.GetComponent<ParticleSystem>().Stop();
+          // iceEffect.GetComponent<ParticleSystem>().Stop();
            
         }
         else
@@ -107,36 +107,12 @@ public class enemyVillager : MonoBehaviour
         rectTransform.localPosition = Vector3.zero;
 
         // Tworzenie efektu ognia
-        fireEffect = CreateParticleEffect("FireEffect", lifeBarObject.transform, Color.red);
+       // fireEffect = CreateParticleEffect("FireEffect", lifeBarObject.transform, Color.red);
 
         // Tworzenie efektu lodu
-        iceEffect = CreateParticleEffect("IceEffect", lifeBarObject.transform, Color.cyan);
+       // iceEffect = CreateParticleEffect("IceEffect", lifeBarObject.transform, Color.cyan);
     }
 
-    ParticleSystem CreateParticleEffect(string name, Transform parent, Color color)
-    {
-        GameObject effectObject = new GameObject(name);
-        effectObject.transform.SetParent(parent);
-        effectObject.transform.localPosition = Vector3.zero;
-        effectObject.transform.localScale = Vector3.one;
-
-        ParticleSystem particleSystem = effectObject.AddComponent<ParticleSystem>();
-        var main = particleSystem.main;
-        main.startColor = color;
-        main.startSize = 0.125f;
-        main.loop = true;
-
-        var shape = particleSystem.shape;
-        shape.shapeType = ParticleSystemShapeType.Box;
-        shape.scale = new Vector3(5f, 1.25f, 0.25f);
-
-        var emission = particleSystem.emission;
-        emission.rateOverTime = 50;
-
-        particleSystem.Stop();
-
-        return particleSystem;
-    }
 
     void UpdateLifeBar()
     {
@@ -158,7 +134,11 @@ public class enemyVillager : MonoBehaviour
             }
         }
     }
-
+    /**
+     * Metoda odejmuj¹ca okreœlon¹ iloœæ ¿ycia.
+     * 
+     * 
+     */
     public void TakeDamage(int damageAmount)
     {
         Debug.Log("Dosta³em damage");
@@ -200,11 +180,10 @@ public class enemyVillager : MonoBehaviour
 
         Destroy(deathTextObj, 1.5f);
     }
-
-    public PlacePath getPath()
-    {
-        return sciezka;
-    }
+    /**
+    * Metoda weryfikuj¹ca czas trwania efektu.
+    * 
+    */
     public void sprawdzCzyMinalCzas(float czas)
     {
         if (czas > 0.5f)
@@ -213,12 +192,15 @@ public class enemyVillager : MonoBehaviour
             czasPodpalenia = false;
             timer = 0.0f;
             speed = 3f;
-            fireEffect.GetComponent<ParticleSystem>().Stop();
-            iceEffect.GetComponent<ParticleSystem>().Stop();
+           // fireEffect.GetComponent<ParticleSystem>().Stop();
+           // iceEffect.GetComponent<ParticleSystem>().Stop();
             UpdateLifeBar();
         }
     }
-
+    /**
+    * Metoda sprawdzaj¹ca tagi obiektów w które wszed³ przeciwnik.
+    * 
+    */
     void OnTriggerEnter(Collider other)
     {
 
@@ -245,7 +227,7 @@ public class enemyVillager : MonoBehaviour
                 czasSpowolnienia = true;
             }
 
-            iceEffect.GetComponent<ParticleSystem>().Play();
+          //  iceEffect.GetComponent<ParticleSystem>().Play();
             UpdateLifeBar();
         }
         else if (other.gameObject.tag == "lawa")
@@ -253,11 +235,15 @@ public class enemyVillager : MonoBehaviour
             timer = 0.0f;
             licznik = 1;
             czasPodpalenia = true;
-            fireEffect.GetComponent<ParticleSystem>().Play();
+           // fireEffect.GetComponent<ParticleSystem>().Play();
             UpdateLifeBar();
         }
 
     }
+    /**
+     * Metoda wykrywaj¹ca kolizje ze strz³¹.
+     * 
+     */
     void OnCollisionEnter(Collision collision)
     {
 
@@ -266,7 +252,12 @@ public class enemyVillager : MonoBehaviour
         Destroy(collision.gameObject);
         TakeDamage(40);
     }
-
+    /**
+    * Metoda m.in. aktualizuje stan przeciwnika, obs³uguje zdarzenie upuszczenia pos¹gu
+    *
+    * @author Dawid Ugniewski, Nikola Osiñska, Konrad, Kondracki
+    * @version 1.0.0
+    */
 
     void Update()
     {

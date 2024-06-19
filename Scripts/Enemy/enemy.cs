@@ -109,7 +109,11 @@ public class enemy : MonoBehaviour
                 lifeBar.color = Color.red;
         }
     }
-
+    /**
+     * Metoda odejmująca określoną ilość życia.
+     * 
+     * 
+     */
     public void TakeDamage(int damageAmount)
     {
         currentLife -= damageAmount;
@@ -126,10 +130,10 @@ public class enemy : MonoBehaviour
             Destroy(gameObject);
         }
     }
-    public PlacePath getPath()
-    {
-        return sciezka;
-    }
+    /**
+     * Metoda weryfikująca czas trwania efektu.
+     * 
+     */
     public void sprawdzCzyMinalCzas(float czas)
     {
        if(czas>0.5f)
@@ -142,7 +146,10 @@ public class enemy : MonoBehaviour
             iceEffect.GetComponent<ParticleSystem>().Stop();
         }
     }
-
+    /**
+     * Metoda sprawdzająca tagi obiektów w które wszedł przeciwnik.
+     * 
+     */
     void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.tag == "Kolce")
@@ -183,6 +190,10 @@ public class enemy : MonoBehaviour
         }
 
     }
+    /*
+     * Metoda wykrywająca kolizje ze strzłą.
+     * 
+     */
     void OnCollisionEnter(Collision collision)
     {
 

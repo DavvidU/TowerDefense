@@ -5,7 +5,7 @@ using UnityEditor;
 using UnityEngine;
 
 /**
- * Klasa odpowiedzialna za zarz¹dzanie przeciwnikiem
+ * Klasa odpowiedzialna za zarz¹dzanie przeciwnikami
  * 
  * @author Artur Leszczak, Nikola Osiñska, Konrad Kondracki, Dawid Ugniewski
  * @version 1.1.0
@@ -56,6 +56,7 @@ public class EnemyManager : MonoBehaviour
     {
         //Application.targetFrameRate = 60;
     }
+
     private void Update()
     {
        
@@ -70,6 +71,7 @@ public class EnemyManager : MonoBehaviour
 
     }
     GameObject postac;
+
     public void WidocznoscPaskowZycia(bool stan)
     {
         foreach( GameObject przeciwnik in listaPrzeciwnikow){
@@ -149,6 +151,12 @@ public class EnemyManager : MonoBehaviour
 
     }
     int licznik = 0;
+    /**
+     * Metoda która pojawia na mapie przeciwnika co okreœlony interwa³ czasu , pilnuje te¿ ilu przeciwników mo¿e byæ w turze na mapie.
+     * Podmienia przeciwnika który podnieœie pos¹¿êk na model z pos¹giem w rêce.
+     * 
+     * @author Konrad Kondracki, Nikola Osiñska
+     */
     void FixedUpdate()
     {
         elapsedTime += Time.fixedDeltaTime;
@@ -232,6 +240,11 @@ public class EnemyManager : MonoBehaviour
         }
 
     }
+
+    /**
+     * Metoda aktualizuj¹ca cel do którego d¹¿¹ przeciwnicy na podstawie tego jaki cel maj¹ okreœlony w swojej instancji.
+     * 
+     */
     public void zmianaKierunkuWszystkich()
     {
         foreach(GameObject przeciwnik in listaPrzeciwnikow)
